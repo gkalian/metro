@@ -1,0 +1,30 @@
+{
+ "links": [
+  {
+   "a": "dostoevskaya",
+   "b": "sadovaya",
+   "lineId": "4",
+   "time": 180,
+   "timeEstimated": true,
+   "from": 1991,
+   "until": 2009,
+   "note": "До 7 марта 2009 года «Садовая» и участок до «Комендантского проспекта» были частью 4-й линии"
+  }
+ ],
+ "formerLines": [
+  {
+   "lineId": "4",
+   "until": 2009,
+   "stations": [
+    "sadovaya",
+    "admiralteyskaya",
+    "sportivnaya",
+    "chkalovskaya",
+    "krestovskiy-ostrov",
+    "staraya-derevnya",
+    "komendantskiy-prospekt"
+   ],
+   "note": "До 7 марта 2009 года участок «Садовая» — «Комендантский проспект» был частью 4-й линии; потом он отошёл к 5-й"
+  }
+ ]
+}

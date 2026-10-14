@@ -1,0 +1,104 @@
+{
+ "id": "К",
+ "name": "Кольцевая (северный участок)",
+ "color": "#E8B800",
+ "stations": [
+  {
+   "id": "bolshoy-prospekt-2",
+   "name": "Большой проспект",
+   "lat": 59.933832,
+   "lon": 30.259579,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "vasileostrovskaya-2",
+   "name": "Василеостровская",
+   "lat": 59.944127,
+   "lon": 30.279759,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 150,
+   "toNextEstimated": true
+  },
+  {
+   "id": "sportivnaya-2",
+   "name": "Спортивная",
+   "lat": 59.953078,
+   "lon": 30.289112,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 210,
+   "toNextEstimated": true
+  },
+  {
+   "id": "petrogradskaya-2",
+   "name": "Петроградская",
+   "lat": 59.967665,
+   "lon": 30.309232,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 150,
+   "toNextEstimated": true
+  },
+  {
+   "id": "kantemirovskaya",
+   "name": "Кантемировская",
+   "lat": 59.97589,
+   "lon": 30.32356,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "lesnaya-2",
+   "name": "Лесная",
+   "lat": 59.98397,
+   "lon": 30.347201,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 210,
+   "toNextEstimated": true
+  },
+  {
+   "id": "arsenalnaya",
+   "name": "Арсенальная",
+   "lat": 59.97789,
+   "lon": 30.3752,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 150,
+   "toNextEstimated": true
+  },
+  {
+   "id": "ploschad-kalinina",
+   "name": "Площадь Калинина",
+   "lat": 59.96637,
+   "lon": 30.38042,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 210,
+   "toNextEstimated": true
+  },
+  {
+   "id": "polyustrovskiy-prospekt-2",
+   "name": "Полюстровский проспект",
+   "lat": 59.95889,
+   "lon": 30.40772,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г."
+  }
+ ]
+}

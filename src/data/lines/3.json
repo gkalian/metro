@@ -1,0 +1,148 @@
+{
+ "id": "3",
+ "name": "Невско-Василеостровская",
+ "color": "#009959",
+ "stations": [
+  {
+   "id": "kamenka",
+   "name": "Каменка",
+   "lat": 60.027765,
+   "lon": 30.235738,
+   "status": "construct",
+   "note": "Горнопроходческие работы",
+   "toNext": 300,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "bogatirskaya",
+   "name": "Богатырская",
+   "lat": 60.006187,
+   "lon": 30.211975,
+   "status": "construct",
+   "note": "Горнопроходческие работы",
+   "toNext": 240,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "begovaya",
+   "name": "Беговая",
+   "lat": 59.98733,
+   "lon": 30.202257,
+   "status": "open",
+   "opened": 2018,
+   "note": "Открыта 26 мая 2018 года",
+   "toNext": 240
+  },
+  {
+   "id": "zenit",
+   "name": "Зенит",
+   "lat": 59.972325,
+   "lon": 30.211578,
+   "status": "open",
+   "opened": 2018,
+   "note": "Открыта 26 мая 2018 года",
+   "toNext": 240
+  },
+  {
+   "id": "primorskaya",
+   "name": "Приморская",
+   "lat": 59.948545,
+   "lon": 30.234526,
+   "status": "open",
+   "opened": 1979,
+   "note": "Открыта 28 сентября 1979 года",
+   "toNext": 240
+  },
+  {
+   "id": "vasileostrovskaya",
+   "name": "Василеостровская",
+   "lat": 59.942927,
+   "lon": 30.278159,
+   "status": "open",
+   "opened": 1967,
+   "note": "Открыта 3 ноября 1967 года",
+   "toNext": 240
+  },
+  {
+   "id": "gostinyy-dvor",
+   "name": "Гостиный двор",
+   "lat": 59.934049,
+   "lon": 30.333772,
+   "status": "open",
+   "opened": 1967,
+   "note": "Открыта 3 ноября 1967 года",
+   "toNext": 180
+  },
+  {
+   "id": "mayakovskaya",
+   "name": "Маяковская",
+   "lat": 59.931612,
+   "lon": 30.35491,
+   "status": "open",
+   "opened": 1967,
+   "note": "Открыта 3 ноября 1967 года",
+   "toNext": 180
+  },
+  {
+   "id": "ploschad-aleksandra-nevskogo-1",
+   "name": "Площадь Александра Невского",
+   "lat": 59.924314,
+   "lon": 30.385102,
+   "status": "open",
+   "opened": 1967,
+   "note": "Открыта 3 ноября 1967 года",
+   "toNext": 300
+  },
+  {
+   "id": "elizarovskaya",
+   "name": "Елизаровская",
+   "lat": 59.896705,
+   "lon": 30.423637,
+   "status": "open",
+   "opened": 1970,
+   "note": "Открыта 21 декабря 1970 года",
+   "toNext": 180
+  },
+  {
+   "id": "lomonosovskaya",
+   "name": "Ломоносовская",
+   "lat": 59.877433,
+   "lon": 30.441951,
+   "status": "open",
+   "opened": 1970,
+   "note": "Открыта 21 декабря 1970 года",
+   "toNext": 180
+  },
+  {
+   "id": "proletarskaya",
+   "name": "Пролетарская",
+   "lat": 59.865275,
+   "lon": 30.47026,
+   "status": "open",
+   "opened": 1981,
+   "note": "Открыта 10 июля 1981 года",
+   "toNext": 180
+  },
+  {
+   "id": "obuhovo",
+   "name": "Обухово",
+   "lat": 59.848795,
+   "lon": 30.457805,
+   "status": "open",
+   "opened": 1981,
+   "note": "Открыта 10 июля 1981 года",
+   "toNext": 240
+  },
+  {
+   "id": "rybatskoe",
+   "name": "Рыбацкое",
+   "lat": 59.830943,
+   "lon": 30.500455,
+   "status": "open",
+   "opened": 1984,
+   "note": "Открыта 28 декабря 1984 года"
+  }
+ ]
+}

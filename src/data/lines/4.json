@@ -1,0 +1,139 @@
+{
+ "id": "4",
+ "name": "Лахтинско-Правобережная",
+ "color": "#ECA21D",
+ "stations": [
+  {
+   "id": "morskoy-fasad",
+   "name": "Морской фасад",
+   "lat": 59.949064,
+   "lon": 30.204134,
+   "status": "project",
+   "toNext": 240,
+   "toNextEstimated": true,
+   "opening": 2034
+  },
+  {
+   "id": "gavan",
+   "name": "Гавань",
+   "lat": 59.933504,
+   "lon": 30.228204,
+   "status": "project",
+   "toNext": 210,
+   "toNextEstimated": true,
+   "opening": 2034
+  },
+  {
+   "id": "gornyy-institut",
+   "name": "Горный институт",
+   "lat": 59.932632,
+   "lon": 30.261179,
+   "status": "open",
+   "opened": 2024,
+   "note": "Открыта 27 декабря 2024 года",
+   "toNext": 210
+  },
+  {
+   "id": "teatralnaya",
+   "name": "Театральная",
+   "lat": 59.926382,
+   "lon": 30.296254,
+   "status": "construct",
+   "throughSince": 2024,
+   "passThrough": true,
+   "note": "Поезда проходят без остановки. По схеме: выход «Театральная-1» — 2029, «Театральная-2» — 2033; год открытия в приложении — условно по первому выходу",
+   "toNext": 150,
+   "opening": 2029
+  },
+  {
+   "id": "spasskaya",
+   "name": "Спасская",
+   "lat": 59.926839,
+   "lon": 30.319752,
+   "status": "open",
+   "opened": 2009,
+   "note": "Открыта 7 марта 2009 года",
+   "toNext": 180
+  },
+  {
+   "id": "dostoevskaya",
+   "name": "Достоевская",
+   "lat": 59.928072,
+   "lon": 30.345746,
+   "status": "open",
+   "opened": 1991,
+   "note": "Открыта 30 декабря 1991 года",
+   "toNext": 180
+  },
+  {
+   "id": "ligovskiy-prospekt",
+   "name": "Лиговский проспект",
+   "lat": 59.920747,
+   "lon": 30.355245,
+   "status": "open",
+   "opened": 1991,
+   "note": "Открыта 30 декабря 1991 года. Второй выход — 2028 (по схеме)",
+   "toNext": 120
+  },
+  {
+   "id": "ploschad-aleksandra-nevskogo-2",
+   "name": "Площадь Александра Невского",
+   "lat": 59.92365,
+   "lon": 30.383471,
+   "status": "open",
+   "opened": 1985,
+   "note": "Открыта 30 декабря 1985 года",
+   "toNext": 180
+  },
+  {
+   "id": "novocherkasskaya",
+   "name": "Новочеркасская",
+   "lat": 59.92933,
+   "lon": 30.412918,
+   "status": "open",
+   "opened": 1985,
+   "note": "Открыта 30 декабря 1985 года",
+   "toNext": 180
+  },
+  {
+   "id": "ladozhskaya",
+   "name": "Ладожская",
+   "lat": 59.93244,
+   "lon": 30.439474,
+   "status": "open",
+   "opened": 1985,
+   "note": "Открыта 30 декабря 1985 года",
+   "toNext": 180
+  },
+  {
+   "id": "prospekt-bolshevikov",
+   "name": "Проспект Большевиков",
+   "lat": 59.919819,
+   "lon": 30.466908,
+   "status": "open",
+   "opened": 1985,
+   "note": "Открыта 30 декабря 1985 года",
+   "toNext": 120
+  },
+  {
+   "id": "ulitsa-dybenko",
+   "name": "Улица Дыбенко",
+   "lat": 59.907573,
+   "lon": 30.483292,
+   "status": "open",
+   "opened": 1987,
+   "note": "Открыта 1 октября 1987 года",
+   "toNext": 270,
+   "toNextEstimated": true
+  },
+  {
+   "id": "kudrovo",
+   "name": "Кудрово",
+   "lat": 59.889191,
+   "lon": 30.51215,
+   "status": "project",
+   "opening": 2034,
+   "note": "Срок зависит от федерального софинансирования"
+  }
+ ]
+}

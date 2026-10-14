@@ -1,0 +1,190 @@
+{
+ "id": "5",
+ "name": "Фрунзенско-Приморская",
+ "color": "#9B41A9",
+ "stations": [
+  {
+   "id": "kolomyazhskaya",
+   "name": "Коломяжская",
+   "lat": 60.05501,
+   "lon": 30.20332,
+   "status": "project",
+   "opening": 2034,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "magistral-31",
+   "name": "Магистраль № 31",
+   "lat": 60.04282,
+   "lon": 30.21473,
+   "status": "project",
+   "opening": 2034,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 240,
+   "toNextEstimated": true
+  },
+  {
+   "id": "shuvalovskiy-prospekt",
+   "name": "Шуваловский проспект",
+   "lat": 60.027656,
+   "lon": 30.235889,
+   "status": "project",
+   "toNext": 270,
+   "toNextEstimated": true,
+   "opening": 2034
+  },
+  {
+   "id": "komendantskiy-prospekt",
+   "name": "Комендантский проспект",
+   "lat": 60.008356,
+   "lon": 30.258915,
+   "status": "open",
+   "opened": 2005,
+   "note": "Открыта 2 апреля 2005 года",
+   "toNext": 180
+  },
+  {
+   "id": "staraya-derevnya",
+   "name": "Старая Деревня",
+   "lat": 59.989228,
+   "lon": 30.255169,
+   "status": "open",
+   "opened": 1999,
+   "note": "Открыта 14 января 1999 года",
+   "toNext": 180
+  },
+  {
+   "id": "krestovskiy-ostrov",
+   "name": "Крестовский остров",
+   "lat": 59.971838,
+   "lon": 30.259427,
+   "status": "open",
+   "opened": 1999,
+   "note": "Открыта 3 сентября 1999 года",
+   "toNext": 240
+  },
+  {
+   "id": "chkalovskaya",
+   "name": "Чкаловская",
+   "lat": 59.961035,
+   "lon": 30.291964,
+   "status": "open",
+   "opened": 1997,
+   "note": "Открыта 15 сентября 1997 года",
+   "toNext": 120
+  },
+  {
+   "id": "sportivnaya",
+   "name": "Спортивная",
+   "lat": 59.952078,
+   "lon": 30.291312,
+   "status": "open",
+   "opened": 1997,
+   "note": "Открыта 15 сентября 1997 года",
+   "toNext": 180
+  },
+  {
+   "id": "admiralteyskaya",
+   "name": "Адмиралтейская",
+   "lat": 59.935876,
+   "lon": 30.315403,
+   "status": "open",
+   "opened": 2011,
+   "throughSince": 1997,
+   "note": "Открыта 28 декабря 2011 года",
+   "toNext": 180
+  },
+  {
+   "id": "sadovaya",
+   "name": "Садовая",
+   "lat": 59.927008,
+   "lon": 30.317456,
+   "status": "open",
+   "opened": 1991,
+   "note": "Открыта 30 декабря 1991 года",
+   "toNext": 240
+  },
+  {
+   "id": "zvenigorodskaya",
+   "name": "Звенигородская",
+   "lat": 59.922304,
+   "lon": 30.335784,
+   "status": "open",
+   "opened": 2008,
+   "note": "Открыта 20 декабря 2008 года",
+   "toNext": 180
+  },
+  {
+   "id": "obvodnyy-kanal",
+   "name": "Обводный канал",
+   "lat": 59.914697,
+   "lon": 30.349361,
+   "status": "open",
+   "opened": 2010,
+   "throughSince": 2008,
+   "note": "Открыта 30 декабря 2010 года",
+   "toNext": 180
+  },
+  {
+   "id": "volkovskaya",
+   "name": "Волковская",
+   "lat": 59.896265,
+   "lon": 30.35686,
+   "status": "open",
+   "opened": 2008,
+   "note": "Открыта 20 декабря 2008 года",
+   "toNext": 180
+  },
+  {
+   "id": "buharestskaya",
+   "name": "Бухарестская",
+   "lat": 59.883681,
+   "lon": 30.369673,
+   "status": "open",
+   "opened": 2012,
+   "note": "Открыта 28 декабря 2012 года",
+   "toNext": 180
+  },
+  {
+   "id": "mezhdunarodnaya",
+   "name": "Международная",
+   "lat": 59.869966,
+   "lon": 30.379045,
+   "status": "open",
+   "opened": 2012,
+   "note": "Открыта 28 декабря 2012 года",
+   "toNext": 120
+  },
+  {
+   "id": "prospekt-slavy",
+   "name": "Проспект Славы",
+   "lat": 59.856505,
+   "lon": 30.395592,
+   "status": "open",
+   "opened": 2019,
+   "note": "Открыта 3 октября 2019 года",
+   "toNext": 180
+  },
+  {
+   "id": "dunayskaya",
+   "name": "Дунайская",
+   "lat": 59.840059,
+   "lon": 30.410778,
+   "status": "open",
+   "opened": 2019,
+   "note": "Открыта 3 октября 2019 года",
+   "toNext": 240
+  },
+  {
+   "id": "shushary",
+   "name": "Шушары",
+   "lat": 59.820176,
+   "lon": 30.432683,
+   "status": "open",
+   "opened": 2019,
+   "note": "Открыта 3 октября 2019 года"
+  }
+ ]
+}

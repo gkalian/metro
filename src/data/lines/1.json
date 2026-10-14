@@ -1,0 +1,279 @@
+{
+ "id": "1",
+ "name": "Кировско-Выборгская",
+ "color": "#E44C31",
+ "stations": [
+  {
+   "id": "devyatkino",
+   "name": "Девяткино",
+   "lat": 60.049799,
+   "lon": 30.442248,
+   "status": "open",
+   "opened": 1978,
+   "note": "Открыта 29 декабря 1978 года",
+   "toNext": 180
+  },
+  {
+   "id": "grazhdanskiy-prospekt",
+   "name": "Гражданский проспект",
+   "lat": 60.03481,
+   "lon": 30.418087,
+   "status": "open",
+   "opened": 1978,
+   "note": "Открыта 29 декабря 1978 года",
+   "toNext": 360
+  },
+  {
+   "id": "akademicheskaya",
+   "name": "Академическая",
+   "lat": 60.012773,
+   "lon": 30.396103,
+   "status": "open",
+   "opened": 1975,
+   "note": "Открыта 31 декабря 1975 года",
+   "toNext": 120
+  },
+  {
+   "id": "politehnicheskaya",
+   "name": "Политехническая",
+   "lat": 60.00895,
+   "lon": 30.370774,
+   "status": "open",
+   "opened": 1975,
+   "note": "Открыта 31 декабря 1975 года",
+   "toNext": 180
+  },
+  {
+   "id": "ploschad-muzhestva",
+   "name": "Площадь Мужества",
+   "lat": 59.999655,
+   "lon": 30.366595,
+   "status": "open",
+   "opened": 1975,
+   "note": "Открыта 31 декабря 1975 года",
+   "toNext": 180
+  },
+  {
+   "id": "lesnaya",
+   "name": "Лесная",
+   "lat": 59.98477,
+   "lon": 30.344201,
+   "status": "open",
+   "opened": 1975,
+   "note": "Открыта 22 апреля 1975 года",
+   "toNext": 180
+  },
+  {
+   "id": "vyborgskaya",
+   "name": "Выборгская",
+   "lat": 59.97111,
+   "lon": 30.347553,
+   "status": "open",
+   "opened": 1975,
+   "note": "Открыта 22 апреля 1975 года",
+   "toNext": 120
+  },
+  {
+   "id": "ploschad-lenina",
+   "name": "Площадь Ленина",
+   "lat": 59.955725,
+   "lon": 30.355957,
+   "status": "open",
+   "opened": 1958,
+   "note": "Открыта 1 июня 1958 года",
+   "toNext": 180
+  },
+  {
+   "id": "chernyshevskaya",
+   "name": "Чернышевская",
+   "lat": 59.944539,
+   "lon": 30.359641,
+   "status": "open",
+   "opened": 1958,
+   "note": "Открыта 1 июня 1958 года",
+   "toNext": 120
+  },
+  {
+   "id": "ploschad-vosstaniya",
+   "name": "Площадь Восстания",
+   "lat": 59.931483,
+   "lon": 30.36036,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 120
+  },
+  {
+   "id": "vladimirskaya",
+   "name": "Владимирская",
+   "lat": 59.927467,
+   "lon": 30.347875,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 120
+  },
+  {
+   "id": "pushkinskaya",
+   "name": "Пушкинская",
+   "lat": 59.920757,
+   "lon": 30.329641,
+   "status": "open",
+   "opened": 1956,
+   "throughSince": 1955,
+   "note": "Открыта 30 апреля 1956 года",
+   "toNext": 120
+  },
+  {
+   "id": "tehnologicheskiy-institut-1",
+   "name": "Технологический институт",
+   "lat": 59.916799,
+   "lon": 30.318967,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 120
+  },
+  {
+   "id": "baltiyskaya",
+   "name": "Балтийская",
+   "lat": 59.907245,
+   "lon": 30.299217,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 180
+  },
+  {
+   "id": "narvskaya",
+   "name": "Нарвская",
+   "lat": 59.901169,
+   "lon": 30.274676,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 240
+  },
+  {
+   "id": "kirovskiy-zavod",
+   "name": "Кировский завод",
+   "lat": 59.879726,
+   "lon": 30.261908,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 120
+  },
+  {
+   "id": "avtovo",
+   "name": "Автово",
+   "lat": 59.867369,
+   "lon": 30.261345,
+   "status": "open",
+   "opened": 1955,
+   "note": "Открыта 15 ноября 1955 года",
+   "toNext": 180
+  },
+  {
+   "id": "leninskiy-prospekt1",
+   "name": "Ленинский проспект",
+   "lat": 59.851677,
+   "lon": 30.268279,
+   "status": "open",
+   "opened": 1977,
+   "note": "Открыта 29 сентября 1977 года",
+   "toNext": 120
+  },
+  {
+   "id": "prospekt-veteranov",
+   "name": "Проспект Ветеранов",
+   "lat": 59.84188,
+   "lon": 30.251543,
+   "status": "open",
+   "opened": 1977,
+   "note": "Открыта 29 сентября 1977 года",
+   "toNext": 150,
+   "toNextEstimated": true
+  },
+  {
+   "id": "aleksandrino",
+   "name": "Александрино",
+   "lat": 59.83947,
+   "lon": 30.23071,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "prospekt-marshala-zhukova",
+   "name": "Проспект Маршала Жукова",
+   "lat": 59.83508,
+   "lon": 30.20269,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г."
+  }
+ ],
+ "branches": [
+  {
+   "from": "prospekt-veteranov",
+   "time": 150,
+   "timeEstimated": true,
+   "stations": [
+    {
+     "id": "ulyanka",
+     "name": "Ульянка",
+     "lat": 59.83232,
+     "lon": 30.24879,
+     "status": "project",
+     "opening": 2035,
+     "note": "Координаты приблизительные — сняты со схемы развития до 2040 г. Срок зависит от федерального софинансирования",
+     "toNext": 300,
+     "toNextEstimated": true
+    },
+    {
+     "id": "aviagorodok",
+     "name": "Авиагородок",
+     "lat": 59.81622,
+     "lon": 30.28946,
+     "status": "project",
+     "opening": 2035,
+     "note": "Координаты приблизительные — сняты со схемы развития до 2040 г. Срок зависит от федерального софинансирования",
+     "toNext": 240,
+     "toNextEstimated": true
+    },
+    {
+     "id": "pulkovo",
+     "name": "Пулково",
+     "lat": 59.79818,
+     "lon": 30.27513,
+     "status": "project",
+     "opening": 2035,
+     "note": "Координаты приблизительные — сняты со схемы развития до 2040 г. Срок зависит от федерального софинансирования",
+     "toNext": 420,
+     "toNextEstimated": true
+    },
+    {
+     "id": "pulkovskie-vysoty",
+     "name": "Пулковские высоты",
+     "lat": 59.76785,
+     "lon": 30.31265,
+     "status": "project",
+     "note": "Координаты приблизительные — сняты со схемы развития до 2040 г. Срок на схеме не указан",
+     "toNext": 270,
+     "toNextEstimated": true
+    },
+    {
+     "id": "kvc-ekspoforum",
+     "name": "КВЦ «Экспофорум»",
+     "lat": 59.76031,
+     "lon": 30.35376,
+     "status": "project",
+     "note": "Координаты приблизительные — сняты со схемы развития до 2040 г. Срок на схеме не указан"
+    }
+   ]
+  }
+ ]
+}

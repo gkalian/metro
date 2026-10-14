@@ -1,0 +1,464 @@
+{
+ "routes": [
+  {
+   "id": "sestroretsk",
+   "name": "Финляндский вокзал — Сестрорецк",
+   "stations": [
+    "rzd-finlyandskiy-vokzal",
+    "rzd-lanskaya",
+    "rzd-novaya-derevnya",
+    "rzd-staraya-derevnya",
+    "rzd-yahtennaya",
+    "rzd-novaya-lahta",
+    "rzd-lahta",
+    "rzd-olgino",
+    "rzd-lisiy-nos",
+    "rzd-gorskaya",
+    "rzd-aleksandrovskaya",
+    "rzd-tarhovka",
+    "rzd-razliv",
+    "rzd-sestroretsk"
+   ]
+  },
+  {
+   "id": "melnichnyy-ruchey",
+   "name": "Финляндский вокзал — Мельничный Ручей",
+   "stations": [
+    "rzd-finlyandskiy-vokzal",
+    "rzd-kushelevka",
+    "rzd-piskarevka",
+    "rzd-rzhevka",
+    "rzd-post-kovalevo",
+    "rzd-kovalevo",
+    "rzd-berngardovka",
+    "rzd-vsevolozhskaya",
+    "rzd-melnichnyy-ruchey"
+   ]
+  },
+  {
+   "id": "oranienbaum",
+   "name": "Балтийский вокзал — Ораниенбаум-1",
+   "stations": [
+    "rzd-baltiyskiy-vokzal",
+    "rzd-bronevaya",
+    "rzd-leninskiy-prospekt",
+    "rzd-dachnoe",
+    "rzd-ulyanka",
+    "rzd-ligovo",
+    "rzd-sosnovaya-polyana",
+    "rzd-sergievo",
+    "rzd-strelna",
+    "rzd-mihaylovskaya-dacha",
+    "rzd-novyy-petergof",
+    "rzd-staryy-petergof",
+    "rzd-universitetskaya",
+    "rzd-martyshkino",
+    "rzd-oranienbaum-1"
+   ]
+  },
+  {
+   "id": "krasnoe-selo",
+   "name": "Балтийский вокзал — Красное Село",
+   "stations": [
+    "rzd-baltiyskiy-vokzal",
+    "rzd-bronevaya",
+    "rzd-leninskiy-prospekt",
+    "rzd-dachnoe",
+    "rzd-ulyanka",
+    "rzd-ligovo",
+    "rzd-gorelovo",
+    "rzd-skachki",
+    "rzd-krasnoe-selo"
+   ]
+  },
+  {
+   "id": "pavlovsk",
+   "name": "Витебский вокзал — Павловск",
+   "stations": [
+    "rzd-vitebskiy-vokzal",
+    "rzd-borovaya",
+    "rzd-vozduhoplavatelnyy-park",
+    "rzd-prospekt-slavy",
+    "rzd-kupchino",
+    "rzd-shushary",
+    "rzd-parovoznyy-muzey",
+    "rzd-detskoselskaya",
+    "rzd-tsarskoe-selo",
+    "rzd-pavlovsk"
+   ]
+  }
+ ],
+ "stations": [
+  {
+   "id": "rzd-finlyandskiy-vokzal",
+   "name": "Финляндский вокзал",
+   "lat": 59.958182,
+   "lon": 30.358157,
+   "metro": [
+    "ploschad-lenina"
+   ]
+  },
+  {
+   "id": "rzd-lanskaya",
+   "name": "Ланская",
+   "lat": 59.99496,
+   "lon": 30.327581
+  },
+  {
+   "id": "rzd-novaya-derevnya",
+   "name": "Новая Деревня",
+   "lat": 59.991745,
+   "lon": 30.296834
+  },
+  {
+   "id": "rzd-staraya-derevnya",
+   "name": "Старая Деревня",
+   "lat": 59.988025,
+   "lon": 30.253595,
+   "metro": [
+    "staraya-derevnya"
+   ]
+  },
+  {
+   "id": "rzd-yahtennaya",
+   "name": "Яхтенная",
+   "lat": 59.991824,
+   "lon": 30.220985
+  },
+  {
+   "id": "rzd-novaya-lahta",
+   "name": "Новая Лахта",
+   "lat": 59.989598,
+   "lon": 30.17438
+  },
+  {
+   "id": "rzd-lahta",
+   "name": "Лахта",
+   "lat": 59.994576,
+   "lon": 30.152536
+  },
+  {
+   "id": "rzd-olgino",
+   "name": "Ольгино",
+   "lat": 59.995757,
+   "lon": 30.13043
+  },
+  {
+   "id": "rzd-lisiy-nos",
+   "name": "Лисий Нос",
+   "lat": 60.014429,
+   "lon": 30.012427
+  },
+  {
+   "id": "rzd-gorskaya",
+   "name": "Горская",
+   "lat": 60.039174,
+   "lon": 29.977368
+  },
+  {
+   "id": "rzd-aleksandrovskaya",
+   "name": "Александровская",
+   "lat": 60.050004,
+   "lon": 29.976782
+  },
+  {
+   "id": "rzd-tarhovka",
+   "name": "Тарховка",
+   "lat": 60.062149,
+   "lon": 29.973374
+  },
+  {
+   "id": "rzd-razliv",
+   "name": "Разлив",
+   "lat": 60.078866,
+   "lon": 29.968234
+  },
+  {
+   "id": "rzd-sestroretsk",
+   "name": "Сестрорецк",
+   "lat": 60.093089,
+   "lon": 29.958526
+  },
+  {
+   "id": "rzd-kushelevka",
+   "name": "Кушелевка",
+   "lat": 59.990464,
+   "lon": 30.354767
+  },
+  {
+   "id": "rzd-piskarevka",
+   "name": "Пискарёвка",
+   "lat": 59.988203,
+   "lon": 30.42501
+  },
+  {
+   "id": "rzd-rzhevka",
+   "name": "Ржевка",
+   "lat": 59.980819,
+   "lon": 30.515803
+  },
+  {
+   "id": "rzd-post-kovalevo",
+   "name": "Пост Ковалёво",
+   "lat": 59.980289,
+   "lon": 30.549143
+  },
+  {
+   "id": "rzd-kovalevo",
+   "name": "Ковалёво",
+   "lat": 59.986617,
+   "lon": 30.562586
+  },
+  {
+   "id": "rzd-berngardovka",
+   "name": "Бернгардовка",
+   "lat": 60.00734,
+   "lon": 30.606555
+  },
+  {
+   "id": "rzd-vsevolozhskaya",
+   "name": "Всеволожская",
+   "lat": 60.014438,
+   "lon": 30.648789
+  },
+  {
+   "id": "rzd-melnichnyy-ruchey",
+   "name": "Мельничный Ручей",
+   "lat": 60.018904,
+   "lon": 30.679427
+  },
+  {
+   "id": "rzd-baltiyskiy-vokzal",
+   "name": "Балтийский вокзал",
+   "lat": 59.905817,
+   "lon": 30.298817,
+   "metro": [
+    "baltiyskaya"
+   ]
+  },
+  {
+   "id": "rzd-bronevaya",
+   "name": "Броневая",
+   "lat": 59.876029,
+   "lon": 30.292791
+  },
+  {
+   "id": "rzd-leninskiy-prospekt",
+   "name": "Ленинский проспект",
+   "lat": 59.853174,
+   "lon": 30.288624
+  },
+  {
+   "id": "rzd-dachnoe",
+   "name": "Дачное",
+   "lat": 59.837103,
+   "lon": 30.271368
+  },
+  {
+   "id": "rzd-ulyanka",
+   "name": "Ульянка",
+   "lat": 59.824584,
+   "lon": 30.220509
+  },
+  {
+   "id": "rzd-ligovo",
+   "name": "Лигово",
+   "lat": 59.823271,
+   "lon": 30.180905
+  },
+  {
+   "id": "rzd-sosnovaya-polyana",
+   "name": "Сосновая Поляна",
+   "lat": 59.824734,
+   "lon": 30.146333
+  },
+  {
+   "id": "rzd-sergievo",
+   "name": "Сергиево",
+   "lat": 59.833472,
+   "lon": 30.0906
+  },
+  {
+   "id": "rzd-strelna",
+   "name": "Стрельна",
+   "lat": 59.847314,
+   "lon": 30.031931
+  },
+  {
+   "id": "rzd-mihaylovskaya-dacha",
+   "name": "Михайловская Дача",
+   "lat": 59.853601,
+   "lon": 29.996271
+  },
+  {
+   "id": "rzd-novyy-petergof",
+   "name": "Новый Петергоф",
+   "lat": 59.863707,
+   "lon": 29.928455
+  },
+  {
+   "id": "rzd-staryy-petergof",
+   "name": "Старый Петергоф",
+   "lat": 59.879693,
+   "lon": 29.862322
+  },
+  {
+   "id": "rzd-universitetskaya",
+   "name": "Университетская",
+   "lat": 59.886543,
+   "lon": 29.832621
+  },
+  {
+   "id": "rzd-martyshkino",
+   "name": "Мартышкино",
+   "lat": 59.902815,
+   "lon": 29.806539
+  },
+  {
+   "id": "rzd-oranienbaum-1",
+   "name": "Ораниенбаум-1",
+   "lat": 59.917668,
+   "lon": 29.771675
+  },
+  {
+   "id": "rzd-gorelovo",
+   "name": "Горелово",
+   "lat": 59.779111,
+   "lon": 30.125539
+  },
+  {
+   "id": "rzd-skachki",
+   "name": "Скачки",
+   "lat": 59.751694,
+   "lon": 30.116635
+  },
+  {
+   "id": "rzd-krasnoe-selo",
+   "name": "Красное Село",
+   "lat": 59.731117,
+   "lon": 30.104087
+  },
+  {
+   "id": "rzd-vitebskiy-vokzal",
+   "name": "Витебский вокзал",
+   "lat": 59.918791,
+   "lon": 30.330624,
+   "metro": [
+    "pushkinskaya",
+    "zvenigorodskaya"
+   ]
+  },
+  {
+   "id": "rzd-borovaya",
+   "name": "Боровая",
+   "lat": 59.905789,
+   "lon": 30.338389
+  },
+  {
+   "id": "rzd-vozduhoplavatelnyy-park",
+   "name": "Воздухоплавательный парк",
+   "lat": 59.890776,
+   "lon": 30.345688
+  },
+  {
+   "id": "rzd-prospekt-slavy",
+   "name": "Проспект Славы",
+   "lat": 59.851741,
+   "lon": 30.365571
+  },
+  {
+   "id": "rzd-kupchino",
+   "name": "Купчино",
+   "lat": 59.829756,
+   "lon": 30.376265,
+   "metro": [
+    "kupchino"
+   ]
+  },
+  {
+   "id": "rzd-shushary",
+   "name": "Шушары",
+   "lat": 59.805799,
+   "lon": 30.388469
+  },
+  {
+   "id": "rzd-parovoznyy-muzey",
+   "name": "Паровозный музей",
+   "lat": 59.787654,
+   "lon": 30.397471
+  },
+  {
+   "id": "rzd-detskoselskaya",
+   "name": "Детскосельская",
+   "lat": 59.740732,
+   "lon": 30.420784
+  },
+  {
+   "id": "rzd-tsarskoe-selo",
+   "name": "Царское Село",
+   "lat": 59.723038,
+   "lon": 30.429679
+  },
+  {
+   "id": "rzd-pavlovsk",
+   "name": "Павловск",
+   "lat": 59.693546,
+   "lon": 30.432771
+  },
+  {
+   "id": "rzd-moskovskiy-vokzal",
+   "name": "Московский вокзал",
+   "lat": 59.9296,
+   "lon": 30.3624,
+   "metro": [
+    "ploschad-vosstaniya",
+    "mayakovskaya"
+   ]
+  },
+  {
+   "id": "rzd-ladozhskiy-vokzal",
+   "name": "Ладожский вокзал",
+   "lat": 59.930674,
+   "lon": 30.440438,
+   "metro": [
+    "ladozhskaya"
+   ]
+  },
+  {
+   "id": "rzd-udelnaya",
+   "name": "Удельная",
+   "lat": 60.01754,
+   "lon": 30.313391,
+   "metro": [
+    "udelnaya"
+   ]
+  },
+  {
+   "id": "rzd-devyatkino",
+   "name": "Девяткино",
+   "lat": 60.050525,
+   "lon": 30.442807,
+   "metro": [
+    "devyatkino"
+   ]
+  },
+  {
+   "id": "rzd-obuhovo",
+   "name": "Обухово",
+   "lat": 59.849437,
+   "lon": 30.453192,
+   "metro": [
+    "obuhovo"
+   ]
+  },
+  {
+   "id": "rzd-rybatskoe",
+   "name": "Рыбацкое",
+   "lat": 59.831274,
+   "lon": 30.501156,
+   "metro": [
+    "rybatskoe"
+   ]
+  }
+ ]
+}

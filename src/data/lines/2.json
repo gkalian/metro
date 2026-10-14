@@ -1,0 +1,186 @@
+{
+ "id": "2",
+ "name": "Московско-Петроградская",
+ "color": "#1887D9",
+ "stations": [
+  {
+   "id": "parnas",
+   "name": "Парнас",
+   "lat": 60.06715,
+   "lon": 30.334128,
+   "status": "open",
+   "opened": 2006,
+   "note": "Открыта 22 декабря 2006 года",
+   "toNext": 180
+  },
+  {
+   "id": "prospekt-prosvescheniya",
+   "name": "Проспект Просвещения",
+   "lat": 60.051416,
+   "lon": 30.332632,
+   "status": "open",
+   "opened": 1988,
+   "note": "Открыта 19 августа 1988 года",
+   "toNext": 120
+  },
+  {
+   "id": "ozerki",
+   "name": "Озерки",
+   "lat": 60.037141,
+   "lon": 30.321529,
+   "status": "open",
+   "opened": 1988,
+   "note": "Открыта 19 августа 1988 года",
+   "toNext": 180
+  },
+  {
+   "id": "udelnaya",
+   "name": "Удельная",
+   "lat": 60.016707,
+   "lon": 30.315421,
+   "status": "open",
+   "opened": 1982,
+   "note": "Открыта 4 ноября 1982 года",
+   "toNext": 180
+  },
+  {
+   "id": "pionerskaya",
+   "name": "Пионерская",
+   "lat": 60.002576,
+   "lon": 30.296791,
+   "status": "open",
+   "opened": 1982,
+   "note": "Открыта 4 ноября 1982 года",
+   "toNext": 180
+  },
+  {
+   "id": "chyornaya-rechka",
+   "name": "Чёрная речка",
+   "lat": 59.985574,
+   "lon": 30.300792,
+   "status": "open",
+   "opened": 1982,
+   "note": "Открыта 4 ноября 1982 года",
+   "toNext": 240
+  },
+  {
+   "id": "petrogradskaya",
+   "name": "Петроградская",
+   "lat": 59.966465,
+   "lon": 30.311432,
+   "status": "open",
+   "opened": 1963,
+   "note": "Открыта 1 июля 1963 года",
+   "toNext": 120
+  },
+  {
+   "id": "gorkovskaya",
+   "name": "Горьковская",
+   "lat": 59.956323,
+   "lon": 30.318724,
+   "status": "open",
+   "opened": 1963,
+   "note": "Открыта 1 июля 1963 года",
+   "toNext": 240
+  },
+  {
+   "id": "nevskiy-prospekt",
+   "name": "Невский проспект",
+   "lat": 59.935601,
+   "lon": 30.327134,
+   "status": "open",
+   "opened": 1963,
+   "note": "Открыта 1 июля 1963 года",
+   "toNext": 120
+  },
+  {
+   "id": "sennaya-ploschad",
+   "name": "Сенная площадь",
+   "lat": 59.92709,
+   "lon": 30.320378,
+   "status": "open",
+   "opened": 1963,
+   "note": "Открыта 1 июля 1963 года",
+   "toNext": 180
+  },
+  {
+   "id": "tehnologicheskiy-institut-2",
+   "name": "Технологический институт",
+   "lat": 59.916622,
+   "lon": 30.318505,
+   "status": "open",
+   "opened": 1961,
+   "note": "Открыта 11 апреля 1961 года",
+   "toNext": 120
+  },
+  {
+   "id": "frunzenskaya",
+   "name": "Фрунзенская",
+   "lat": 59.906155,
+   "lon": 30.317509,
+   "status": "open",
+   "opened": 1961,
+   "note": "Открыта 29 апреля 1961 года",
+   "toNext": 120
+  },
+  {
+   "id": "moskovskie-vorota",
+   "name": "Московские Ворота",
+   "lat": 59.891924,
+   "lon": 30.317751,
+   "status": "open",
+   "opened": 1961,
+   "note": "Открыта 29 апреля 1961 года",
+   "toNext": 120
+  },
+  {
+   "id": "elektrosila",
+   "name": "Электросила",
+   "lat": 59.879425,
+   "lon": 30.318658,
+   "status": "open",
+   "opened": 1961,
+   "note": "Открыта 29 апреля 1961 года",
+   "toNext": 120
+  },
+  {
+   "id": "park-pobedy",
+   "name": "Парк Победы",
+   "lat": 59.86659,
+   "lon": 30.321712,
+   "status": "open",
+   "opened": 1961,
+   "note": "Открыта 29 апреля 1961 года",
+   "toNext": 180
+  },
+  {
+   "id": "moskovskaya",
+   "name": "Московская",
+   "lat": 59.852192,
+   "lon": 30.322206,
+   "status": "open",
+   "opened": 1969,
+   "note": "Открыта 25 декабря 1969 года",
+   "toNext": 240
+  },
+  {
+   "id": "zvyozdnaya",
+   "name": "Звёздная",
+   "lat": 59.833228,
+   "lon": 30.349616,
+   "status": "open",
+   "opened": 1969,
+   "note": "Открыта 25 декабря 1969 года",
+   "toNext": 180
+  },
+  {
+   "id": "kupchino",
+   "name": "Купчино",
+   "lat": 59.829887,
+   "lon": 30.375399,
+   "status": "open",
+   "opened": 1969,
+   "note": "Открыта 25 декабря 1969 года"
+  }
+ ]
+}

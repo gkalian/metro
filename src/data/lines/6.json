@@ -1,0 +1,192 @@
+{
+ "id": "6",
+ "name": "Красносельско-Калининская",
+ "color": "#99682F",
+ "stations": [
+  {
+   "id": "ruchi",
+   "name": "Ручьи",
+   "lat": 60.00044,
+   "lon": 30.44449,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 270,
+   "toNextEstimated": true
+  },
+  {
+   "id": "piskaryovka",
+   "name": "Пискарёвка",
+   "lat": 59.98223,
+   "lon": 30.42343,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "bestuzhevskaya",
+   "name": "Бестужевская",
+   "lat": 59.96988,
+   "lon": 30.42754,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "polyustrovskiy-prospekt-1",
+   "name": "Полюстровский проспект",
+   "lat": 59.95989,
+   "lon": 30.40972,
+   "status": "project",
+   "opening": 2040,
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "toNext": 330,
+   "toNextEstimated": true
+  },
+  {
+   "id": "suvorovskaya",
+   "name": "Суворовская",
+   "lat": 59.93769,
+   "lon": 30.3744,
+   "status": "project",
+   "note": "Ведём проектирование",
+   "toNext": 120,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "znamenskaya",
+   "name": "Знаменская",
+   "lat": 59.93202,
+   "lon": 30.36718,
+   "status": "project",
+   "note": "Ведём проектирование",
+   "toNext": 180,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "ligovskiy-prospekt-2",
+   "name": "Лиговский проспект",
+   "lat": 59.920728,
+   "lon": 30.357413,
+   "status": "project",
+   "note": "Ведём проектирование",
+   "toNext": 120,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "karetnaya",
+   "name": "Каретная",
+   "lat": 59.91355,
+   "lon": 30.35638,
+   "status": "construct",
+   "note": "Горнопроходческие работы",
+   "toNext": 150,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "borovaya",
+   "name": "Боровая",
+   "lat": 59.9049,
+   "lon": 30.34328,
+   "status": "construct",
+   "note": "Горнопроходческие работы",
+   "toNext": 240,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "zastavskaya",
+   "name": "Заставская",
+   "lat": 59.89092,
+   "lon": 30.31363,
+   "status": "construct",
+   "note": "Горнопроходческие работы",
+   "toNext": 210,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "bronevaya",
+   "name": "Броневая",
+   "lat": 59.87696,
+   "lon": 30.29757,
+   "status": "construct",
+   "note": "Горнопроходческие работы",
+   "toNext": 210,
+   "toNextEstimated": true,
+   "opening": 2030
+  },
+  {
+   "id": "putilovskaya",
+   "name": "Путиловская",
+   "lat": 59.87886,
+   "lon": 30.26484,
+   "status": "open",
+   "opened": 2025,
+   "note": "Открыта 26 декабря 2025 года",
+   "toNext": 300,
+   "toNextEstimated": true
+  },
+  {
+   "id": "yugo-zapadnaya",
+   "name": "Юго-Западная",
+   "lat": 59.8592,
+   "lon": 30.23078,
+   "status": "open",
+   "opened": 2025,
+   "note": "Открыта 26 декабря 2025 года",
+   "toNext": 180,
+   "toNextEstimated": true
+  },
+  {
+   "id": "brestskaya",
+   "name": "Брестская",
+   "lat": 59.85987,
+   "lon": 30.20524,
+   "status": "project",
+   "note": "Трассировка со схемы; от этого варианта город ранее отказался из-за геологии у «Петергофского шоссе», новый пока не опубликован",
+   "toNext": 180,
+   "toNextEstimated": true,
+   "opening": 2037
+  },
+  {
+   "id": "ulitsa-doblesti",
+   "name": "Улица Доблести",
+   "lat": 59.8615,
+   "lon": 30.18037,
+   "status": "project",
+   "note": "Трассировка со схемы; от этого варианта город ранее отказался из-за геологии у «Петергофского шоссе», новый пока не опубликован",
+   "toNext": 270,
+   "toNextEstimated": true,
+   "opening": 2037
+  },
+  {
+   "id": "petergofskoe-shosse",
+   "name": "Петергофское шоссе",
+   "lat": 59.846686,
+   "lon": 30.146576,
+   "status": "project",
+   "note": "Трассировка со схемы; от этого варианта город ранее отказался из-за геологии у «Петергофского шоссе», новый пока не опубликован",
+   "toNext": 270,
+   "toNextEstimated": true,
+   "opening": 2037
+  },
+  {
+   "id": "sosnovaya-polyana",
+   "name": "Сосновая Поляна",
+   "lat": 59.82526,
+   "lon": 30.145,
+   "status": "project",
+   "note": "Трассировка со схемы; от этого варианта город ранее отказался из-за геологии у «Петергофского шоссе», новый пока не опубликован",
+   "opening": 2037
+  }
+ ]
+}

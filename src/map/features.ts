@@ -1,0 +1,197 @@
+import type { Feature, LineString, Point as GeoPoint } from 'geojson';
+import { smoothLine, type Point } from '../geo/geometry';
+import {
+  activeLinks,
+  inService,
+  isOpen,
+  isPast,
+  lineAt,
+  lineRuns,
+  sectionLine,
+  type Horizon,
+  type Network,
+  type Station,
+  type Status,
+} from '../domain/network';
+import type { Railway } from '../domain/railway';
+import type { Route } from '../domain/routing';
+
+/** What the map shows; the features below are built from it. */
+export interface MapState {
+  showPlanned: boolean;
+  showRail: boolean;
+  horizon: Horizon;
+  from: string | null;
+  to: string | null;
+  route: Route | null;
+}
+
+/** Order-free key of a station pair. */
+export const pairKey = (a: string, b: string): string => (a < b ? `${a}|${b}` : `${b}|${a}`);
+
+/** Smoothed track between neighbouring stations, by station pair. */
+export function trackCurves(net: Network): Map<string, Point[]> {
+  const curves = new Map<string, Point[]>();
+  for (const run of net.lines.flatMap((line) => lineRuns(net, line))) {
+    const curve = smoothLine(run.map(({ station: s }) => [s.lon, s.lat]));
+    run.slice(0, -1).forEach(({ station: s }, i) => curves.set(pairKey(s.id, run[i + 1]!.station.id), curve[i]!));
+  }
+  return curves;
+}
+
+/** Smoothed rail track by station pair; a section shared by two routes is kept once. */
+export function railCurves(rail: Railway): Map<string, Point[]> {
+  const curves = new Map<string, Point[]>();
+  for (const route of rail.routes) {
+    const stops = route.stations.map((id) => rail.stations.get(id)!);
+    const curve = smoothLine(stops.map((s) => [s.lon, s.lat]));
+    stops.slice(0, -1).forEach((s, i) => {
+      const key = pairKey(s.id, stops[i + 1]!.id);
+      if (!curves.has(key)) curves.set(key, curve[i]!);
+    });
+  }
+  return curves;
+}
+
+/**
+ * Colour of the way between two consecutive stations of a route: their line as it was then,
+ * or null for a walk between lines.
+ */
+export function wayColor(net: Network, a: string, b: string, horizon: Horizon): string | null {
+  // historic track may join stations that belong to different lines today
+  const link = net.links.find((l) => pairKey(l.a, l.b) === pairKey(a, b));
+  if (link) return net.lineById.get(link.lineId)!.color;
+  const la = lineAt(net, net.stations.get(a)!, horizon);
+  return la === lineAt(net, net.stations.get(b)!, horizon) ? la.color : null;
+}
+
+/**
+ * Metro features keyed by `properties.key` for the fader. A key changes with the look of a
+ * feature (status, line), so the old look cross-fades into the new one.
+ */
+export function metroFeatures(net: Network, curves: Map<string, Point[]>, state: MapState) {
+  const { showPlanned, horizon, from, to, route } = state;
+  const routeStations = new Set(route?.path);
+  const routePairs = new Set<string>();
+  route?.path.slice(0, -1).forEach((id, i) => routePairs.add(pairKey(id, route.path[i + 1]!)));
+  const routeStops = new Set<string>(route?.legs.flatMap((l) => (l.kind === 'ride' ? l.stations : [l.from, l.to])));
+  const hasRoute = !!route && route.path.length > 1;
+  // with a route every track is muted, so the route line grows visibly over its own
+  const dimTrack = hasRoute;
+  // looking back, what came later is left out rather than drawn as planned
+  const showLater = showPlanned && !isPast(horizon);
+
+  const segments: Feature<LineString>[] = [];
+  for (const line of net.lines) {
+    for (const run of lineRuns(net, line)) {
+      run.slice(0, -1).forEach(({ station: s }, i) => {
+        const next = run[i + 1]!.station;
+        const status = segmentStatus(s, next, horizon);
+        if (!showLater && status !== 'open') return;
+        const key = pairKey(s.id, next.id);
+        const color = sectionLine(net, line, s, next, horizon).color;
+        segments.push({
+          type: 'Feature',
+          geometry: { type: 'LineString', coordinates: curves.get(key)! },
+          properties: { key: `${key}|${status}|${color}`, color, status, dim: dimTrack },
+        });
+      });
+    }
+  }
+  for (const link of activeLinks(net, horizon)) {
+    const a = net.stations.get(link.a)!;
+    const b = net.stations.get(link.b)!;
+    segments.push({
+      type: 'Feature',
+      geometry: { type: 'LineString', coordinates: [[a.lon, a.lat], [b.lon, b.lat]] },
+      properties: {
+        key: `link|${pairKey(a.id, b.id)}`,
+        color: net.lineById.get(link.lineId)!.color,
+        status: 'open',
+        dim: dimTrack,
+      },
+    });
+  }
+
+  const stations: Feature<GeoPoint>[] = [];
+  for (const s of net.stations.values()) {
+    const open = isOpen(s, horizon);
+    if (!showLater && !open) continue;
+    const role = s.id === from ? 'from' : s.id === to ? 'to' : '';
+    const color = lineAt(net, s, horizon).color;
+    stations.push({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [s.lon, s.lat] },
+      properties: {
+        key: `${s.id}|${open}|${color}`,
+        id: s.id,
+        name: s.name,
+        color,
+        planned: !open,
+        role,
+        dim: hasRoute && !routeStations.has(s.id),
+        // labels: endpoints first, then route stops, then open stations
+        rank: role ? 0 : routeStops.has(s.id) ? 1 : open ? 2 : 3,
+      },
+    });
+  }
+
+  const transfers: Feature<LineString>[] = [];
+  for (const t of net.transfers) {
+    const a = net.stations.get(t.a)!;
+    const b = net.stations.get(t.b)!;
+    const planned = !(isOpen(a, horizon) && isOpen(b, horizon));
+    if (planned && !showLater) continue;
+    const key = pairKey(a.id, b.id);
+    transfers.push({
+      type: 'Feature',
+      geometry: { type: 'LineString', coordinates: [[a.lon, a.lat], [b.lon, b.lat]] },
+      properties: { key: `${key}|${planned}`, planned, dim: hasRoute && !routePairs.has(key) },
+    });
+  }
+
+  return { segments, transfers, stations };
+}
+
+/** Suburban rail features, keyed like the metro ones. */
+export function railFeatures(net: Network, rail: Railway, curves: Map<string, Point[]>, state: MapState) {
+  const { showRail, route } = state;
+  if (!showRail) return { lines: [], links: [], stations: [] };
+  const dim = !!route && route.path.length > 1;
+
+  const lines: Feature<LineString>[] = [...curves].map(([key, coordinates]) => ({
+    type: 'Feature',
+    geometry: { type: 'LineString', coordinates },
+    properties: { key, dim },
+  }));
+  const links: Feature<LineString>[] = [];
+  const stations: Feature<GeoPoint>[] = [];
+  for (const s of rail.stations.values()) {
+    const metro = (s.metro ?? []).map((id) => net.stations.get(id)!);
+    for (const m of metro) {
+      links.push({
+        type: 'Feature',
+        geometry: { type: 'LineString', coordinates: [[s.lon, s.lat], [m.lon, m.lat]] },
+        properties: { key: `${s.id}|${m.id}`, dim },
+      });
+    }
+    stations.push({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [s.lon, s.lat] },
+      properties: {
+        key: s.id,
+        id: s.id,
+        // the metro label beside it already says the same
+        name: metro.some((m) => m.name === s.name) ? '' : s.name,
+        terminal: rail.routes.some((r) => r.stations[0] === s.id || r.stations.at(-1) === s.id),
+        dim,
+      },
+    });
+  }
+  return { lines, links, stations };
+}
+
+function segmentStatus(a: Station, b: Station, horizon: Horizon): Status {
+  if (inService(a, horizon) && inService(b, horizon)) return 'open';
+  return a.status === 'project' || b.status === 'project' ? 'project' : 'construct';
+}

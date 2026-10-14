@@ -1,0 +1,112 @@
+[
+ {
+  "a": "tehnologicheskiy-institut-1",
+  "b": "tehnologicheskiy-institut-2",
+  "time": 60
+ },
+ {
+  "a": "ploschad-vosstaniya",
+  "b": "mayakovskaya",
+  "time": 180
+ },
+ {
+  "a": "vladimirskaya",
+  "b": "dostoevskaya",
+  "time": 180
+ },
+ {
+  "a": "pushkinskaya",
+  "b": "zvenigorodskaya",
+  "time": 180
+ },
+ {
+  "a": "nevskiy-prospekt",
+  "b": "gostinyy-dvor",
+  "time": 180
+ },
+ {
+  "a": "sennaya-ploschad",
+  "b": "sadovaya",
+  "time": 180
+ },
+ {
+  "a": "sennaya-ploschad",
+  "b": "spasskaya",
+  "time": 180
+ },
+ {
+  "a": "sadovaya",
+  "b": "spasskaya",
+  "time": 180
+ },
+ {
+  "a": "ploschad-aleksandra-nevskogo-1",
+  "b": "ploschad-aleksandra-nevskogo-2",
+  "time": 180
+ },
+ {
+  "a": "kirovskiy-zavod",
+  "b": "putilovskaya",
+  "time": 180
+ },
+ {
+  "a": "kamenka",
+  "b": "shuvalovskiy-prospekt",
+  "time": 180
+ },
+ {
+  "a": "karetnaya",
+  "b": "obvodnyy-kanal",
+  "time": 180
+ },
+ {
+  "a": "zastavskaya",
+  "b": "moskovskie-vorota",
+  "time": 180
+ },
+ {
+  "a": "ligovskiy-prospekt-2",
+  "b": "ligovskiy-prospekt",
+  "time": 180
+ },
+ {
+  "a": "znamenskaya",
+  "b": "ploschad-vosstaniya",
+  "time": 180
+ },
+ {
+  "a": "znamenskaya",
+  "b": "mayakovskaya",
+  "time": 180
+ },
+ {
+  "a": "bolshoy-prospekt-2",
+  "b": "gornyy-institut",
+  "time": 180
+ },
+ {
+  "a": "vasileostrovskaya-2",
+  "b": "vasileostrovskaya",
+  "time": 180
+ },
+ {
+  "a": "sportivnaya-2",
+  "b": "sportivnaya",
+  "time": 180
+ },
+ {
+  "a": "petrogradskaya-2",
+  "b": "petrogradskaya",
+  "time": 180
+ },
+ {
+  "a": "lesnaya-2",
+  "b": "lesnaya",
+  "time": 180
+ },
+ {
+  "a": "polyustrovskiy-prospekt-2",
+  "b": "polyustrovskiy-prospekt-1",
+  "time": 180
+ }
+]
