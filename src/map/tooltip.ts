@@ -1,4 +1,4 @@
-import { isOpen, lineAt, STATUS_LABEL, type Horizon, type Network, type Station } from '../domain/network';
+import { isOpen, lineAt, STATUS_LABEL, type Exit, type Horizon, type Network, type Station } from '../domain/network';
 import { routesAt, type Railway, type RailStation } from '../domain/railway';
 import { h } from '../ui/dom';
 
@@ -18,6 +18,19 @@ export function stationTooltip(net: Network, s: Station, horizon: Horizon): HTML
       !isOpen(s) && (s.opening ? `Открытие по плану — ${s.opening}.` : 'Срок открытия не назван.'),
       s.note,
     ]),
+  );
+}
+
+/** Station, its line within the horizon and where a far exit comes up. */
+export function exitTooltip(net: Network, e: Exit, horizon: Horizon): HTMLElement {
+  const s = net.stations.get(e.station)!;
+  const line = lineAt(net, s, horizon);
+  return h(
+    'div',
+    { className: 'tip' },
+    h('strong', { textContent: s.name }),
+    h('span', { className: 'tip__line', textContent: `${line.id} · ${line.name}`, css: { '--line': line.color } }),
+    ...notes([`${e.name}: ${e.address}.`, e.note]),
   );
 }
 

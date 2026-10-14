@@ -36,6 +36,17 @@ describe('metroFeatures', () => {
     expect(station({ ...base, showPlanned: false }, 'kamenka')).toBeUndefined();
   });
 
+  it('draws the Vasilyevsky exit of «Спортивная» as the station joined by a transfer from 2015 on', () => {
+    const exit = (state: MapState) =>
+      metroFeatures(net, curves, state).stations.find((f) => f.properties!.exit === 'sportivnaya-vo');
+    const passage = (state: MapState) =>
+      metroFeatures(net, curves, state).transfers.find((f) => f.properties!.key === 'exit|sportivnaya-vo');
+    expect(exit({ ...base, horizon: 2009 })).toBeUndefined();
+    expect(passage({ ...base, horizon: 2009 })).toBeUndefined();
+    expect(exit(base)!.properties).toMatchObject({ id: 'sportivnaya', name: 'Спортивная', color: color('5') });
+    expect(passage(base)).toBeDefined();
+  });
+
   it('mutes everything but the route', () => {
     const route = findRoute(buildGraph(net, null), 'devyatkino', 'akademicheskaya')!;
     const state = { ...base, from: 'devyatkino', to: 'akademicheskaya', route };

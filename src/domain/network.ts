@@ -5,6 +5,7 @@ import line4 from '../data/lines/4.json';
 import line5 from '../data/lines/5.json';
 import line6 from '../data/lines/6.json';
 import lineK from '../data/lines/k.json';
+import exits from '../data/exits.json';
 import history from '../data/history.json';
 import transfers from '../data/transfers.json';
 
@@ -54,6 +55,22 @@ export interface Transfer {
   time: number;
 }
 
+/**
+ * A vestibule far from its station, joined to it by a passage, e.g. «Спортивная» on
+ * Vasilyevsky Island. Shown on the map only, not routed.
+ */
+export interface Exit {
+  id: string;
+  station: string;
+  name: string;
+  address: string;
+  lat: number;
+  lon: number;
+  /** Year the exit opened to passengers, when later than the station. */
+  opened?: number;
+  note?: string;
+}
+
 /** Track that carried trains in the past but is not part of any line today. */
 export interface HistoricLink {
   a: string;
@@ -78,6 +95,7 @@ export interface FormerLine {
 export interface Network {
   lines: Line[];
   transfers: Transfer[];
+  exits: Exit[];
   links: HistoricLink[];
   formerLines: FormerLine[];
   stations: Map<string, Station>;
@@ -140,6 +158,7 @@ export function loadNetwork(): Network {
   return {
     lines,
     transfers: transfers as Transfer[],
+    exits: exits as Exit[],
     links: history.links as HistoricLink[],
     formerLines,
     stations,
@@ -180,6 +199,12 @@ export function isOpen(s: Station, horizon: Horizon = null): boolean {
   if (s.status === 'open' && !s.passThrough) return true;
   if (horizon === null) return false;
   return (s.opening ?? Infinity) <= horizon;
+}
+
+/** Exit takes passengers within the horizon: its station is open and so is the exit itself. */
+export function exitOpen(net: Network, e: Exit, horizon: Horizon = null): boolean {
+  if (!isOpen(net.stations.get(e.station)!, horizon)) return false;
+  return !isPast(horizon) || (e.opened ?? 0) <= horizon;
 }
 
 /** Trains run through the station within the horizon. */

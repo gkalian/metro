@@ -2,6 +2,7 @@ import type { Feature, LineString, Point as GeoPoint } from 'geojson';
 import { smoothLine, type Point } from '../geo/geometry';
 import {
   activeLinks,
+  exitOpen,
   inService,
   isOpen,
   isPast,
@@ -147,6 +148,36 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
       type: 'Feature',
       geometry: { type: 'LineString', coordinates: [[a.lon, a.lat], [b.lon, b.lat]] },
       properties: { key: `${key}|${planned}`, planned, dim: hasRoute && !routePairs.has(key) },
+    });
+  }
+
+  // A far exit, once it takes passengers, looks like its station joined to it by a transfer;
+  // it carries the station's id, so it answers clicks and hovers as the station does.
+  for (const e of net.exits) {
+    if (!exitOpen(net, e, horizon)) continue;
+    const s = net.stations.get(e.station)!;
+    const role = s.id === from ? 'from' : s.id === to ? 'to' : '';
+    const color = lineAt(net, s, horizon).color;
+    const dim = hasRoute && !routeStations.has(s.id);
+    stations.push({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [e.lon, e.lat] },
+      properties: {
+        key: `${e.id}|${color}`,
+        id: s.id,
+        exit: e.id,
+        name: s.name,
+        color,
+        planned: false,
+        role,
+        dim,
+        rank: role ? 0 : routeStops.has(s.id) ? 1 : 2,
+      },
+    });
+    transfers.push({
+      type: 'Feature',
+      geometry: { type: 'LineString', coordinates: [[s.lon, s.lat], [e.lon, e.lat]] },
+      properties: { key: `exit|${e.id}`, planned: false, dim },
     });
   }
 

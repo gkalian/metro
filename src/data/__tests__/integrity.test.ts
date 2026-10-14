@@ -65,6 +65,16 @@ describe('links between files', () => {
     }
   });
 
+  it('exits belong to known open stations and lie in the city', () => {
+    const ids = net.exits.map((e) => e.id);
+    expect(ids.filter((id, i) => ids.indexOf(id) !== i)).toEqual([]);
+    for (const e of net.exits) {
+      expect(metro(e.station), e.id).toBe(true);
+      expect(inArea(e), e.id).toBe(true);
+      expect(e.opened ?? Infinity, e.id).toBeGreaterThanOrEqual(net.stations.get(e.station)!.opened ?? Infinity);
+    }
+  });
+
   it('rail routes and metro walks name known stations', () => {
     expect(rail.stations.size).toBe(new Set([...rail.stations.values()].map((s) => s.id)).size);
     for (const r of rail.routes) expect(r.stations.filter((id) => !rail.stations.has(id)), r.id).toEqual([]);

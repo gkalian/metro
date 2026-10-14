@@ -11,7 +11,7 @@ import { loadBasemap, localizeBasemap, type Theme } from './basemap';
 import { Fader } from './fade';
 import { metroFeatures, pairKey, railCurves, railFeatures, trackCurves, wayColor, type MapState } from './features';
 import { addNetworkLayers, EMPTY, FADING, NO_GRADIENT, type FadingSource } from './layers';
-import { railTooltip, stationTooltip } from './tooltip';
+import { exitTooltip, railTooltip, stationTooltip } from './tooltip';
 import { buildTrace, CLEAR, headGradient, traceGradient, type Trace } from './trace';
 
 export type { MapState } from './features';
@@ -201,12 +201,15 @@ export class MapView {
       if (id) this.onStationClick(id);
     });
     map.on('mousemove', 'stations-hit', (e) => {
-      const id = e.features?.[0]?.properties?.id as string | undefined;
-      const s = id ? this.net.stations.get(id) : undefined;
+      const props = e.features?.[0]?.properties;
+      const s = props?.id ? this.net.stations.get(props.id as string) : undefined;
       if (!s) return;
       map.getCanvas().style.cursor = 'pointer';
+      const exit = props?.exit ? this.net.exits.find((x) => x.id === props.exit) : undefined;
       // the line in the tooltip depends on the year, so the year is part of the key
-      show(`${s.id}@${this.state.horizon}`, [s.lon, s.lat], () => stationTooltip(this.net, s, this.state.horizon));
+      const key = `${exit?.id ?? s.id}@${this.state.horizon}`;
+      if (exit) show(key, [exit.lon, exit.lat], () => exitTooltip(this.net, exit, this.state.horizon));
+      else show(key, [s.lon, s.lat], () => stationTooltip(this.net, s, this.state.horizon));
     });
     map.on('mouseleave', 'stations-hit', () => {
       map.getCanvas().style.cursor = '';
