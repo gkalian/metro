@@ -1,0 +1,24 @@
+/* Colours and shadows for both themes; everything else refers to these. */
+:root {
+  --bg: rgba(255, 255, 255, 0.92);
+  --bg-solid: #ffffff;
+  --fg: #1b1e24;
+  --muted: #68707d;
+  --border: rgba(20, 24, 32, 0.12);
+  --field: rgba(20, 24, 32, 0.05);
+  --hover: rgba(20, 24, 32, 0.07);
+  --shadow: 0 10px 40px rgba(15, 20, 30, 0.18);
+  --rail: #4a505a;
+}
+
+:root[data-theme='dark'] {
+  --bg: rgba(24, 27, 33, 0.92);
+  --bg-solid: #181b21;
+  --fg: #f1f3f6;
+  --muted: #9aa3b2;
+  --border: rgba(255, 255, 255, 0.12);
+  --field: rgba(255, 255, 255, 0.07);
+  --hover: rgba(255, 255, 255, 0.09);
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --rail: #aeb5c1;
+}

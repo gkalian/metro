@@ -1,0 +1,42 @@
+/* MapLibre popups restyled as station tooltips. */
+.maplibregl-popup {
+  pointer-events: none;
+}
+
+.maplibregl-popup-content {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--bg-solid);
+  color: var(--fg);
+  box-shadow: var(--shadow);
+  font: inherit;
+  font-size: 13px;
+}
+
+.maplibregl-popup-tip {
+  display: none;
+}
+
+.tip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 240px;
+}
+
+.tip strong {
+  font-size: 14px;
+}
+
+.tip__line {
+  color: var(--line);
+  font-weight: 600;
+}
+
+.tip__line--rail {
+  --line: var(--muted);
+}
+
+.tip__note {
+  color: var(--muted);
+}

@@ -1,0 +1,99 @@
+/* The side panel and the tab that folds it away; on phones it is a bottom sheet. */
+.panel {
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  left: 16px;
+  width: 415px;
+  max-height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  overflow-y: auto;
+  background: var(--bg);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  line-height: 1.4;
+  transition: transform 0.25s ease, visibility 0.25s;
+}
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* tab on the panel's right edge; it stays at the screen edge when the panel is folded away */
+.sidebar-toggle {
+  position: absolute;
+  z-index: 3;
+  top: 34px;
+  left: 430px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-left: 0;
+  border-radius: 0 10px 10px 0;
+  background: var(--bg);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: 6px 4px 16px rgba(15, 20, 30, 0.12);
+  color: var(--muted);
+  cursor: pointer;
+  transition: left 0.25s ease;
+}
+
+.sidebar-toggle:hover {
+  color: var(--fg);
+}
+
+.sidebar-toggle__chevron {
+  width: 8px;
+  height: 8px;
+  margin-left: 3px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+:root[data-sidebar='collapsed'] .panel {
+  transform: translateX(calc(-100% - 20px));
+  visibility: hidden;
+}
+
+:root[data-sidebar='collapsed'] .sidebar-toggle {
+  left: 0;
+}
+
+:root[data-sidebar='collapsed'] .sidebar-toggle__chevron {
+  margin: 0 3px 0 0;
+  transform: rotate(-135deg);
+}
+
+@media (max-width: 720px) {
+  .panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 46%;
+    border-radius: 18px 18px 0 0;
+    border-width: 1px 0 0;
+  }
+
+  .sidebar-toggle {
+    display: none;
+  }
+
+  /* the bottom sheet does not fold */
+  :root[data-sidebar='collapsed'] .panel {
+    transform: none;
+    visibility: visible;
+  }
+}

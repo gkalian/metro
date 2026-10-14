@@ -1,0 +1,60 @@
+/* A panel section whose heading button folds its body: «Хронология», «Условные обозначения». */
+.fold {
+  border-top: 1px solid var(--border);
+}
+
+.fold__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: calc(100% + 16px);
+  margin: 4px -8px 0;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fold__toggle:hover {
+  background: var(--hover);
+  color: var(--fg);
+}
+
+/* what the section is set to, e.g. «: к концу 1970-х», in ordinary case */
+.fold__value {
+  color: var(--fg);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.fold__chevron {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(2px) rotate(-135deg);
+  transition: transform 0.15s;
+}
+
+.fold__toggle[aria-expanded='false'] .fold__chevron {
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.fold__body {
+  padding-top: 6px;
+}
+
+/* bodies set their own display, which would otherwise beat [hidden] */
+.fold__body[hidden] {
+  display: none;
+}

@@ -1,0 +1,12 @@
+/* Tokens come first; the rest is one file per part of the page, in the panel's top-to-bottom order. */
+@import './tokens.css';
+@import './base.css';
+@import './panel.css';
+@import './pickers.css';
+@import './result.css';
+@import './options.css';
+@import './fold.css';
+@import './chronology.css';
+@import './legend.css';
+@import './footer.css';
+@import './map.css';

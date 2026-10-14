@@ -1,0 +1,67 @@
+/* The year slider with a label under each stop. */
+.chronology input[type='range'] {
+  display: block;
+  width: 100%;
+  margin: 2px 0 0;
+  accent-color: var(--fg);
+}
+
+/* each label sits under its thumb position: half a thumb in from either end */
+.chronology__ticks {
+  position: relative;
+  height: 30px;
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--muted);
+}
+
+/* labels alternate between two rows so neighbours don't collide; a short mark points up to the thumb stop */
+.chronology__ticks span {
+  position: absolute;
+  top: 5px;
+  left: calc(8px + (100% - 16px) * var(--at));
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.chronology__ticks span:nth-child(even) {
+  top: 18px;
+}
+
+.chronology__ticks span::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 1px;
+  height: 3px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.chronology__ticks span:nth-child(even)::before {
+  height: 16px;
+}
+
+.chronology__ticks span:first-child {
+  transform: translateX(-8px);
+}
+
+.chronology__ticks span:first-child::before {
+  left: 8px;
+}
+
+.chronology__ticks span:last-child {
+  transform: translateX(calc(-100% + 8px));
+}
+
+.chronology__ticks span:last-child::before {
+  left: auto;
+  right: 8px;
+}
+
+.chronology__ticks .is-now {
+  color: var(--fg);
+  font-weight: 600;
+}

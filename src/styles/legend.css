@@ -1,0 +1,45 @@
+/* Lines and map symbols; the swatches copy how the map draws them. */
+.legend {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-inline: 0;
+  list-style: none;
+  font-size: 13px;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend__rail {
+  margin-top: 4px;
+}
+
+/* the map's railway: dark line with a dashed light core */
+.rail-swatch {
+  flex: none;
+  width: 22px;
+  height: 6px;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, var(--bg-solid) 0 4px, transparent 4px 8px) center / 100% 2px no-repeat,
+    var(--rail);
+}
+
+/* the map's walking link: a row of round dots */
+.walk-swatch {
+  flex: none;
+  width: 22px;
+  height: 4px;
+  background: radial-gradient(circle, var(--rail) 1.6px, transparent 2px) left center / 6px 4px repeat-x;
+}
+
+/* the bottom sheet is short on room */
+@media (max-width: 720px) {
+  .fold--legend {
+    display: none;
+  }
+}

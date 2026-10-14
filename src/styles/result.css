@@ -1,0 +1,78 @@
+/* The route found: total time, then a card per ride and a line per transfer. */
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary__time {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.summary__meta {
+  color: var(--muted);
+}
+
+.legs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leg {
+  padding: 8px 10px 8px 14px;
+  border-left: 5px solid var(--line);
+  border-radius: 4px 10px 10px 4px;
+  background: var(--field);
+}
+
+.leg--transfer {
+  border-left: 5px dotted var(--muted);
+  background: transparent;
+  color: var(--muted);
+  padding-block: 2px;
+}
+
+.leg__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.leg__line {
+  flex: 1;
+}
+
+.leg__time {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.leg__stop {
+  font-weight: 600;
+}
+
+.leg details {
+  margin: 2px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.leg summary {
+  cursor: pointer;
+}
+
+.leg details ul {
+  margin: 4px 0;
+  padding-left: 18px;
+  color: var(--fg);
+}
