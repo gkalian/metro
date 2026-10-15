@@ -14,6 +14,7 @@ export type Status = 'open' | 'construct' | 'project';
 export interface Station {
   id: string;
   name: string;
+  nameEn?: string;
   lat: number;
   lon: number;
   status: Status;
@@ -44,6 +45,7 @@ export interface Branch {
 export interface Line {
   id: string;
   name: string;
+  nameEn?: string;
   color: string;
   stations: Station[];
   branches: Branch[];

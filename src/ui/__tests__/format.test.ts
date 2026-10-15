@@ -1,5 +1,8 @@
-import { describe, expect, it } from 'vitest';
-import { formatTime, normalize, plural } from '../format';
+import { afterEach, describe, expect, it } from 'vitest';
+import { setLang } from '../../app/i18n';
+import { count, formatTime, normalize, plural } from '../format';
+
+afterEach(() => setLang('ru'));
 
 describe('formatTime', () => {
   it('rounds to minutes, at least one', () => {
@@ -22,6 +25,15 @@ describe('plural', () => {
       'станция', 'станции', 'станций', 'станций', 'станций', 'станций',
       'станция', 'станции', 'станций', 'станция', 'станций',
     ]);
+  });
+});
+
+describe('in English', () => {
+  it('formats time and counts', () => {
+    setLang('en');
+    expect(formatTime(65 * 60)).toBe('1 h 05 min');
+    expect(count(1, ['пересадка', 'пересадки', 'пересадок'], ['transfer', 'transfers'])).toBe('1 transfer');
+    expect(count(3, ['пересадка', 'пересадки', 'пересадок'], ['transfer', 'transfers'])).toBe('3 transfers');
   });
 });
 

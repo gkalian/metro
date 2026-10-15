@@ -1,9 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { setLang } from '../i18n';
 import { loadNetwork } from '../../domain/network';
 import { chronologyValue, horizonLabel, horizonsOf, parseYear, tickLabel, yearParam } from '../horizons';
 
 const net = loadNetwork();
 const horizons = horizonsOf(net);
+
+afterEach(() => setLang('ru'));
 
 describe('horizons', () => {
   it('runs from the past through today to every plan', () => {
@@ -26,6 +29,14 @@ describe('horizons', () => {
     expect(horizonLabel(1979)).toBe('к концу 1970-х');
     expect(tickLabel(1959)).toBe('50-е');
     expect(tickLabel(null)).toBe('сейчас');
+  });
+
+  it('labels in English', () => {
+    setLang('en');
+    expect(horizonLabel(1979)).toBe('by the end of the 1970s');
+    expect(chronologyValue(Infinity)).toBe(': all plans');
+    expect(tickLabel(1959)).toBe('50s');
+    expect(tickLabel(null)).toBe('now');
   });
 
   it('round-trips through the URL', () => {

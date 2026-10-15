@@ -1,11 +1,13 @@
 {
  "id": "6",
  "name": "Красносельско-Калининская",
+ "nameEn": "Krasnoselsko-Kalininskaya",
  "color": "#99682F",
  "stations": [
   {
    "id": "ruchi",
    "name": "Ручьи",
+   "nameEn": "Ruchyi",
    "lat": 60.00044,
    "lon": 30.44449,
    "status": "project",
@@ -17,6 +19,7 @@
   {
    "id": "piskaryovka",
    "name": "Пискарёвка",
+   "nameEn": "Piskaryovka",
    "lat": 59.98223,
    "lon": 30.42343,
    "status": "project",
@@ -28,6 +31,7 @@
   {
    "id": "bestuzhevskaya",
    "name": "Бестужевская",
+   "nameEn": "Bestuzhevskaya",
    "lat": 59.96988,
    "lon": 30.42754,
    "status": "project",
@@ -39,6 +43,7 @@
   {
    "id": "polyustrovskiy-prospekt-1",
    "name": "Полюстровский проспект",
+   "nameEn": "Polyustrovsky Prospekt",
    "lat": 59.95989,
    "lon": 30.40972,
    "status": "project",
@@ -50,6 +55,7 @@
   {
    "id": "suvorovskaya",
    "name": "Суворовская",
+   "nameEn": "Suvorovskaya",
    "lat": 59.93769,
    "lon": 30.3744,
    "status": "project",
@@ -61,6 +67,7 @@
   {
    "id": "znamenskaya",
    "name": "Знаменская",
+   "nameEn": "Znamenskaya",
    "lat": 59.93202,
    "lon": 30.36718,
    "status": "project",
@@ -72,6 +79,7 @@
   {
    "id": "ligovskiy-prospekt-2",
    "name": "Лиговский проспект",
+   "nameEn": "Ligovsky Prospekt",
    "lat": 59.920728,
    "lon": 30.357413,
    "status": "project",
@@ -83,6 +91,7 @@
   {
    "id": "karetnaya",
    "name": "Каретная",
+   "nameEn": "Karetnaya",
    "lat": 59.91355,
    "lon": 30.35638,
    "status": "construct",
@@ -94,6 +103,7 @@
   {
    "id": "borovaya",
    "name": "Боровая",
+   "nameEn": "Borovaya",
    "lat": 59.9049,
    "lon": 30.34328,
    "status": "construct",
@@ -105,6 +115,7 @@
   {
    "id": "zastavskaya",
    "name": "Заставская",
+   "nameEn": "Zastavskaya",
    "lat": 59.89092,
    "lon": 30.31363,
    "status": "construct",
@@ -116,6 +127,7 @@
   {
    "id": "bronevaya",
    "name": "Броневая",
+   "nameEn": "Bronevaya",
    "lat": 59.87696,
    "lon": 30.29757,
    "status": "construct",
@@ -127,6 +139,7 @@
   {
    "id": "putilovskaya",
    "name": "Путиловская",
+   "nameEn": "Putilovskaya",
    "lat": 59.87886,
    "lon": 30.26484,
    "status": "open",
@@ -138,6 +151,7 @@
   {
    "id": "yugo-zapadnaya",
    "name": "Юго-Западная",
+   "nameEn": "Yugo-Zapadnaya",
    "lat": 59.8592,
    "lon": 30.23078,
    "status": "open",
@@ -149,6 +163,7 @@
   {
    "id": "brestskaya",
    "name": "Брестская",
+   "nameEn": "Brestskaya",
    "lat": 59.85987,
    "lon": 30.20524,
    "status": "project",
@@ -160,6 +175,7 @@
   {
    "id": "ulitsa-doblesti",
    "name": "Улица Доблести",
+   "nameEn": "Ulitsa Doblesti",
    "lat": 59.8615,
    "lon": 30.18037,
    "status": "project",
@@ -171,6 +187,7 @@
   {
    "id": "petergofskoe-shosse",
    "name": "Петергофское шоссе",
+   "nameEn": "Petergofskoye Shosse",
    "lat": 59.846686,
    "lon": 30.146576,
    "status": "project",
@@ -182,6 +199,7 @@
   {
    "id": "sosnovaya-polyana",
    "name": "Сосновая Поляна",
+   "nameEn": "Sosnovaya Polyana",
    "lat": 59.82526,
    "lon": 30.145,
    "status": "project",

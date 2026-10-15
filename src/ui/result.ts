@@ -1,7 +1,8 @@
 import { inService, isOpen, isPast, type Horizon, type Network } from '../domain/network';
 import type { Route } from '../domain/routing';
+import { nameOf, tr } from '../app/i18n';
 import { h } from './dom';
-import { formatTime, plural } from './format';
+import { count, formatTime } from './format';
 
 export function renderResult(
   root: HTMLElement,
@@ -14,8 +15,14 @@ export function renderResult(
       h('p', {
         className: 'hint',
         textContent: from
-          ? 'Теперь выберите станцию назначения — на карте или в поле «Куда».'
-          : 'Нажмите на две станции на карте или выберите их в полях выше — посчитаем время в пути.',
+          ? tr(
+              'Теперь выберите станцию назначения — на карте или в поле «Куда».',
+              'Now pick the destination — on the map or in the “To” field.',
+            )
+          : tr(
+              'Нажмите на две станции на карте или выберите их в полях выше — посчитаем время в пути.',
+              'Click two stations on the map or pick them in the fields above to get the travel time.',
+            ),
       }),
     );
     return;
@@ -24,7 +31,10 @@ export function renderResult(
     root.replaceChildren(
       h('p', {
         className: 'hint',
-        textContent: `В сети ${state.horizonLabel} между этими станциями нет пути — сдвиньте ползунок года.`,
+        textContent: tr(
+          `В сети ${state.horizonLabel} между этими станциями нет пути — сдвиньте ползунок года.`,
+          `No way between these stations in the network ${state.horizonLabel} — move the year slider.`,
+        ),
       }),
     );
     return;
@@ -39,8 +49,8 @@ export function renderResult(
     h('div', {
       className: 'summary__meta',
       textContent: route.transfers
-        ? `${route.transfers} ${plural(route.transfers, 'пересадка', 'пересадки', 'пересадок')} · в поездах ${formatTime(rideTime)} · переходы ${formatTime(route.transferTime)}`
-        : 'без пересадок',
+        ? `${count(route.transfers, ['пересадка', 'пересадки', 'пересадок'], ['transfer', 'transfers'])} · ${tr('в поездах', 'on trains')} ${formatTime(rideTime)} · ${tr('переходы', 'walking')} ${formatTime(route.transferTime)}`
+        : tr('без пересадок', 'no transfers'),
     }),
   );
 
@@ -48,7 +58,7 @@ export function renderResult(
   for (const leg of route.legs) {
     if (leg.kind === 'transfer') {
       legs.append(
-        h('li', { className: 'leg leg--transfer' }, `Переход на «${station(leg.to).name}» · ${formatTime(leg.time)}`),
+        h('li', { className: 'leg leg--transfer' }, `${tr(`Переход на «${nameOf(station(leg.to))}»`, `Transfer to “${nameOf(station(leg.to))}”`)} · ${formatTime(leg.time)}`),
       );
       continue;
     }
@@ -62,21 +72,21 @@ export function renderResult(
           'div',
           { className: 'leg__head' },
           h('span', { className: 'line-badge', textContent: line.id }),
-          h('span', { className: 'leg__line', textContent: line.name }),
+          h('span', { className: 'leg__line', textContent: nameOf(line) }),
           h('span', { className: 'leg__time', textContent: formatTime(leg.time) }),
         ),
-        h('div', { className: 'leg__stop', textContent: station(leg.stations[0]!).name }),
+        h('div', { className: 'leg__stop', textContent: nameOf(station(leg.stations[0]!)) }),
         middle.length
           ? h(
               'details',
               {},
               h('summary', {
-                textContent: `${middle.length} ${plural(middle.length, 'станция', 'станции', 'станций')} без пересадки`,
+                textContent: `${count(middle.length, ['станция', 'станции', 'станций'], ['station', 'stations'])} ${tr('без пересадки', 'in between')}`,
               }),
-              h('ul', {}, ...middle.map((id) => h('li', { textContent: station(id).name }))),
+              h('ul', {}, ...middle.map((id) => h('li', { textContent: nameOf(station(id)) }))),
             )
           : null,
-        h('div', { className: 'leg__stop', textContent: station(leg.stations.at(-1)!).name }),
+        h('div', { className: 'leg__stop', textContent: nameOf(station(leg.stations.at(-1)!)) }),
       ),
     );
   }
@@ -84,10 +94,22 @@ export function renderResult(
   // an endpoint does not take passengers yet, or the way runs through track not built yet
   const future = [from, to].some((id) => !isOpen(station(id))) || route.path.some((id) => !inService(station(id)));
   const notes = [
-    'Время расчётное, без ожидания поезда.',
-    future && 'Будущая сеть — по схеме развития до 2040 года; сроки могут сдвинуться.',
-    isPast(state.horizon) && 'Сеть прошлых лет — по датам открытия станций; время перегонов — сегодняшнее.',
-    route.estimated && 'Часть перегонов оценена по расстоянию — по ним нет опубликованных данных.',
+    tr('Время расчётное, без ожидания поезда.', 'Estimated time, not counting the wait for a train.'),
+    future &&
+      tr(
+        'Будущая сеть — по схеме развития до 2040 года; сроки могут сдвинуться.',
+        'The future network follows the development plan to 2040; dates may shift.',
+      ),
+    isPast(state.horizon) &&
+      tr(
+        'Сеть прошлых лет — по датам открытия станций; время перегонов — сегодняшнее.',
+        'Past networks follow station opening dates; running times are today’s.',
+      ),
+    route.estimated &&
+      tr(
+        'Часть перегонов оценена по расстоянию — по ним нет опубликованных данных.',
+        'Some running times are estimated from distance: there is no published data for them.',
+      ),
   ].filter(Boolean);
 
   root.replaceChildren(summary, legs, h('p', { className: 'note', textContent: notes.join(' ') }));

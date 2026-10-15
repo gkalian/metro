@@ -1,11 +1,13 @@
 {
  "id": "1",
  "name": "Кировско-Выборгская",
+ "nameEn": "Kirovsko-Vyborgskaya",
  "color": "#E44C31",
  "stations": [
   {
    "id": "devyatkino",
    "name": "Девяткино",
+   "nameEn": "Devyatkino",
    "lat": 60.049799,
    "lon": 30.442248,
    "status": "open",
@@ -16,6 +18,7 @@
   {
    "id": "grazhdanskiy-prospekt",
    "name": "Гражданский проспект",
+   "nameEn": "Grazhdansky Prospekt",
    "lat": 60.03481,
    "lon": 30.418087,
    "status": "open",
@@ -26,6 +29,7 @@
   {
    "id": "akademicheskaya",
    "name": "Академическая",
+   "nameEn": "Akademicheskaya",
    "lat": 60.012773,
    "lon": 30.396103,
    "status": "open",
@@ -36,6 +40,7 @@
   {
    "id": "politehnicheskaya",
    "name": "Политехническая",
+   "nameEn": "Politekhnicheskaya",
    "lat": 60.00895,
    "lon": 30.370774,
    "status": "open",
@@ -46,6 +51,7 @@
   {
    "id": "ploschad-muzhestva",
    "name": "Площадь Мужества",
+   "nameEn": "Ploshchad Muzhestva",
    "lat": 59.999655,
    "lon": 30.366595,
    "status": "open",
@@ -56,6 +62,7 @@
   {
    "id": "lesnaya",
    "name": "Лесная",
+   "nameEn": "Lesnaya",
    "lat": 59.98477,
    "lon": 30.344201,
    "status": "open",
@@ -66,6 +73,7 @@
   {
    "id": "vyborgskaya",
    "name": "Выборгская",
+   "nameEn": "Vyborgskaya",
    "lat": 59.97111,
    "lon": 30.347553,
    "status": "open",
@@ -76,6 +84,7 @@
   {
    "id": "ploschad-lenina",
    "name": "Площадь Ленина",
+   "nameEn": "Ploshchad Lenina",
    "lat": 59.955725,
    "lon": 30.355957,
    "status": "open",
@@ -86,6 +95,7 @@
   {
    "id": "chernyshevskaya",
    "name": "Чернышевская",
+   "nameEn": "Chernyshevskaya",
    "lat": 59.944539,
    "lon": 30.359641,
    "status": "open",
@@ -96,6 +106,7 @@
   {
    "id": "ploschad-vosstaniya",
    "name": "Площадь Восстания",
+   "nameEn": "Ploshchad Vosstaniya",
    "lat": 59.931483,
    "lon": 30.36036,
    "status": "open",
@@ -106,6 +117,7 @@
   {
    "id": "vladimirskaya",
    "name": "Владимирская",
+   "nameEn": "Vladimirskaya",
    "lat": 59.927467,
    "lon": 30.347875,
    "status": "open",
@@ -116,6 +128,7 @@
   {
    "id": "pushkinskaya",
    "name": "Пушкинская",
+   "nameEn": "Pushkinskaya",
    "lat": 59.920757,
    "lon": 30.329641,
    "status": "open",
@@ -127,6 +140,7 @@
   {
    "id": "tehnologicheskiy-institut-1",
    "name": "Технологический институт",
+   "nameEn": "Tekhnologichesky Institut",
    "lat": 59.916799,
    "lon": 30.318967,
    "status": "open",
@@ -137,6 +151,7 @@
   {
    "id": "baltiyskaya",
    "name": "Балтийская",
+   "nameEn": "Baltiyskaya",
    "lat": 59.907245,
    "lon": 30.299217,
    "status": "open",
@@ -147,6 +162,7 @@
   {
    "id": "narvskaya",
    "name": "Нарвская",
+   "nameEn": "Narvskaya",
    "lat": 59.901169,
    "lon": 30.274676,
    "status": "open",
@@ -157,6 +173,7 @@
   {
    "id": "kirovskiy-zavod",
    "name": "Кировский завод",
+   "nameEn": "Kirovsky Zavod",
    "lat": 59.879726,
    "lon": 30.261908,
    "status": "open",
@@ -167,6 +184,7 @@
   {
    "id": "avtovo",
    "name": "Автово",
+   "nameEn": "Avtovo",
    "lat": 59.867369,
    "lon": 30.261345,
    "status": "open",
@@ -177,6 +195,7 @@
   {
    "id": "leninskiy-prospekt1",
    "name": "Ленинский проспект",
+   "nameEn": "Leninsky Prospekt",
    "lat": 59.851677,
    "lon": 30.268279,
    "status": "open",
@@ -187,6 +206,7 @@
   {
    "id": "prospekt-veteranov",
    "name": "Проспект Ветеранов",
+   "nameEn": "Prospekt Veteranov",
    "lat": 59.84188,
    "lon": 30.251543,
    "status": "open",
@@ -198,6 +218,7 @@
   {
    "id": "aleksandrino",
    "name": "Александрино",
+   "nameEn": "Aleksandrino",
    "lat": 59.83947,
    "lon": 30.23071,
    "status": "project",
@@ -209,6 +230,7 @@
   {
    "id": "prospekt-marshala-zhukova",
    "name": "Проспект Маршала Жукова",
+   "nameEn": "Prospekt Marshala Zhukova",
    "lat": 59.83508,
    "lon": 30.20269,
    "status": "project",
@@ -225,6 +247,7 @@
     {
      "id": "ulyanka",
      "name": "Ульянка",
+     "nameEn": "Ulyanka",
      "lat": 59.83232,
      "lon": 30.24879,
      "status": "project",
@@ -236,6 +259,7 @@
     {
      "id": "aviagorodok",
      "name": "Авиагородок",
+     "nameEn": "Aviagorodok",
      "lat": 59.81622,
      "lon": 30.28946,
      "status": "project",
@@ -247,6 +271,7 @@
     {
      "id": "pulkovo",
      "name": "Пулково",
+     "nameEn": "Pulkovo",
      "lat": 59.79818,
      "lon": 30.27513,
      "status": "project",
@@ -258,6 +283,7 @@
     {
      "id": "pulkovskie-vysoty",
      "name": "Пулковские высоты",
+     "nameEn": "Pulkovskiye Vysoty",
      "lat": 59.76785,
      "lon": 30.31265,
      "status": "project",
@@ -268,6 +294,7 @@
     {
      "id": "kvc-ekspoforum",
      "name": "КВЦ «Экспофорум»",
+     "nameEn": "Expoforum",
      "lat": 59.76031,
      "lon": 30.35376,
      "status": "project",

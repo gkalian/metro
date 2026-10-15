@@ -1,11 +1,13 @@
 {
  "id": "4",
  "name": "Лахтинско-Правобережная",
+ "nameEn": "Lakhtinsko-Pravoberezhnaya",
  "color": "#ECA21D",
  "stations": [
   {
    "id": "morskoy-fasad",
    "name": "Морской фасад",
+   "nameEn": "Morskoy Fasad",
    "lat": 59.949064,
    "lon": 30.204134,
    "status": "project",
@@ -16,6 +18,7 @@
   {
    "id": "gavan",
    "name": "Гавань",
+   "nameEn": "Gavan",
    "lat": 59.933504,
    "lon": 30.228204,
    "status": "project",
@@ -26,6 +29,7 @@
   {
    "id": "gornyy-institut",
    "name": "Горный институт",
+   "nameEn": "Gorny Institut",
    "lat": 59.932632,
    "lon": 30.261179,
    "status": "open",
@@ -36,6 +40,7 @@
   {
    "id": "teatralnaya",
    "name": "Театральная",
+   "nameEn": "Teatralnaya",
    "lat": 59.926382,
    "lon": 30.296254,
    "status": "construct",
@@ -48,6 +53,7 @@
   {
    "id": "spasskaya",
    "name": "Спасская",
+   "nameEn": "Spasskaya",
    "lat": 59.926839,
    "lon": 30.319752,
    "status": "open",
@@ -58,6 +64,7 @@
   {
    "id": "dostoevskaya",
    "name": "Достоевская",
+   "nameEn": "Dostoyevskaya",
    "lat": 59.928072,
    "lon": 30.345746,
    "status": "open",
@@ -68,6 +75,7 @@
   {
    "id": "ligovskiy-prospekt",
    "name": "Лиговский проспект",
+   "nameEn": "Ligovsky Prospekt",
    "lat": 59.920747,
    "lon": 30.355245,
    "status": "open",
@@ -78,6 +86,7 @@
   {
    "id": "ploschad-aleksandra-nevskogo-2",
    "name": "Площадь Александра Невского",
+   "nameEn": "Ploshchad Aleksandra Nevskogo",
    "lat": 59.92365,
    "lon": 30.383471,
    "status": "open",
@@ -88,6 +97,7 @@
   {
    "id": "novocherkasskaya",
    "name": "Новочеркасская",
+   "nameEn": "Novocherkasskaya",
    "lat": 59.92933,
    "lon": 30.412918,
    "status": "open",
@@ -98,6 +108,7 @@
   {
    "id": "ladozhskaya",
    "name": "Ладожская",
+   "nameEn": "Ladozhskaya",
    "lat": 59.93244,
    "lon": 30.439474,
    "status": "open",
@@ -108,6 +119,7 @@
   {
    "id": "prospekt-bolshevikov",
    "name": "Проспект Большевиков",
+   "nameEn": "Prospekt Bolshevikov",
    "lat": 59.919819,
    "lon": 30.466908,
    "status": "open",
@@ -118,6 +130,7 @@
   {
    "id": "ulitsa-dybenko",
    "name": "Улица Дыбенко",
+   "nameEn": "Ulitsa Dybenko",
    "lat": 59.907573,
    "lon": 30.483292,
    "status": "open",
@@ -129,6 +142,7 @@
   {
    "id": "kudrovo",
    "name": "Кудрово",
+   "nameEn": "Kudrovo",
    "lat": 59.889191,
    "lon": 30.51215,
    "status": "project",

@@ -15,6 +15,7 @@ import {
   type Status,
 } from '../domain/network';
 import type { Railway } from '../domain/railway';
+import { nameOf } from '../app/i18n';
 import type { Route } from '../domain/routing';
 
 /** What the map shows; the features below are built from it. */
@@ -126,7 +127,7 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
       properties: {
         key: `${s.id}|${open}|${color}`,
         id: s.id,
-        name: s.name,
+        name: nameOf(s),
         color,
         planned: !open,
         role,
@@ -166,7 +167,7 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
         key: `${e.id}|${color}`,
         id: s.id,
         exit: e.id,
-        name: s.name,
+        name: nameOf(s),
         color,
         planned: false,
         role,
@@ -213,7 +214,7 @@ export function railFeatures(net: Network, rail: Railway, curves: Map<string, Po
         key: s.id,
         id: s.id,
         // the metro label beside it already says the same
-        name: metro.some((m) => m.name === s.name) ? '' : s.name,
+        name: metro.some((m) => m.name === s.name) ? '' : nameOf(s),
         terminal: rail.routes.some((r) => r.stations[0] === s.id || r.stations.at(-1) === s.id),
         dim,
       },

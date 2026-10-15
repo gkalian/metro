@@ -4,6 +4,7 @@ import raw from '../data/railway.json';
 export interface RailStation {
   id: string;
   name: string;
+  nameEn?: string;
   lat: number;
   lon: number;
   /** Metro stations within walking distance, as the scheme draws them. */

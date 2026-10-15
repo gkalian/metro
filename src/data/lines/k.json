@@ -1,11 +1,13 @@
 {
  "id": "К",
  "name": "Кольцевая (северный участок)",
+ "nameEn": "Koltsevaya (northern section)",
  "color": "#E8B800",
  "stations": [
   {
    "id": "bolshoy-prospekt-2",
    "name": "Большой проспект",
+   "nameEn": "Bolshoy Prospekt",
    "lat": 59.933832,
    "lon": 30.259579,
    "status": "project",
@@ -17,6 +19,7 @@
   {
    "id": "vasileostrovskaya-2",
    "name": "Василеостровская",
+   "nameEn": "Vasileostrovskaya",
    "lat": 59.944127,
    "lon": 30.279759,
    "status": "project",
@@ -28,6 +31,7 @@
   {
    "id": "sportivnaya-2",
    "name": "Спортивная",
+   "nameEn": "Sportivnaya",
    "lat": 59.953078,
    "lon": 30.289112,
    "status": "project",
@@ -39,6 +43,7 @@
   {
    "id": "petrogradskaya-2",
    "name": "Петроградская",
+   "nameEn": "Petrogradskaya",
    "lat": 59.967665,
    "lon": 30.309232,
    "status": "project",
@@ -50,6 +55,7 @@
   {
    "id": "kantemirovskaya",
    "name": "Кантемировская",
+   "nameEn": "Kantemirovskaya",
    "lat": 59.97589,
    "lon": 30.32356,
    "status": "project",
@@ -61,6 +67,7 @@
   {
    "id": "lesnaya-2",
    "name": "Лесная",
+   "nameEn": "Lesnaya",
    "lat": 59.98397,
    "lon": 30.347201,
    "status": "project",
@@ -72,6 +79,7 @@
   {
    "id": "arsenalnaya",
    "name": "Арсенальная",
+   "nameEn": "Arsenalnaya",
    "lat": 59.97789,
    "lon": 30.3752,
    "status": "project",
@@ -83,6 +91,7 @@
   {
    "id": "ploschad-kalinina",
    "name": "Площадь Калинина",
+   "nameEn": "Ploshchad Kalinina",
    "lat": 59.96637,
    "lon": 30.38042,
    "status": "project",
@@ -94,6 +103,7 @@
   {
    "id": "polyustrovskiy-prospekt-2",
    "name": "Полюстровский проспект",
+   "nameEn": "Polyustrovsky Prospekt",
    "lat": 59.95889,
    "lon": 30.40772,
    "status": "project",

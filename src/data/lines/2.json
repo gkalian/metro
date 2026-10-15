@@ -1,11 +1,13 @@
 {
  "id": "2",
  "name": "Московско-Петроградская",
+ "nameEn": "Moskovsko-Petrogradskaya",
  "color": "#1887D9",
  "stations": [
   {
    "id": "parnas",
    "name": "Парнас",
+   "nameEn": "Parnas",
    "lat": 60.06715,
    "lon": 30.334128,
    "status": "open",
@@ -16,6 +18,7 @@
   {
    "id": "prospekt-prosvescheniya",
    "name": "Проспект Просвещения",
+   "nameEn": "Prospekt Prosveshcheniya",
    "lat": 60.051416,
    "lon": 30.332632,
    "status": "open",
@@ -26,6 +29,7 @@
   {
    "id": "ozerki",
    "name": "Озерки",
+   "nameEn": "Ozerki",
    "lat": 60.037141,
    "lon": 30.321529,
    "status": "open",
@@ -36,6 +40,7 @@
   {
    "id": "udelnaya",
    "name": "Удельная",
+   "nameEn": "Udelnaya",
    "lat": 60.016707,
    "lon": 30.315421,
    "status": "open",
@@ -46,6 +51,7 @@
   {
    "id": "pionerskaya",
    "name": "Пионерская",
+   "nameEn": "Pionerskaya",
    "lat": 60.002576,
    "lon": 30.296791,
    "status": "open",
@@ -56,6 +62,7 @@
   {
    "id": "chyornaya-rechka",
    "name": "Чёрная речка",
+   "nameEn": "Chyornaya Rechka",
    "lat": 59.985574,
    "lon": 30.300792,
    "status": "open",
@@ -66,6 +73,7 @@
   {
    "id": "petrogradskaya",
    "name": "Петроградская",
+   "nameEn": "Petrogradskaya",
    "lat": 59.966465,
    "lon": 30.311432,
    "status": "open",
@@ -76,6 +84,7 @@
   {
    "id": "gorkovskaya",
    "name": "Горьковская",
+   "nameEn": "Gorkovskaya",
    "lat": 59.956323,
    "lon": 30.318724,
    "status": "open",
@@ -86,6 +95,7 @@
   {
    "id": "nevskiy-prospekt",
    "name": "Невский проспект",
+   "nameEn": "Nevsky Prospekt",
    "lat": 59.935601,
    "lon": 30.327134,
    "status": "open",
@@ -96,6 +106,7 @@
   {
    "id": "sennaya-ploschad",
    "name": "Сенная площадь",
+   "nameEn": "Sennaya Ploshchad",
    "lat": 59.92709,
    "lon": 30.320378,
    "status": "open",
@@ -106,6 +117,7 @@
   {
    "id": "tehnologicheskiy-institut-2",
    "name": "Технологический институт",
+   "nameEn": "Tekhnologichesky Institut",
    "lat": 59.916622,
    "lon": 30.318505,
    "status": "open",
@@ -116,6 +128,7 @@
   {
    "id": "frunzenskaya",
    "name": "Фрунзенская",
+   "nameEn": "Frunzenskaya",
    "lat": 59.906155,
    "lon": 30.317509,
    "status": "open",
@@ -126,6 +139,7 @@
   {
    "id": "moskovskie-vorota",
    "name": "Московские Ворота",
+   "nameEn": "Moskovskiye Vorota",
    "lat": 59.891924,
    "lon": 30.317751,
    "status": "open",
@@ -136,6 +150,7 @@
   {
    "id": "elektrosila",
    "name": "Электросила",
+   "nameEn": "Elektrosila",
    "lat": 59.879425,
    "lon": 30.318658,
    "status": "open",
@@ -146,6 +161,7 @@
   {
    "id": "park-pobedy",
    "name": "Парк Победы",
+   "nameEn": "Park Pobedy",
    "lat": 59.86659,
    "lon": 30.321712,
    "status": "open",
@@ -156,6 +172,7 @@
   {
    "id": "moskovskaya",
    "name": "Московская",
+   "nameEn": "Moskovskaya",
    "lat": 59.852192,
    "lon": 30.322206,
    "status": "open",
@@ -166,6 +183,7 @@
   {
    "id": "zvyozdnaya",
    "name": "Звёздная",
+   "nameEn": "Zvyozdnaya",
    "lat": 59.833228,
    "lon": 30.349616,
    "status": "open",
@@ -176,6 +194,7 @@
   {
    "id": "kupchino",
    "name": "Купчино",
+   "nameEn": "Kupchino",
    "lat": 59.829887,
    "lon": 30.375399,
    "status": "open",

@@ -1,4 +1,5 @@
 import { isOpen, lineAt, type Horizon, type Network, type Station } from '../domain/network';
+import { nameOf, tr } from '../app/i18n';
 import { h } from './dom';
 import { normalize } from './format';
 
@@ -10,19 +11,19 @@ export class StationPicker {
   private options: Station[] = [];
   private active = 0;
   private value: Station | null = null;
+  private readonly clear: HTMLButtonElement;
   showPlanned = true;
   horizon: Horizon = null;
 
   constructor(
     root: HTMLElement,
-    placeholder: string,
+    private readonly label: { ru: string; en: string },
     private readonly net: Network,
     private readonly onPick: (id: string | null) => void,
   ) {
     this.badge = h('span', { className: 'line-badge picker__badge' });
-    this.input = h('input', { type: 'text', placeholder, autocomplete: 'off', spellcheck: false });
-    this.input.setAttribute('aria-label', placeholder);
-    const clear = h('button', { type: 'button', className: 'picker__clear', title: 'Очистить', textContent: '×' });
+    this.input = h('input', { type: 'text', autocomplete: 'off', spellcheck: false });
+    const clear = (this.clear = h('button', { type: 'button', className: 'picker__clear', textContent: '×' }));
     this.list = h('ul', { className: 'picker__list', hidden: true });
     root.append(this.badge, this.input, clear, this.list);
 
@@ -48,7 +49,11 @@ export class StationPicker {
 
   set(station: Station | null): void {
     this.value = station;
-    this.input.value = station?.name ?? '';
+    const placeholder = tr(this.label.ru, this.label.en);
+    this.input.placeholder = placeholder;
+    this.input.setAttribute('aria-label', placeholder);
+    this.clear.title = tr('Очистить', 'Clear');
+    this.input.value = station ? nameOf(station) : '';
     // the line as it was in the chosen year
     const line = station && lineAt(this.net, station, this.horizon);
     this.badge.textContent = line?.id ?? '';
@@ -65,8 +70,10 @@ export class StationPicker {
   private open(query: string): void {
     const q = normalize(query);
     const all = [...this.net.stations.values()].filter((s) => this.showPlanned || isOpen(s, this.horizon));
-    const starts = all.filter((s) => normalize(s.name).startsWith(q));
-    const contains = all.filter((s) => !starts.includes(s) && normalize(s.name).includes(q));
+    // either name finds the station, whichever language is shown
+    const names = (s: Station) => [s.name, s.nameEn ?? ''].map(normalize);
+    const starts = all.filter((s) => names(s).some((n) => n.startsWith(q)));
+    const contains = all.filter((s) => !starts.includes(s) && names(s).some((n) => n.includes(q)));
     this.options = q ? [...starts, ...contains] : all;
     this.active = 0;
     this.list.replaceChildren(
@@ -76,14 +83,14 @@ export class StationPicker {
           'li',
           {},
           h('span', { className: 'line-badge', textContent: line.id, css: { '--line': line.color } }),
-          h('span', { className: 'picker__name', textContent: s.name }),
-          !isOpen(s) && h('span', { className: 'picker__status', textContent: s.opening ? `план ${s.opening}` : 'без срока' }),
+          h('span', { className: 'picker__name', textContent: nameOf(s) }),
+          !isOpen(s) && h('span', { className: 'picker__status', textContent: s.opening ? `${tr('план', 'planned')} ${s.opening}` : tr('без срока', 'no date') }),
         );
         li.dataset.id = s.id;
         return li;
       }),
     );
-    if (!this.options.length) this.list.append(h('li', { className: 'picker__empty', textContent: 'Ничего не найдено' }));
+    if (!this.options.length) this.list.append(h('li', { className: 'picker__empty', textContent: tr('Ничего не найдено', 'Nothing found') }));
     this.list.hidden = false;
     this.highlight();
   }

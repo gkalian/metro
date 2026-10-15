@@ -1,4 +1,6 @@
 import './styles/index.css';
+import { LANGS, setLang, tr, type Lang } from './app/i18n';
+import { translatePage } from './ui/static-text';
 import { chronologyValue, horizonLabel, horizonsOf, parseYear, tickLabel, yearParam } from './app/horizons';
 import { loadChoice, loadFlag, saveFlag, saveString } from './app/storage';
 import { isOpen, loadNetwork, type Horizon } from './domain/network';
@@ -28,29 +30,32 @@ const state = {
   showRail: loadFlag('show-rail', true),
   horizon: parseYear(horizons, params.get('year')),
   theme: loadChoice('theme', THEMES, matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+  lang: loadChoice<Lang>('lang', LANGS, 'ru'),
 };
+setLang(state.lang);
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const showPlannedBox = $<HTMLInputElement>('show-planned');
 const showRailBox = $<HTMLInputElement>('show-rail');
 const slider = $<HTMLInputElement>('horizon');
 slider.max = String(horizons.length - 1);
-$('horizon-ticks').replaceChildren(
-  ...horizons.map((h, i) => {
-    const tick = Object.assign(document.createElement('span'), {
-      textContent: tickLabel(h),
-      className: h === null ? 'is-now' : '',
-    });
-    tick.style.setProperty('--at', String(i / (horizons.length - 1)));
-    return tick;
-  }),
-);
+const renderTicks = () =>
+  $('horizon-ticks').replaceChildren(
+    ...horizons.map((h, i) => {
+      const tick = Object.assign(document.createElement('span'), {
+        textContent: tickLabel(h),
+        className: h === null ? 'is-now' : '',
+      });
+      tick.style.setProperty('--at', String(i / (horizons.length - 1)));
+      return tick;
+    }),
+  );
 
 // before the map, which reads the panel state for its padding
 const sidebarToggle = $<HTMLButtonElement>('sidebar-toggle');
 function setSidebar(collapsed: boolean): void {
   document.documentElement.dataset.sidebar = collapsed ? 'collapsed' : 'open';
-  const label = collapsed ? 'Развернуть панель' : 'Свернуть панель';
+  const label = collapsed ? tr('Развернуть панель', 'Show panel') : tr('Свернуть панель', 'Hide panel');
   sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
   sidebarToggle.setAttribute('aria-label', label);
   sidebarToggle.title = label;
@@ -58,9 +63,8 @@ function setSidebar(collapsed: boolean): void {
 setSidebar(loadChoice('sidebar', ['open', 'collapsed'], 'open') === 'collapsed');
 
 const mapView = new MapView('map', net, rail, state.theme, onStationClick);
-const fromPicker = new StationPicker($('picker-from'), 'Откуда', net, (id) => setEndpoint('from', id));
-const toPicker = new StationPicker($('picker-to'), 'Куда', net, (id) => setEndpoint('to', id));
-renderLegend($('legend'), net);
+const fromPicker = new StationPicker($('picker-from'), { ru: 'Откуда', en: 'From' }, net, (id) => setEndpoint('from', id));
+const toPicker = new StationPicker($('picker-to'), { ru: 'Куда', en: 'To' }, net, (id) => setEndpoint('to', id));
 bindFold($<HTMLButtonElement>('legend-toggle'), $('legend'), 'legend-collapsed', true);
 bindFold($<HTMLButtonElement>('chronology-toggle'), $('chronology'), 'chronology-collapsed', false);
 
@@ -105,6 +109,15 @@ function update(fit = false): void {
   if (state.from && state.to) route = findRoute(graphAt(state.horizon), state.from, state.to);
 
   document.documentElement.dataset.theme = state.theme;
+  document.documentElement.lang = state.lang;
+  // the button shows the language in use
+  const langBtn = $('lang');
+  langBtn.textContent = state.lang.toUpperCase();
+  langBtn.setAttribute('aria-label', tr('Язык: русский. Переключить на английский', 'Language: English. Switch to Russian'));
+  translatePage();
+  setSidebar(document.documentElement.dataset.sidebar === 'collapsed');
+  renderTicks();
+  renderLegend($('legend'), net);
   showPlannedBox.checked = state.showPlanned;
   showRailBox.checked = state.showRail;
   slider.value = String(horizons.indexOf(state.horizon));
@@ -155,6 +168,12 @@ sidebarToggle.addEventListener('click', () => {
 
 $('swap').addEventListener('click', () => {
   [state.from, state.to] = [state.to, state.from];
+  update();
+});
+$('lang').addEventListener('click', () => {
+  state.lang = state.lang === 'en' ? 'ru' : 'en';
+  setLang(state.lang);
+  saveString('lang', state.lang);
   update();
 });
 $('theme').addEventListener('click', () => {

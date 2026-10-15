@@ -33,6 +33,11 @@ describe('metro lines', () => {
     expect(allStations.filter((s) => !inArea(s)).map((s) => s.id)).toEqual([]);
   });
 
+  it('name every line and station in English too', () => {
+    const unnamed = [...net.lines, ...allStations, ...rail.stations.values()].filter((x) => !x.nameEn?.trim());
+    expect(unnamed.map((x) => x.name)).toEqual([]);
+  });
+
   it('date every station open today, so the past can be drawn', () => {
     const undated = allStations.filter((s) => s.status === 'open' && !s.passThrough && !s.opened);
     expect(undated.map((s) => s.id)).toEqual([]);

@@ -1,11 +1,13 @@
 {
  "id": "5",
  "name": "Фрунзенско-Приморская",
+ "nameEn": "Frunzensko-Primorskaya",
  "color": "#9B41A9",
  "stations": [
   {
    "id": "kolomyazhskaya",
    "name": "Коломяжская",
+   "nameEn": "Kolomyazhskaya",
    "lat": 60.05501,
    "lon": 30.20332,
    "status": "project",
@@ -17,6 +19,7 @@
   {
    "id": "magistral-31",
    "name": "Магистраль № 31",
+   "nameEn": "Magistral No. 31",
    "lat": 60.04282,
    "lon": 30.21473,
    "status": "project",
@@ -28,6 +31,7 @@
   {
    "id": "shuvalovskiy-prospekt",
    "name": "Шуваловский проспект",
+   "nameEn": "Shuvalovsky Prospekt",
    "lat": 60.027656,
    "lon": 30.235889,
    "status": "project",
@@ -38,6 +42,7 @@
   {
    "id": "komendantskiy-prospekt",
    "name": "Комендантский проспект",
+   "nameEn": "Komendantsky Prospekt",
    "lat": 60.008356,
    "lon": 30.258915,
    "status": "open",
@@ -48,6 +53,7 @@
   {
    "id": "staraya-derevnya",
    "name": "Старая Деревня",
+   "nameEn": "Staraya Derevnya",
    "lat": 59.989228,
    "lon": 30.255169,
    "status": "open",
@@ -58,6 +64,7 @@
   {
    "id": "krestovskiy-ostrov",
    "name": "Крестовский остров",
+   "nameEn": "Krestovsky Ostrov",
    "lat": 59.971838,
    "lon": 30.259427,
    "status": "open",
@@ -68,6 +75,7 @@
   {
    "id": "chkalovskaya",
    "name": "Чкаловская",
+   "nameEn": "Chkalovskaya",
    "lat": 59.961035,
    "lon": 30.291964,
    "status": "open",
@@ -78,6 +86,7 @@
   {
    "id": "sportivnaya",
    "name": "Спортивная",
+   "nameEn": "Sportivnaya",
    "lat": 59.952078,
    "lon": 30.291312,
    "status": "open",
@@ -88,6 +97,7 @@
   {
    "id": "admiralteyskaya",
    "name": "Адмиралтейская",
+   "nameEn": "Admiralteyskaya",
    "lat": 59.935876,
    "lon": 30.315403,
    "status": "open",
@@ -99,6 +109,7 @@
   {
    "id": "sadovaya",
    "name": "Садовая",
+   "nameEn": "Sadovaya",
    "lat": 59.927008,
    "lon": 30.317456,
    "status": "open",
@@ -109,6 +120,7 @@
   {
    "id": "zvenigorodskaya",
    "name": "Звенигородская",
+   "nameEn": "Zvenigorodskaya",
    "lat": 59.922304,
    "lon": 30.335784,
    "status": "open",
@@ -119,6 +131,7 @@
   {
    "id": "obvodnyy-kanal",
    "name": "Обводный канал",
+   "nameEn": "Obvodny Kanal",
    "lat": 59.914697,
    "lon": 30.349361,
    "status": "open",
@@ -130,6 +143,7 @@
   {
    "id": "volkovskaya",
    "name": "Волковская",
+   "nameEn": "Volkovskaya",
    "lat": 59.896265,
    "lon": 30.35686,
    "status": "open",
@@ -140,6 +154,7 @@
   {
    "id": "buharestskaya",
    "name": "Бухарестская",
+   "nameEn": "Bukharestskaya",
    "lat": 59.883681,
    "lon": 30.369673,
    "status": "open",
@@ -150,6 +165,7 @@
   {
    "id": "mezhdunarodnaya",
    "name": "Международная",
+   "nameEn": "Mezhdunarodnaya",
    "lat": 59.869966,
    "lon": 30.379045,
    "status": "open",
@@ -160,6 +176,7 @@
   {
    "id": "prospekt-slavy",
    "name": "Проспект Славы",
+   "nameEn": "Prospekt Slavy",
    "lat": 59.856505,
    "lon": 30.395592,
    "status": "open",
@@ -170,6 +187,7 @@
   {
    "id": "dunayskaya",
    "name": "Дунайская",
+   "nameEn": "Dunayskaya",
    "lat": 59.840059,
    "lon": 30.410778,
    "status": "open",
@@ -180,6 +198,7 @@
   {
    "id": "shushary",
    "name": "Шушары",
+   "nameEn": "Shushary",
    "lat": 59.820176,
    "lon": 30.432683,
    "status": "open",
