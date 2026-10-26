@@ -7,7 +7,7 @@ Interactive metro maps on top of a city map: Saint Petersburg and Thessaloniki. 
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)](https://vite.dev/) [![MapLibre GL](https://img.shields.io/badge/MapLibre_GL-396CB2?logo=maplibre&logoColor=white)](https://maplibre.org/) [![OpenFreeMap](https://img.shields.io/badge/OpenFreeMap-7EBC6F?logo=openstreetmap&logoColor=white)](https://openfreemap.org/)
 
 
-| [Saint Petersburg](https://gkalian.github.io/metro-spb/) | [Thessaloniki](https://gkalian.github.io/metro-spb/thessaloniki/) |
+| [Saint Petersburg](https://gkalian.github.io/metro/) | [Thessaloniki](https://gkalian.github.io/metro/thessaloniki/) |
 | --- | --- |
 | ![](./public/og.jpg) | ![](./public/thessaloniki/og.jpg) |
 

@@ -7,8 +7,8 @@ import type { Plugin } from 'vite';
 import type { Lang } from './app/i18n.ts';
 import type { City } from './city.ts';
 
-const SITE = 'https://gkalian.github.io/metro-spb/';
-const REPO = 'https://github.com/gkalian/metro-spb';
+const SITE = 'https://gkalian.github.io/metro/';
+const REPO = 'https://github.com/gkalian/metro';
 
 const SUBTITLE: Record<Lang, string> = {
   ru: 'интерактивная карта и время в пути',

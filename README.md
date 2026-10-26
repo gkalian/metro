@@ -7,7 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)](https://vite.dev/) [![MapLibre GL](https://img.shields.io/badge/MapLibre_GL-396CB2?logo=maplibre&logoColor=white)](https://maplibre.org/) [![OpenFreeMap](https://img.shields.io/badge/OpenFreeMap-7EBC6F?logo=openstreetmap&logoColor=white)](https://openfreemap.org/)
 
 
-| [Санкт-Петербург](https://gkalian.github.io/metro-spb/) | [Салоники](https://gkalian.github.io/metro-spb/thessaloniki/) |
+| [Санкт-Петербург](https://gkalian.github.io/metro/) | [Салоники](https://gkalian.github.io/metro/thessaloniki/) |
 | --- | --- |
 | ![](./public/og.jpg) | ![](./public/thessaloniki/og.jpg) |
 
