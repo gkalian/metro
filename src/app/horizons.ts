@@ -1,4 +1,4 @@
-import { tr } from './i18n';
+import { t } from './i18n';
 import { decadeHorizons, isPast, openingYears, type Horizon, type Network } from '../domain/network';
 
 /** Slider stops: history by decade, then today, then the scheme's years, then every plan. */
@@ -7,25 +7,25 @@ export const horizonsOf = (net: Network): Horizon[] => [...decadeHorizons(net), 
 /** E.g. «к концу 1970-х», to follow «в сети». */
 export const horizonLabel = (h: Horizon): string =>
   h === null
-    ? tr('на сегодня', 'today')
+    ? t('horizonToday')
     : h === Infinity
-      ? tr('на все планы', 'with all plans')
+      ? t('horizonAllPlans')
       : isPast(h)
-        ? tr(`к концу ${h - 9}-х`, `by the end of the ${h - 9}s`)
-        : tr(`на ${h}`, `by ${h}`);
+        ? t('horizonDecade', h - 9)
+        : t('horizonYear', h);
 
 /** What the «Хронология» heading adds; today is the default and goes unsaid. */
 export const chronologyValue = (h: Horizon): string =>
-  h === null ? '' : `: ${h === Infinity ? tr('все планы', 'all plans') : horizonLabel(h)}`;
+  h === null ? '' : `: ${h === Infinity ? t('chronologyAllPlans') : horizonLabel(h)}`;
 
 /** Short label under a slider stop. */
 export const tickLabel = (h: Horizon): string =>
   h === null
-    ? tr('сейчас', 'now')
+    ? t('tickNow')
     : h === Infinity
-      ? tr('все', 'all')
+      ? t('tickAll')
       : isPast(h)
-        ? `${String(h - 9).slice(2)}${tr('-е', 's')}`
+        ? t('tickDecade', h - 9)
         : String(h);
 
 /** The `year` URL parameter for a horizon, or null for today. */

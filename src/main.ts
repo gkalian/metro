@@ -1,5 +1,5 @@
 import './styles/index.css';
-import { LANGS, setLang, tr, type Lang } from './app/i18n';
+import { LANGS, nextLang, setLang, t, type Lang } from './app/i18n';
 import { translatePage } from './ui/static-text';
 import { chronologyValue, horizonLabel, horizonsOf, parseYear, tickLabel, yearParam } from './app/horizons';
 import { loadChoice, loadFlag, saveFlag, saveString } from './app/storage';
@@ -55,7 +55,7 @@ const renderTicks = () =>
 const sidebarToggle = $<HTMLButtonElement>('sidebar-toggle');
 function setSidebar(collapsed: boolean): void {
   document.documentElement.dataset.sidebar = collapsed ? 'collapsed' : 'open';
-  const label = collapsed ? tr('Развернуть панель', 'Show panel') : tr('Свернуть панель', 'Hide panel');
+  const label = t(collapsed ? 'showPanel' : 'hidePanel');
   sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
   sidebarToggle.setAttribute('aria-label', label);
   sidebarToggle.title = label;
@@ -63,8 +63,8 @@ function setSidebar(collapsed: boolean): void {
 setSidebar(loadChoice('sidebar', ['open', 'collapsed'], 'open') === 'collapsed');
 
 const mapView = new MapView('map', net, rail, state.theme, onStationClick);
-const fromPicker = new StationPicker($('picker-from'), { ru: 'Откуда', en: 'From' }, net, (id) => setEndpoint('from', id));
-const toPicker = new StationPicker($('picker-to'), { ru: 'Куда', en: 'To' }, net, (id) => setEndpoint('to', id));
+const fromPicker = new StationPicker($('picker-from'), 'from', net, (id) => setEndpoint('from', id));
+const toPicker = new StationPicker($('picker-to'), 'to', net, (id) => setEndpoint('to', id));
 bindFold($<HTMLButtonElement>('legend-toggle'), $('legend'), 'legend-collapsed', true);
 bindFold($<HTMLButtonElement>('chronology-toggle'), $('chronology'), 'chronology-collapsed', false);
 
@@ -113,7 +113,7 @@ function update(fit = false): void {
   // the button shows the language in use
   const langBtn = $('lang');
   langBtn.textContent = state.lang.toUpperCase();
-  langBtn.setAttribute('aria-label', tr('Язык: русский. Переключить на английский', 'Language: English. Switch to Russian'));
+  langBtn.setAttribute('aria-label', t('languageButton'));
   translatePage();
   setSidebar(document.documentElement.dataset.sidebar === 'collapsed');
   renderTicks();
@@ -171,9 +171,10 @@ $('swap').addEventListener('click', () => {
   update();
 });
 $('lang').addEventListener('click', () => {
-  state.lang = state.lang === 'en' ? 'ru' : 'en';
+  state.lang = nextLang(state.lang);
   setLang(state.lang);
   saveString('lang', state.lang);
+  mapView.localize();
   update();
 });
 $('theme').addEventListener('click', () => {

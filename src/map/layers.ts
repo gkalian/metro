@@ -38,6 +38,14 @@ export function addNetworkLayers(map: MlMap, theme: Theme): void {
       15, ['*', 8, k],
     ] as ExpressionSpecification;
 
+  // lines sharing track sit side by side, a line width apart; historic track has no side
+  const side = ['coalesce', ['get', 'side'], 0] as ExpressionSpecification;
+  const offset = ['interpolate', ['linear'], ['zoom'],
+    9, ['*', 2.2, side],
+    12, ['*', 4.5, side],
+    15, ['*', 8, side],
+  ] as ExpressionSpecification;
+
   // Suburban rail lies under the metro, drawn the classic way: dark line with a dashed light core.
   map.addLayer({
     id: 'rail-lines',
@@ -95,7 +103,7 @@ export function addNetworkLayers(map: MlMap, theme: Theme): void {
     source: 'segments',
     filter: ['==', ['get', 'status'], 'open'],
     layout: round,
-    paint: { 'line-color': c.casing, 'line-width': width(1.5), 'line-opacity': dimmed(0.9, 0) },
+    paint: { 'line-offset': offset, 'line-color': c.casing, 'line-width': width(1.5), 'line-opacity': dimmed(0.9, 0) },
   });
   map.addLayer({
     id: 'segments-project',
@@ -103,6 +111,7 @@ export function addNetworkLayers(map: MlMap, theme: Theme): void {
     source: 'segments',
     filter: ['==', ['get', 'status'], 'project'],
     paint: {
+      'line-offset': offset,
       'line-color': ['get', 'color'],
       'line-width': width(0.7),
       'line-dasharray': [1, 2],
@@ -115,6 +124,7 @@ export function addNetworkLayers(map: MlMap, theme: Theme): void {
     source: 'segments',
     filter: ['==', ['get', 'status'], 'construct'],
     paint: {
+      'line-offset': offset,
       'line-color': ['get', 'color'],
       'line-width': width(0.85),
       'line-dasharray': [3, 1.5],
@@ -127,7 +137,12 @@ export function addNetworkLayers(map: MlMap, theme: Theme): void {
     source: 'segments',
     filter: ['==', ['get', 'status'], 'open'],
     layout: round,
-    paint: { 'line-color': ['get', 'color'], 'line-width': width(1), 'line-opacity': dimmed(1, 0.22) },
+    paint: {
+      'line-offset': offset,
+      'line-color': ['get', 'color'],
+      'line-width': width(1),
+      'line-opacity': dimmed(1, 0.22),
+    },
   });
   // The route is one line coloured by a gradient along it, so it can grow from start to end.
   map.addLayer({
@@ -173,7 +188,7 @@ export function addNetworkLayers(map: MlMap, theme: Theme): void {
     paint: {
       'circle-radius': radius(swell(['case', ['get', 'planned'], 0.8, 1])),
       'circle-color': c.casing,
-      'circle-stroke-color': ['get', 'color'],
+      'circle-stroke-color': ['case', ['get', 'shared'], c.text, ['get', 'color']],
       'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 9, 1.4, 12, 2.4, 15, 3.6],
       'circle-opacity': dimmed(1, 0.5),
       'circle-stroke-opacity': faded(['case', ['get', 'dim'], 0.25, ['get', 'planned'], 0.75, 1]),

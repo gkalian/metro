@@ -7,7 +7,9 @@ import {
   isOpen,
   isPast,
   lineAt,
+  lineRunning,
   lineRuns,
+  linesAt,
   sectionLine,
   type Horizon,
   type Network,
@@ -68,6 +70,20 @@ export function wayColor(net: Network, a: string, b: string, horizon: Horizon): 
 }
 
 /**
+ * Colour of each ride along a route by station pair: the line of the train taken, which on
+ * shared track may differ from the line the stations belong to.
+ */
+export function routeColors(net: Network, route: Route | null): Map<string, string> {
+  const colors = new Map<string, string>();
+  for (const leg of route?.legs ?? []) {
+    if (leg.kind !== 'ride') continue;
+    const color = net.lineById.get(leg.lineId)!.color;
+    leg.stations.slice(0, -1).forEach((id, i) => colors.set(pairKey(id, leg.stations[i + 1]!), color));
+  }
+  return colors;
+}
+
+/**
  * Metro features keyed by `properties.key` for the fader. A key changes with the look of a
  * feature (status, line), so the old look cross-fades into the new one.
  */
@@ -84,7 +100,10 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
   const showLater = showPlanned && !isPast(horizon);
 
   const segments: Feature<LineString>[] = [];
+  /** Lines drawn between each pair of stations, so shared track is drawn side by side. */
+  const sharing = new Map<string, string[]>();
   for (const line of net.lines) {
+    if (!lineRunning(line, horizon)) continue;
     for (const run of lineRuns(net, line)) {
       run.slice(0, -1).forEach(({ station: s }, i) => {
         const next = run[i + 1]!.station;
@@ -92,13 +111,20 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
         if (!showLater && status !== 'open') return;
         const key = pairKey(s.id, next.id);
         const color = sectionLine(net, line, s, next, horizon).color;
+        const lines = sharing.get(key) ?? sharing.set(key, []).get(key)!;
+        lines.push(color);
         segments.push({
           type: 'Feature',
           geometry: { type: 'LineString', coordinates: curves.get(key)! },
-          properties: { key: `${key}|${status}|${color}`, color, status, dim: dimTrack },
+          properties: { key: `${key}|${status}|${color}`, pair: key, color, status, dim: dimTrack, side: 0 },
         });
       });
     }
+  }
+  // on shared track each line keeps its place: -0.5 and 0.5 line widths from the middle for two
+  for (const f of segments) {
+    const lines = sharing.get(f.properties!.pair as string)!;
+    f.properties!.side = lines.indexOf(f.properties!.color as string) - (lines.length - 1) / 2;
   }
   for (const link of activeLinks(net, horizon)) {
     const a = net.stations.get(link.a)!;
@@ -121,15 +147,18 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
     if (!showLater && !open) continue;
     const role = s.id === from ? 'from' : s.id === to ? 'to' : '';
     const color = lineAt(net, s, horizon).color;
+    const shared = linesAt(net, s, horizon).length > 1;
     stations.push({
       type: 'Feature',
       geometry: { type: 'Point', coordinates: [s.lon, s.lat] },
       properties: {
-        key: `${s.id}|${open}|${color}`,
+        key: `${s.id}|${open}|${color}|${shared}`,
         id: s.id,
         name: nameOf(s),
         color,
         planned: !open,
+        // trains of several lines call here: drawn like a transfer
+        shared,
         role,
         dim: hasRoute && !routeStations.has(s.id),
         // labels: endpoints first, then route stops, then open stations

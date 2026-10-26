@@ -1,4 +1,5 @@
-import type { Map as MlMap, StyleSpecification } from 'maplibre-gl';
+import type { ExpressionSpecification, Map as MlMap, StyleSpecification } from 'maplibre-gl';
+import { lang } from '../app/i18n';
 
 export type Theme = 'light' | 'dark';
 export const THEMES: readonly Theme[] = ['light', 'dark'];
@@ -20,12 +21,19 @@ export function loadBasemap(map: MlMap, theme: Theme): void {
   map.setStyle(BASEMAP[theme], { transformStyle: (_, next) => withMontserrat(next) });
 }
 
-/** Prefer Russian names on the basemap where the tiles carry them. */
+/**
+ * Basemap names in the page's language where the tiles carry them. Without an English name
+ * the Latin spelling is better than the Cyrillic one; without a Russian one, the local name.
+ */
 export function localizeBasemap(map: MlMap): void {
+  const field: ExpressionSpecification =
+    lang() === 'en'
+      ? ['coalesce', ['get', 'name:en'], ['get', 'name:latin'], ['get', 'name']]
+      : ['coalesce', ['get', 'name:ru'], ['get', 'name']];
   for (const layer of map.getStyle().layers) {
     if (layer.type !== 'symbol' || !layer.layout?.['text-field']) continue;
     if (!JSON.stringify(layer.layout['text-field']).includes('name')) continue;
-    map.setLayoutProperty(layer.id, 'text-field', ['coalesce', ['get', 'name:ru'], ['get', 'name']]);
+    map.setLayoutProperty(layer.id, 'text-field', field);
   }
 }
 

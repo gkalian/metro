@@ -1,11 +1,14 @@
-import { activeLinks, inService, isOpen, lineRuns, sectionLine, type Horizon, type Network, type Station } from './network';
+import { activeLinks, inService, isOpen, lineRunning, lineRuns, sectionLine, type Horizon, type Network, type Station } from './network';
 
 export interface Edge {
   to: string;
   time: number;
   kind: 'ride' | 'transfer';
-  /** Line of a ride as it was within the horizon; empty for a transfer. */
-  lineId: string;
+  /**
+   * Lines whose trains make this ride, as they were within the horizon: one, or several
+   * where lines share track; empty for a transfer.
+   */
+  lines: string[];
   estimated: boolean;
   /** Stations passed without stopping, in travel order. */
   via: string[];
@@ -15,7 +18,10 @@ export type Graph = Map<string, Edge[]>;
 
 export interface RideLeg {
   kind: 'ride';
+  /** The line shown for the leg: the first of `lineIds`. */
   lineId: string;
+  /** Every line whose train makes the whole leg: several where lines share track. */
+  lineIds: string[];
   /** Stops, including the boarding and the alighting station. */
   stations: string[];
   time: number;
@@ -26,6 +32,8 @@ export interface TransferLeg {
   from: string;
   to: string;
   time: number;
+  /** Onto a train of another line at the same platform, where lines that shared track part. */
+  change?: boolean;
 }
 
 export type Leg = RideLeg | TransferLeg;
@@ -45,42 +53,57 @@ export function buildGraph(net: Network, horizon: Horizon): Graph {
   const graph: Graph = new Map();
   const add = (from: string, edge: Edge) => {
     const list = graph.get(from);
-    if (list) list.push(edge);
-    else graph.set(from, [edge]);
+    if (!list) {
+      graph.set(from, [edge]);
+      return;
+    }
+    // two lines on the same track make one ride that either train takes
+    const same = edge.kind === 'ride' && list.find(
+      (e) => e.kind === 'ride' && e.to === edge.to && e.time === edge.time && e.via.join() === edge.via.join(),
+    );
+    if (same) {
+      for (const id of edge.lines) if (!same.lines.includes(id)) same.lines.push(id);
+      same.estimated ||= edge.estimated;
+    } else {
+      list.push(edge);
+    }
   };
 
-  for (const [line, run] of net.lines.flatMap((line) => lineRuns(net, line).map((run) => [line, run] as const))) {
-    let prev: Station | null = null;
-    let time = 0;
-    let estimated = false;
-    let via: string[] = [];
-    for (const { station: s, toNext, estimated: est } of run) {
-      if (!inService(s, horizon)) {
-        prev = null;
-        continue;
-      }
-      if (isOpen(s, horizon)) {
-        if (prev) {
-          const lineId = sectionLine(net, line, prev, s, horizon).id;
-          add(prev.id, { to: s.id, time, kind: 'ride', lineId, estimated, via });
-          add(s.id, { to: prev.id, time, kind: 'ride', lineId, estimated, via: [...via].reverse() });
+  for (const line of net.lines) {
+    if (!lineRunning(line, horizon)) continue;
+    for (const run of lineRuns(net, line)) {
+      let prev: Station | null = null;
+      let time = 0;
+      let estimated = false;
+      let via: string[] = [];
+      for (const { station: s, toNext, estimated: est } of run) {
+        if (!inService(s, horizon)) {
+          prev = null;
+          continue;
         }
-        prev = s;
-        time = 0;
-        estimated = false;
-        via = [];
-      } else if (prev) {
-        via.push(s.id);
+        if (isOpen(s, horizon)) {
+          if (prev) {
+            const lineId = sectionLine(net, line, prev, s, horizon).id;
+            add(prev.id, { to: s.id, time, kind: 'ride', lines: [lineId], estimated, via });
+            add(s.id, { to: prev.id, time, kind: 'ride', lines: [lineId], estimated, via: [...via].reverse() });
+          }
+          prev = s;
+          time = 0;
+          estimated = false;
+          via = [];
+        } else if (prev) {
+          via.push(s.id);
+        }
+        time += toNext ?? 0;
+        estimated ||= !!est;
       }
-      time += toNext ?? 0;
-      estimated ||= !!est;
     }
   }
 
   for (const l of activeLinks(net, horizon)) {
     const estimated = !!l.timeEstimated;
-    add(l.a, { to: l.b, time: l.time, kind: 'ride', lineId: l.lineId, estimated, via: [] });
-    add(l.b, { to: l.a, time: l.time, kind: 'ride', lineId: l.lineId, estimated, via: [] });
+    add(l.a, { to: l.b, time: l.time, kind: 'ride', lines: [l.lineId], estimated, via: [] });
+    add(l.b, { to: l.a, time: l.time, kind: 'ride', lines: [l.lineId], estimated, via: [] });
   }
 
   for (const t of net.transfers) {
@@ -88,8 +111,8 @@ export function buildGraph(net: Network, horizon: Horizon): Graph {
     const b = net.stations.get(t.b);
     if (!a || !b) continue;
     if (!(isOpen(a, horizon) && isOpen(b, horizon))) continue;
-    add(a.id, { to: b.id, time: t.time, kind: 'transfer', lineId: '', estimated: false, via: [] });
-    add(b.id, { to: a.id, time: t.time, kind: 'transfer', lineId: '', estimated: false, via: [] });
+    add(a.id, { to: b.id, time: t.time, kind: 'transfer', lines: [], estimated: false, via: [] });
+    add(b.id, { to: a.id, time: t.time, kind: 'transfer', lines: [], estimated: false, via: [] });
   }
   return graph;
 }
@@ -135,6 +158,7 @@ export function findRoute(graph: Graph, from: string, to: string): Route | null 
   const legs: Leg[] = [];
   let transferTime = 0;
   let estimated = false;
+  let changes = 0;
   for (const { from: a, edge } of steps) {
     path.push(...edge.via, edge.to);
     estimated ||= edge.estimated;
@@ -143,16 +167,24 @@ export function findRoute(graph: Graph, from: string, to: string): Route | null 
       legs.push({ kind: 'transfer', from: a, to: edge.to, time: edge.time });
       continue;
     }
-    // a train running on into another line is a new leg, though no change is needed
+    // Stay on board while some line runs the whole way so far: on a fixed path this
+    // greedy choice needs the fewest changes.
     const last = legs.at(-1);
-    if (last?.kind === 'ride' && last.lineId === edge.lineId) {
+    const common = last?.kind === 'ride' ? last.lineIds.filter((id) => edge.lines.includes(id)) : [];
+    if (last?.kind === 'ride' && common.length) {
+      last.lineIds = common;
       last.stations.push(edge.to);
       last.time += edge.time;
-    } else {
-      legs.push({ kind: 'ride', lineId: edge.lineId, stations: [a, edge.to], time: edge.time });
+      continue;
     }
+    if (last?.kind === 'ride') {
+      legs.push({ kind: 'transfer', from: a, to: a, time: 0, change: true });
+      changes++;
+    }
+    legs.push({ kind: 'ride', lineId: '', lineIds: [...edge.lines], stations: [a, edge.to], time: edge.time });
   }
+  for (const leg of legs) if (leg.kind === 'ride') leg.lineId = leg.lineIds[0]!;
 
   const total = dist.get(to)!;
-  return { path, legs, time: total.time, transferTime, transfers: total.transfers, estimated };
+  return { path, legs, time: total.time, transferTime, transfers: total.transfers + changes, estimated };
 }

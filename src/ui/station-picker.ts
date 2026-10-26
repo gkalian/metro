@@ -1,5 +1,5 @@
 import { isOpen, lineAt, type Horizon, type Network, type Station } from '../domain/network';
-import { nameOf, tr } from '../app/i18n';
+import { nameOf, t } from '../app/i18n';
 import { h } from './dom';
 import { normalize } from './format';
 
@@ -17,7 +17,7 @@ export class StationPicker {
 
   constructor(
     root: HTMLElement,
-    private readonly label: { ru: string; en: string },
+    private readonly label: 'from' | 'to',
     private readonly net: Network,
     private readonly onPick: (id: string | null) => void,
   ) {
@@ -49,10 +49,10 @@ export class StationPicker {
 
   set(station: Station | null): void {
     this.value = station;
-    const placeholder = tr(this.label.ru, this.label.en);
+    const placeholder = t(this.label);
     this.input.placeholder = placeholder;
     this.input.setAttribute('aria-label', placeholder);
-    this.clear.title = tr('Очистить', 'Clear');
+    this.clear.title = t('clear');
     this.input.value = station ? nameOf(station) : '';
     // the line as it was in the chosen year
     const line = station && lineAt(this.net, station, this.horizon);
@@ -84,13 +84,13 @@ export class StationPicker {
           {},
           h('span', { className: 'line-badge', textContent: line.id, css: { '--line': line.color } }),
           h('span', { className: 'picker__name', textContent: nameOf(s) }),
-          !isOpen(s) && h('span', { className: 'picker__status', textContent: s.opening ? `${tr('план', 'planned')} ${s.opening}` : tr('без срока', 'no date') }),
+          !isOpen(s) && h('span', { className: 'picker__status', textContent: s.opening ? t('plannedFor', s.opening) : t('noDate') }),
         );
         li.dataset.id = s.id;
         return li;
       }),
     );
-    if (!this.options.length) this.list.append(h('li', { className: 'picker__empty', textContent: tr('Ничего не найдено', 'Nothing found') }));
+    if (!this.options.length) this.list.append(h('li', { className: 'picker__empty', textContent: t('nothingFound') }));
     this.list.hidden = false;
     this.highlight();
   }

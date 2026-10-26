@@ -7,9 +7,10 @@ import type { Point } from '../geo/geometry';
 import type { Network } from '../domain/network';
 import type { Railway } from '../domain/railway';
 import type { Route } from '../domain/routing';
+import { lang } from '../app/i18n';
 import { loadBasemap, localizeBasemap, type Theme } from './basemap';
 import { Fader } from './fade';
-import { metroFeatures, pairKey, railCurves, railFeatures, trackCurves, wayColor, type MapState } from './features';
+import { metroFeatures, pairKey, railCurves, railFeatures, routeColors, trackCurves, wayColor, type MapState } from './features';
 import { addNetworkLayers, EMPTY, FADING, NO_GRADIENT, type FadingSource } from './layers';
 import { exitTooltip, railTooltip, stationTooltip } from './tooltip';
 import { buildTrace, CLEAR, headGradient, traceGradient, type Trace } from './trace';
@@ -27,6 +28,8 @@ maplibregl.setWorkerUrl(workerUrl);
 export class MapView {
   readonly map: MlMap;
   private theme: Theme;
+  /** The basemap's layers are in place; false while a new theme loads. */
+  private styled = false;
   private state: MapState = { showPlanned: true, showRail: true, horizon: null, from: null, to: null, route: null };
   private readonly curves: Map<string, Point[]>;
   private readonly railCurves: Map<string, Point[]>;
@@ -74,6 +77,7 @@ export class MapView {
   setTheme(theme: Theme): void {
     if (theme === this.theme) return;
     this.theme = theme;
+    this.styled = false;
     loadBasemap(this.map, theme);
   }
 
@@ -133,10 +137,12 @@ export class MapView {
       const s = this.net.stations.get(id)!;
       return [s.lon, s.lat];
     };
+    // on shared track the colour is the line of the train taken
+    const rides = routeColors(this.net, this.state.route);
     return buildTrace(path, at, (a, b) => ({
       points: this.curves.get(pairKey(a, b)) ?? [at(a), at(b)],
       // a walk between lines is drawn by the transfer layer
-      color: wayColor(this.net, a, b, this.state.horizon) ?? CLEAR,
+      color: rides.get(pairKey(a, b)) ?? wayColor(this.net, a, b, this.state.horizon) ?? CLEAR,
     }));
   }
 
@@ -207,7 +213,7 @@ export class MapView {
       map.getCanvas().style.cursor = 'pointer';
       const exit = props?.exit ? this.net.exits.find((x) => x.id === props.exit) : undefined;
       // the line in the tooltip depends on the year, so the year is part of the key
-      const key = `${exit?.id ?? s.id}@${this.state.horizon}`;
+      const key = `${exit?.id ?? s.id}@${this.state.horizon}@${lang()}`;
       if (exit) show(key, [exit.lon, exit.lat], () => exitTooltip(this.net, exit, this.state.horizon));
       else show(key, [s.lon, s.lat], () => stationTooltip(this.net, s, this.state.horizon));
     });
@@ -220,14 +226,21 @@ export class MapView {
       if (map.queryRenderedFeatures(e.point, { layers: ['stations-hit'] }).length) return;
       const id = e.features?.[0]?.properties?.id as string | undefined;
       const s = id ? this.rail.stations.get(id) : undefined;
-      if (s) show(s.id, [s.lon, s.lat], () => railTooltip(this.net, this.rail, s));
+      if (s) show(`${s.id}@${lang()}`, [s.lon, s.lat], () => railTooltip(this.net, this.rail, s));
     });
     map.on('mouseleave', 'rail-hit', () => {
       if (!map.getCanvas().style.cursor) hide();
     });
   }
 
+  /** Basemap names follow the page's language; the network's own labels come with the next render. */
+  localize(): void {
+    // a style still loading picks the language up in addLayers
+    if (this.styled) localizeBasemap(this.map);
+  }
+
   private addLayers(): void {
+    this.styled = true;
     localizeBasemap(this.map);
     // the style change dropped the old sources along with their feature states
     this.fader.reset();

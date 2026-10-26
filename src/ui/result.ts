@@ -1,8 +1,8 @@
 import { inService, isOpen, isPast, type Horizon, type Network } from '../domain/network';
 import type { Route } from '../domain/routing';
-import { nameOf, tr } from '../app/i18n';
+import { nameOf, t } from '../app/i18n';
 import { h } from './dom';
-import { count, formatTime } from './format';
+import { formatTime } from './format';
 
 export function renderResult(
   root: HTMLElement,
@@ -11,32 +11,11 @@ export function renderResult(
 ): void {
   const { from, to, route } = state;
   if (!from || !to) {
-    root.replaceChildren(
-      h('p', {
-        className: 'hint',
-        textContent: from
-          ? tr(
-              'Теперь выберите станцию назначения — на карте или в поле «Куда».',
-              'Now pick the destination — on the map or in the “To” field.',
-            )
-          : tr(
-              'Нажмите на две станции на карте или выберите их в полях выше — посчитаем время в пути.',
-              'Click two stations on the map or pick them in the fields above to get the travel time.',
-            ),
-      }),
-    );
+    root.replaceChildren(h('p', { className: 'hint', textContent: t(from ? 'hintPickTo' : 'hintPickBoth') }));
     return;
   }
   if (!route) {
-    root.replaceChildren(
-      h('p', {
-        className: 'hint',
-        textContent: tr(
-          `В сети ${state.horizonLabel} между этими станциями нет пути — сдвиньте ползунок года.`,
-          `No way between these stations in the network ${state.horizonLabel} — move the year slider.`,
-        ),
-      }),
-    );
+    root.replaceChildren(h('p', { className: 'hint', textContent: t('noRoute', state.horizonLabel) }));
     return;
   }
 
@@ -49,20 +28,32 @@ export function renderResult(
     h('div', {
       className: 'summary__meta',
       textContent: route.transfers
-        ? `${count(route.transfers, ['пересадка', 'пересадки', 'пересадок'], ['transfer', 'transfers'])} · ${tr('в поездах', 'on trains')} ${formatTime(rideTime)} · ${tr('переходы', 'walking')} ${formatTime(route.transferTime)}`
-        : tr('без пересадок', 'no transfers'),
+        ? [
+            t('transfers', route.transfers),
+            // a change of trains where lines sharing track part takes no walking
+            route.transferTime && t('rideAndWalk', formatTime(rideTime), formatTime(route.transferTime)),
+          ]
+            .filter(Boolean)
+            .join(' · ')
+        : t('noTransfers'),
     }),
   );
 
   const legs = h('ol', { className: 'legs' });
-  for (const leg of route.legs) {
+  route.legs.forEach((leg, i) => {
+    if (leg.kind === 'transfer' && leg.change) {
+      const next = route.legs[i + 1];
+      const onto = next?.kind === 'ride' ? next.lineIds : [];
+      legs.append(h('li', { className: 'leg leg--transfer' }, t('changeTrains', nameOf(station(leg.from)), onto)));
+      return;
+    }
     if (leg.kind === 'transfer') {
-      legs.append(
-        h('li', { className: 'leg leg--transfer' }, `${tr(`Переход на «${nameOf(station(leg.to))}»`, `Transfer to “${nameOf(station(leg.to))}”`)} · ${formatTime(leg.time)}`),
-      );
-      continue;
+      legs.append(h('li', { className: 'leg leg--transfer' }, `${t('walkTo', nameOf(station(leg.to)))} · ${formatTime(leg.time)}`));
+      return;
     }
     const line = net.lineById.get(leg.lineId)!;
+    // on shared track a train of any of these lines will do
+    const lines = leg.lineIds.map((id) => net.lineById.get(id)!);
     const middle = leg.stations.slice(1, -1);
     legs.append(
       h(
@@ -71,8 +62,8 @@ export function renderResult(
         h(
           'div',
           { className: 'leg__head' },
-          h('span', { className: 'line-badge', textContent: line.id }),
-          h('span', { className: 'leg__line', textContent: nameOf(line) }),
+          ...lines.map((l) => h('span', { className: 'line-badge', textContent: l.id, css: { '--line': l.color } })),
+          h('span', { className: 'leg__line', textContent: lines.length > 1 ? t('anyTrain', leg.lineIds) : nameOf(line) }),
           h('span', { className: 'leg__time', textContent: formatTime(leg.time) }),
         ),
         h('div', { className: 'leg__stop', textContent: nameOf(station(leg.stations[0]!)) }),
@@ -80,36 +71,22 @@ export function renderResult(
           ? h(
               'details',
               {},
-              h('summary', {
-                textContent: `${count(middle.length, ['станция', 'станции', 'станций'], ['station', 'stations'])} ${tr('без пересадки', 'in between')}`,
-              }),
+              h('summary', { textContent: t('stopsBetween', middle.length) }),
               h('ul', {}, ...middle.map((id) => h('li', { textContent: nameOf(station(id)) }))),
             )
           : null,
         h('div', { className: 'leg__stop', textContent: nameOf(station(leg.stations.at(-1)!)) }),
       ),
     );
-  }
+  });
 
   // an endpoint does not take passengers yet, or the way runs through track not built yet
   const future = [from, to].some((id) => !isOpen(station(id))) || route.path.some((id) => !inService(station(id)));
   const notes = [
-    tr('Время расчётное, без ожидания поезда.', 'Estimated time, not counting the wait for a train.'),
-    future &&
-      tr(
-        'Будущая сеть — по схеме развития до 2040 года; сроки могут сдвинуться.',
-        'The future network follows the development plan to 2040; dates may shift.',
-      ),
-    isPast(state.horizon) &&
-      tr(
-        'Сеть прошлых лет — по датам открытия станций; время перегонов — сегодняшнее.',
-        'Past networks follow station opening dates; running times are today’s.',
-      ),
-    route.estimated &&
-      tr(
-        'Часть перегонов оценена по расстоянию — по ним нет опубликованных данных.',
-        'Some running times are estimated from distance: there is no published data for them.',
-      ),
+    t('noteEstimate'),
+    future && t('noteFuture'),
+    isPast(state.horizon) && t('notePast'),
+    route.estimated && t('noteEstimatedRuns'),
   ].filter(Boolean);
 
   root.replaceChildren(summary, legs, h('p', { className: 'note', textContent: notes.join(' ') }));

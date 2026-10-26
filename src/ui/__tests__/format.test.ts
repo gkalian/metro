@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { setLang } from '../../app/i18n';
-import { count, formatTime, normalize, plural } from '../format';
+import { setLang, t } from '../../app/i18n';
+import { plural } from '../../app/messages/ru';
+import { formatTime, normalize } from '../format';
 
 afterEach(() => setLang('ru'));
 
@@ -32,8 +33,8 @@ describe('in English', () => {
   it('formats time and counts', () => {
     setLang('en');
     expect(formatTime(65 * 60)).toBe('1 h 05 min');
-    expect(count(1, ['пересадка', 'пересадки', 'пересадок'], ['transfer', 'transfers'])).toBe('1 transfer');
-    expect(count(3, ['пересадка', 'пересадки', 'пересадок'], ['transfer', 'transfers'])).toBe('3 transfers');
+    expect(t('transfers', 1)).toBe('1 transfer');
+    expect(t('transfers', 3)).toBe('3 transfers');
   });
 });
 

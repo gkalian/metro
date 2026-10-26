@@ -10,7 +10,10 @@ import transfers from '../transfers.json';
 
 const net = loadNetwork();
 const rail = loadRailway();
-const allStations: Station[] = net.lines.flatMap((l) => [...l.stations, ...l.branches.flatMap((b) => b.stations)]);
+// each station once, from the file of its own line; other lines only name it
+const allStations: Station[] = net.lines.flatMap((l) =>
+  [...l.stations, ...l.branches.flatMap((b) => b.stations)].filter((s) => s.lineId === l.id),
+);
 const metro = (id: string) => net.stations.has(id);
 const line = (id: string) => net.lineById.has(id);
 // the map's maxBounds
@@ -23,9 +26,9 @@ describe('metro lines', () => {
     expect(ids.filter((id, i) => ids.indexOf(id) !== i)).toEqual([]);
   });
 
-  it('fork branches from a station of their own line', () => {
+  it('fork branches from a station the line calls at', () => {
     for (const l of net.lines) {
-      for (const b of l.branches) expect(net.stations.get(b.from)?.lineId, `${l.id}: ${b.from}`).toBe(l.id);
+      for (const b of l.branches) expect(net.stations.get(b.from)?.lineIds, `${l.id}: ${b.from}`).toContain(l.id);
     }
   });
 
@@ -36,6 +39,21 @@ describe('metro lines', () => {
   it('name every line and station in English too', () => {
     const unnamed = [...net.lines, ...allStations, ...rail.stations.values()].filter((x) => !x.nameEn?.trim());
     expect(unnamed.map((x) => x.name)).toEqual([]);
+  });
+
+  it('give lines on shared track the same run times', () => {
+    // a ride both lines make must take both the same time, or it counts as two different rides
+    for (const l of net.lines) {
+      for (const run of l.runs) {
+        run.slice(0, -1).forEach((r, i) => {
+          const next = run[i + 1]!.station;
+          for (const orun of net.lines.filter((o) => o !== l).flatMap((o) => o.runs)) {
+            const j = orun.findIndex((o) => o.station === r.station);
+            if (j >= 0 && orun[j + 1]?.station === next) expect(orun[j]!.toNext, `${l.id}: ${r.station.id}`).toBe(r.toNext);
+          }
+        });
+      }
+    }
   });
 
   it('date every station open today, so the past can be drawn', () => {
