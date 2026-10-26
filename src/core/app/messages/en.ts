@@ -40,7 +40,7 @@ export const en: Messages = {
   anyTrain: (lines) => `Any train of lines ${lines.join(' and ')}`,
   stopsBetween: (n) => `${n} ${n === 1 ? 'station' : 'stations'} in between`,
   noteEstimate: 'Estimated time, not counting the wait for a train.',
-  noteFuture: 'The future network follows the development plan to 2040; dates may shift.',
+  noteFuture: 'The future network follows the development plans; dates may shift.',
   notePast: 'Past networks follow station opening dates; running times are today’s.',
   noteEstimatedRuns: 'Some running times are estimated from distance: there is no published data for them.',
 

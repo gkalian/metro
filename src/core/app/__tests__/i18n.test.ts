@@ -1,7 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { LANGS, nameOf, nextLang, noteDate, setLang, t } from '../i18n';
+import { LANGS, nameOf, nextLang, noteDate, setCityMessages, setLang, t } from '../i18n';
 
-afterEach(() => setLang('ru'));
+afterEach(() => {
+  setLang('ru');
+  setCityMessages();
+});
 
 describe('nameOf', () => {
   const s = { name: 'Автово', nameEn: 'Avtovo' };
@@ -26,6 +29,13 @@ describe('t', () => {
     setLang('en');
     expect(t('noTransfers')).toBe('no transfers');
     expect(t('anyTrain', ['1', '2'])).toBe('Any train of lines 1 and 2');
+  });
+
+  it('takes the city’s wording where it has one', () => {
+    setCityMessages({ ru: { noteFuture: 'По плану до 2040 года.' } });
+    expect(t('noteFuture')).toBe('По плану до 2040 года.');
+    setLang('en');
+    expect(t('noteFuture')).toBe('The future network follows the development plans; dates may shift.');
   });
 });
 

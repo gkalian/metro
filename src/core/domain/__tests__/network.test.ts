@@ -1,31 +1,42 @@
 import { describe, expect, it } from 'vitest';
 import { activeLinks, decadeHorizons, inService, isOpen, isPast, lineAt, loadNetwork, sectionLine } from '../network';
+import { spb } from '../../../cities/spb/city';
 
-const net = loadNetwork();
+const net = loadNetwork(spb.network);
 const st = (id: string) => net.stations.get(id)!;
+
+describe('loadNetwork', () => {
+  const stop = (id: string) => ({ id, name: id, lat: 0, lon: 0, status: 'open' });
+  const line = (id: string, stations: unknown[]) => ({ id, name: id, color: '#000', stations });
+
+  it('refuses a station described twice or an unknown one', () => {
+    expect(() => loadNetwork({ lines: [line('1', [stop('a')]), line('2', [stop('a')])] })).toThrow(/twice/);
+    expect(() => loadNetwork({ lines: [line('1', [stop('a'), { ref: 'b' }])] })).toThrow(/unknown station b/);
+  });
+});
 
 describe('isOpen / inService', () => {
   it('opens stations by their year when looking back', () => {
-    expect(isOpen(st('sportivnaya'), 1989)).toBe(false);
-    expect(isOpen(st('sportivnaya'), 1999)).toBe(true);
+    expect(isOpen(net, st('sportivnaya'), 1989)).toBe(false);
+    expect(isOpen(net, st('sportivnaya'), 1999)).toBe(true);
   });
 
   it('runs trains through a station before it opens', () => {
     // «Адмиралтейская»: trains since 1997, passengers since 2011
-    expect(isOpen(st('admiralteyskaya'), 1999)).toBe(false);
-    expect(inService(st('admiralteyskaya'), 1999)).toBe(true);
+    expect(isOpen(net, st('admiralteyskaya'), 1999)).toBe(false);
+    expect(inService(net, st('admiralteyskaya'), 1999)).toBe(true);
   });
 
   it('opens planned stations by the scheme year, undated ones only with every plan', () => {
-    expect(isOpen(st('kamenka'))).toBe(false);
-    expect(isOpen(st('kvc-ekspoforum'), 2040)).toBe(false);
-    expect(isOpen(st('kvc-ekspoforum'), Infinity)).toBe(true);
+    expect(isOpen(net, st('kamenka'))).toBe(false);
+    expect(isOpen(net, st('kvc-ekspoforum'), 2040)).toBe(false);
+    expect(isOpen(net, st('kvc-ekspoforum'), Infinity)).toBe(true);
   });
 
   it('tells history from plans', () => {
-    expect(isPast(null)).toBe(false);
-    expect(isPast(1999)).toBe(true);
-    expect(isPast(2040)).toBe(false);
+    expect(isPast(net, null)).toBe(false);
+    expect(isPast(net, 1999)).toBe(true);
+    expect(isPast(net, 2040)).toBe(false);
   });
 });
 

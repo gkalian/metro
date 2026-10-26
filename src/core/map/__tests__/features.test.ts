@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { loadNetwork } from '../../domain/network';
 import { loadRailway } from '../../domain/railway';
+import { spb } from '../../../cities/spb/city';
 import { buildGraph, findRoute } from '../../domain/routing';
 import { metroFeatures, pairKey, railCurves, railFeatures, trackCurves, wayColor, type MapState } from '../features';
 
-const net = loadNetwork();
-const rail = loadRailway();
+const net = loadNetwork(spb.network);
+const rail = loadRailway(spb.railway);
 const curves = trackCurves(net);
 const color = (lineId: string) => net.lineById.get(lineId)!.color;
 const base: MapState = { showPlanned: true, showRail: true, horizon: null, from: null, to: null, route: null };

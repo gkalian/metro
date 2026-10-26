@@ -1,4 +1,4 @@
-import { activeLinks, inService, isOpen, lineRunning, lineRuns, sectionLine, type Horizon, type Network, type Station } from './network';
+import { activeLinks, inService, isOpen, lineRunning, sectionLine, type Horizon, type Network, type Station } from './network';
 
 export interface Edge {
   to: string;
@@ -18,9 +18,7 @@ export type Graph = Map<string, Edge[]>;
 
 export interface RideLeg {
   kind: 'ride';
-  /** The line shown for the leg: the first of `lineIds`. */
-  lineId: string;
-  /** Every line whose train makes the whole leg: several where lines share track. */
+  /** Every line whose train makes the whole leg: several where lines share track; the first is shown. */
   lineIds: string[];
   /** Stops, including the boarding and the alighting station. */
   stations: string[];
@@ -70,18 +68,18 @@ export function buildGraph(net: Network, horizon: Horizon): Graph {
   };
 
   for (const line of net.lines) {
-    if (!lineRunning(line, horizon)) continue;
-    for (const run of lineRuns(net, line)) {
+    if (!lineRunning(net, line, horizon)) continue;
+    for (const run of line.runs) {
       let prev: Station | null = null;
       let time = 0;
       let estimated = false;
       let via: string[] = [];
       for (const { station: s, toNext, estimated: est } of run) {
-        if (!inService(s, horizon)) {
+        if (!inService(net, s, horizon)) {
           prev = null;
           continue;
         }
-        if (isOpen(s, horizon)) {
+        if (isOpen(net, s, horizon)) {
           if (prev) {
             const lineId = sectionLine(net, line, prev, s, horizon).id;
             add(prev.id, { to: s.id, time, kind: 'ride', lines: [lineId], estimated, via });
@@ -110,7 +108,7 @@ export function buildGraph(net: Network, horizon: Horizon): Graph {
     const a = net.stations.get(t.a);
     const b = net.stations.get(t.b);
     if (!a || !b) continue;
-    if (!(isOpen(a, horizon) && isOpen(b, horizon))) continue;
+    if (!(isOpen(net, a, horizon) && isOpen(net, b, horizon))) continue;
     add(a.id, { to: b.id, time: t.time, kind: 'transfer', lines: [], estimated: false, via: [] });
     add(b.id, { to: a.id, time: t.time, kind: 'transfer', lines: [], estimated: false, via: [] });
   }
@@ -181,9 +179,8 @@ export function findRoute(graph: Graph, from: string, to: string): Route | null 
       legs.push({ kind: 'transfer', from: a, to: a, time: 0, change: true });
       changes++;
     }
-    legs.push({ kind: 'ride', lineId: '', lineIds: [...edge.lines], stations: [a, edge.to], time: edge.time });
+    legs.push({ kind: 'ride', lineIds: [...edge.lines], stations: [a, edge.to], time: edge.time });
   }
-  for (const leg of legs) if (leg.kind === 'ride') leg.lineId = leg.lineIds[0]!;
 
   const total = dist.get(to)!;
   return { path, legs, time: total.time, transferTime, transfers: total.transfers + changes, estimated };

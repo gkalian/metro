@@ -1,5 +1,3 @@
-import raw from '../data/railway.json';
-
 /** Suburban rail stop from the metro scheme; shown on the map only, not routed. */
 export interface RailStation {
   id: string;
@@ -18,13 +16,19 @@ export interface RailRoute {
   stations: string[];
 }
 
+/** Suburban rail as a city's data file gives it. */
+export interface RailwayData {
+  routes: RailRoute[];
+  stations: RailStation[];
+}
+
 export interface Railway {
   routes: RailRoute[];
   stations: Map<string, RailStation>;
 }
 
-export function loadRailway(): Railway {
-  const data = raw as { routes: RailRoute[]; stations: RailStation[] };
+/** The city's suburban rail; none when the city has no such data. */
+export function loadRailway(data: RailwayData = { routes: [], stations: [] }): Railway {
   return { routes: data.routes, stations: new Map(data.stations.map((s) => [s.id, s])) };
 }
 

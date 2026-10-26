@@ -49,6 +49,7 @@ export class MapView {
     container: string,
     private readonly net: Network,
     private readonly rail: Railway,
+    bounds: [[number, number], [number, number]],
     theme: Theme,
     private readonly onStationClick: (id: string) => void,
   ) {
@@ -60,10 +61,7 @@ export class MapView {
       bounds: networkBounds(net),
       fitBoundsOptions: { padding: viewPadding() },
       minZoom: 8,
-      maxBounds: [
-        [28.6, 59.3],
-        [32.0, 60.5],
-      ],
+      maxBounds: bounds,
       attributionControl: { compact: true },
     });
     this.fader = new Fader(this.map, REDUCED_MOTION ? 0 : FADE_MS);

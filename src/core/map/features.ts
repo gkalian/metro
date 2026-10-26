@@ -8,7 +8,6 @@ import {
   isPast,
   lineAt,
   lineRunning,
-  lineRuns,
   linesAt,
   sectionLine,
   type Horizon,
@@ -36,7 +35,7 @@ export const pairKey = (a: string, b: string): string => (a < b ? `${a}|${b}` : 
 /** Smoothed track between neighbouring stations, by station pair. */
 export function trackCurves(net: Network): Map<string, Point[]> {
   const curves = new Map<string, Point[]>();
-  for (const run of net.lines.flatMap((line) => lineRuns(net, line))) {
+  for (const run of net.lines.flatMap((line) => line.runs)) {
     const curve = smoothLine(run.map(({ station: s }) => [s.lon, s.lat]));
     run.slice(0, -1).forEach(({ station: s }, i) => curves.set(pairKey(s.id, run[i + 1]!.station.id), curve[i]!));
   }
@@ -77,7 +76,7 @@ export function routeColors(net: Network, route: Route | null): Map<string, stri
   const colors = new Map<string, string>();
   for (const leg of route?.legs ?? []) {
     if (leg.kind !== 'ride') continue;
-    const color = net.lineById.get(leg.lineId)!.color;
+    const color = net.lineById.get(leg.lineIds[0]!)!.color;
     leg.stations.slice(0, -1).forEach((id, i) => colors.set(pairKey(id, leg.stations[i + 1]!), color));
   }
   return colors;
@@ -97,17 +96,17 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
   // with a route every track is muted, so the route line grows visibly over its own
   const dimTrack = hasRoute;
   // looking back, what came later is left out rather than drawn as planned
-  const showLater = showPlanned && !isPast(horizon);
+  const showLater = showPlanned && !isPast(net, horizon);
 
   const segments: Feature<LineString>[] = [];
   /** Lines drawn between each pair of stations, so shared track is drawn side by side. */
   const sharing = new Map<string, string[]>();
   for (const line of net.lines) {
-    if (!lineRunning(line, horizon)) continue;
-    for (const run of lineRuns(net, line)) {
+    if (!lineRunning(net, line, horizon)) continue;
+    for (const run of line.runs) {
       run.slice(0, -1).forEach(({ station: s }, i) => {
         const next = run[i + 1]!.station;
-        const status = segmentStatus(s, next, horizon);
+        const status = segmentStatus(net, s, next, horizon);
         if (!showLater && status !== 'open') return;
         const key = pairKey(s.id, next.id);
         const color = sectionLine(net, line, s, next, horizon).color;
@@ -143,7 +142,7 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
 
   const stations: Feature<GeoPoint>[] = [];
   for (const s of net.stations.values()) {
-    const open = isOpen(s, horizon);
+    const open = isOpen(net, s, horizon);
     if (!showLater && !open) continue;
     const role = s.id === from ? 'from' : s.id === to ? 'to' : '';
     const color = lineAt(net, s, horizon).color;
@@ -171,7 +170,7 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
   for (const t of net.transfers) {
     const a = net.stations.get(t.a)!;
     const b = net.stations.get(t.b)!;
-    const planned = !(isOpen(a, horizon) && isOpen(b, horizon));
+    const planned = !(isOpen(net, a, horizon) && isOpen(net, b, horizon));
     if (planned && !showLater) continue;
     const key = pairKey(a.id, b.id);
     transfers.push({
@@ -199,6 +198,7 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
         name: nameOf(s),
         color,
         planned: false,
+        shared: false,
         role,
         dim,
         rank: role ? 0 : routeStops.has(s.id) ? 1 : 2,
@@ -252,7 +252,7 @@ export function railFeatures(net: Network, rail: Railway, curves: Map<string, Po
   return { lines, links, stations };
 }
 
-function segmentStatus(a: Station, b: Station, horizon: Horizon): Status {
-  if (inService(a, horizon) && inService(b, horizon)) return 'open';
+function segmentStatus(net: Network, a: Station, b: Station, horizon: Horizon): Status {
+  if (inService(net, a, horizon) && inService(net, b, horizon)) return 'open';
   return a.status === 'project' || b.status === 'project' ? 'project' : 'construct';
 }

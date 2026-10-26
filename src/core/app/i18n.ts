@@ -12,11 +12,18 @@ export const LANGS: readonly Lang[] = ['ru', 'en'];
 const MESSAGES: Record<Lang, Messages> = { ru, en };
 
 let current: Lang = 'ru';
+/** The city's own texts, in place of the engine's. */
+let overrides: { [L in Lang]?: Partial<Messages> } = {};
 
 export const lang = (): Lang => current;
 
 export function setLang(value: Lang): void {
   current = value;
+}
+
+/** Texts the city words its own way, e.g. which plan its future network follows. */
+export function setCityMessages(messages: { [L in Lang]?: Partial<Messages> } = {}): void {
+  overrides = messages;
 }
 
 /** The language after the current one, for the language button. */
@@ -27,7 +34,7 @@ type Args<K extends MessageKey> = Messages[K] extends (...args: infer A) => stri
 
 /** The text under `key` in the current language, e.g. `t('transfers', 2)`. */
 export function t<K extends MessageKey>(key: K, ...args: Args<K>): string {
-  const text = MESSAGES[current][key];
+  const text = overrides[current]?.[key] ?? MESSAGES[current][key];
   return typeof text === 'function' ? (text as (...a: unknown[]) => string)(...args) : text;
 }
 

@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { decadeHorizons, isOpen, loadNetwork } from '../network';
+import { spb } from '../../../cities/spb/city';
 import { buildGraph, findRoute } from '../routing';
 
-const net = loadNetwork();
+const net = loadNetwork(spb.network);
 const open = buildGraph(net, null);
 const planned = buildGraph(net, Infinity);
 
@@ -74,7 +75,7 @@ describe('findRoute', () => {
     const r = findRoute(in1999, 'ladozhskaya', 'staraya-derevnya')!;
     expect(r.transfers).toBe(0);
     expect(r.path).toContain('sadovaya');
-    expect(r.legs[0]).toMatchObject({ kind: 'ride', lineId: '4' });
+    expect(r.legs[0]).toMatchObject({ kind: 'ride', lineIds: ['4'] });
     const today = findRoute(open, 'ladozhskaya', 'staraya-derevnya')!;
     expect(today.transfers).toBeGreaterThan(0);
   });
@@ -87,17 +88,17 @@ describe('findRoute', () => {
     ] as const) {
       const r = findRoute(in1999, from, to)!;
       expect(r.legs, `${from} → ${to}`).toHaveLength(1);
-      expect(r.legs[0]).toMatchObject({ kind: 'ride', lineId: '4' });
+      expect(r.legs[0]).toMatchObject({ kind: 'ride', lineIds: ['4'] });
     }
     // today the same trip starts on line 5
     const today = findRoute(open, 'sportivnaya', 'ladozhskaya')!;
-    expect(today.legs[0]).toMatchObject({ kind: 'ride', lineId: '5' });
+    expect(today.legs[0]).toMatchObject({ kind: 'ride', lineIds: ['5'] });
   });
 
   it('keeps the network of every decade connected', () => {
     for (const year of decadeHorizons(net)) {
       const graph = buildGraph(net, year);
-      const ids = [...net.stations.values()].filter((s) => isOpen(s, year)).map((s) => s.id);
+      const ids = [...net.stations.values()].filter((s) => isOpen(net, s, year)).map((s) => s.id);
       for (const id of ids) expect(findRoute(graph, ids[0]!, id), `${year}: ${id}`).not.toBeNull();
     }
   });

@@ -5,26 +5,26 @@ import { decadeHorizons, isPast, openingYears, type Horizon, type Network } from
 export const horizonsOf = (net: Network): Horizon[] => [...decadeHorizons(net), null, ...openingYears(net), Infinity];
 
 /** E.g. «к концу 1970-х», to follow «в сети». */
-export const horizonLabel = (h: Horizon): string =>
+export const horizonLabel = (net: Network, h: Horizon): string =>
   h === null
     ? t('horizonToday')
     : h === Infinity
       ? t('horizonAllPlans')
-      : isPast(h)
+      : isPast(net, h)
         ? t('horizonDecade', h - 9)
         : t('horizonYear', h);
 
 /** What the «Хронология» heading adds; today is the default and goes unsaid. */
-export const chronologyValue = (h: Horizon): string =>
-  h === null ? '' : `: ${h === Infinity ? t('chronologyAllPlans') : horizonLabel(h)}`;
+export const chronologyValue = (net: Network, h: Horizon): string =>
+  h === null ? '' : `: ${h === Infinity ? t('chronologyAllPlans') : horizonLabel(net, h)}`;
 
 /** Short label under a slider stop. */
-export const tickLabel = (h: Horizon): string =>
+export const tickLabel = (net: Network, h: Horizon): string =>
   h === null
     ? t('tickNow')
     : h === Infinity
       ? t('tickAll')
-      : isPast(h)
+      : isPast(net, h)
         ? t('tickDecade', h - 9)
         : String(h);
 

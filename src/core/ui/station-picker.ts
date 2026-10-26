@@ -69,7 +69,7 @@ export class StationPicker {
 
   private open(query: string): void {
     const q = normalize(query);
-    const all = [...this.net.stations.values()].filter((s) => this.showPlanned || isOpen(s, this.horizon));
+    const all = [...this.net.stations.values()].filter((s) => this.showPlanned || isOpen(this.net, s, this.horizon));
     // either name finds the station, whichever language is shown
     const names = (s: Station) => [s.name, s.nameEn ?? ''].map(normalize);
     const starts = all.filter((s) => names(s).some((n) => n.startsWith(q)));
@@ -84,7 +84,7 @@ export class StationPicker {
           {},
           h('span', { className: 'line-badge', textContent: line.id, css: { '--line': line.color } }),
           h('span', { className: 'picker__name', textContent: nameOf(s) }),
-          !isOpen(s) && h('span', { className: 'picker__status', textContent: s.opening ? t('plannedFor', s.opening) : t('noDate') }),
+          !isOpen(this.net, s) && h('span', { className: 'picker__status', textContent: s.opening ? t('plannedFor', s.opening) : t('noDate') }),
         );
         li.dataset.id = s.id;
         return li;

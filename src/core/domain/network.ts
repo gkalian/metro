@@ -1,14 +1,3 @@
-import line1 from '../data/lines/1.json';
-import line2 from '../data/lines/2.json';
-import line3 from '../data/lines/3.json';
-import line4 from '../data/lines/4.json';
-import line5 from '../data/lines/5.json';
-import line6 from '../data/lines/6.json';
-import lineK from '../data/lines/k.json';
-import exits from '../data/exits.json';
-import history from '../data/history.json';
-import transfers from '../data/transfers.json';
-
 export type Status = 'open' | 'construct' | 'project';
 
 export interface Station {
@@ -36,26 +25,17 @@ export interface Station {
   toNextEstimated?: boolean;
 }
 
-/** A fork leaving the line at `from`, e.g. the Pulkovo branch of line 1. */
-export interface Branch {
-  from: string;
-  /** Seconds from `from` to the first branch station. */
-  time: number;
-  timeEstimated?: boolean;
-  stations: Station[];
-}
-
 export interface Line {
   id: string;
   name: string;
   nameEn?: string;
   color: string;
-  /** In order, including stations of other lines it runs through (shared track, `{"ref": id}` in the file). */
-  stations: Station[];
-  branches: Branch[];
   /** Year trains of this line began to run, when later than the stations it shares. */
   since?: number;
-  /** Continuous runs of track with this line's times: the main line, then each branch from its fork. */
+  /**
+   * Continuous runs of track with this line's times: the main line, then each branch from
+   * its fork. Stations of other lines it runs through (shared track) are included.
+   */
   runs: RunStop[][];
 }
 
@@ -112,6 +92,8 @@ export interface Network {
   lineById: Map<string, Line>;
   /** Former line by station id. */
   formerLineOf: Map<string, FormerLine>;
+  /** Year of the most recent opening; horizons up to it look back (see `isPast`). */
+  latestOpened: number;
 }
 
 /** One stop along a run of track and the time to the next stop of that run. */
@@ -136,73 +118,76 @@ interface RawRef {
   toNextEstimated?: boolean;
 }
 type RawStop = RawStation | RawRef;
-type RawLine = Omit<Line, 'stations' | 'branches' | 'runs'> & {
+/** A line file: stations in order, `{"ref": id}` for a station of another line it runs through. */
+type RawLine = Omit<Line, 'runs'> & {
   stations: RawStop[];
-  branches?: (Omit<Branch, 'stations'> & { stations: RawStop[] })[];
+  /** Forks, e.g. the Pulkovo branch of line 1: `time` is from `from` to the first branch station. */
+  branches?: { from: string; time: number; timeEstimated?: boolean; stations: RawStop[] }[];
 };
+
+/** A city's network as its data files give it; only the lines are required. */
+export interface NetworkData {
+  /** One file per line, in legend order (see the README for the format). */
+  lines: unknown[];
+  transfers?: Transfer[];
+  exits?: Exit[];
+  history?: { links?: HistoricLink[]; formerLines?: FormerLine[] };
+}
 
 const isRef = (s: RawStop): s is RawRef => 'ref' in s;
 
-/** One file per line, in legend order. */
-const RAW_LINES = [line1, line2, line3, line4, line5, line6, lineK] as unknown as RawLine[];
+/** Years up to the network's latest opening are history, later ones are plans. */
+export const isPast = (net: Network, h: Horizon): h is number => h !== null && h <= net.latestOpened;
 
-const rawStations = RAW_LINES.flatMap((l) => [...l.stations, ...(l.branches ?? []).flatMap((b) => b.stations)]).filter(
-  (s): s is RawStation => !isRef(s),
-);
-
-/** The most recent opening; years up to it are history, later ones are plans. */
-const LATEST_OPENED = Math.max(...rawStations.map((s) => s.opened ?? 0), ...RAW_LINES.map((l) => l.since ?? 0));
-
-export const isPast = (h: Horizon): h is number => h !== null && h <= LATEST_OPENED;
-
-export function loadNetwork(): Network {
+export function loadNetwork(data: NetworkData): Network {
+  const rawLines = data.lines as RawLine[];
   // every station first, so a line can name one described in another line's file
   const stations = new Map<string, Station>();
-  for (const line of RAW_LINES) {
+  for (const line of rawLines) {
     for (const s of [...line.stations, ...(line.branches ?? []).flatMap((b) => b.stations)]) {
-      if (!isRef(s)) stations.set(s.id, { ...s, lineId: line.id, lineIds: [line.id] });
+      if (isRef(s)) continue;
+      if (stations.has(s.id)) throw new Error(`line ${line.id}: station ${s.id} is described twice`);
+      stations.set(s.id, { ...s, lineId: line.id, lineIds: [line.id] });
     }
   }
-  const lines: Line[] = RAW_LINES.map((line) => {
+  const lines: Line[] = rawLines.map(({ stations: main, branches = [], ...line }) => {
+    const station = (id: string) => {
+      const s = stations.get(id);
+      if (!s) throw new Error(`line ${line.id}: unknown station ${id}`);
+      return s;
+    };
     const resolve = (list: RawStop[]): RunStop[] =>
       list.map((s) => {
-        const station = stations.get(isRef(s) ? s.ref : s.id);
-        if (!station) throw new Error(`line ${line.id}: unknown station ${isRef(s) ? s.ref : s.id}`);
-        if (!station.lineIds.includes(line.id)) station.lineIds.push(line.id);
-        return { station, toNext: s.toNext, estimated: s.toNextEstimated };
+        const st = station(isRef(s) ? s.ref : s.id);
+        if (!st.lineIds.includes(line.id)) st.lineIds.push(line.id);
+        return { station: st, toNext: s.toNext, estimated: s.toNextEstimated };
       });
-    const main = resolve(line.stations);
-    const branches = (line.branches ?? []).map((b) => ({ ...b, stops: resolve(b.stations) }));
     return {
       ...line,
-      stations: main.map((r) => r.station),
-      branches: branches.map(({ stops, ...b }) => ({ ...b, stations: stops.map((r) => r.station) })),
       runs: [
-        main,
-        ...branches.map((b) => [
-          { station: stations.get(b.from)!, toNext: b.time, estimated: b.timeEstimated },
-          ...b.stops,
-        ]),
+        resolve(main),
+        ...branches.map((b) => [{ station: station(b.from), toNext: b.time, estimated: b.timeEstimated }, ...resolve(b.stations)]),
       ],
     };
   });
-  const formerLines = history.formerLines as FormerLine[];
+  const formerLines = data.history?.formerLines ?? [];
   return {
     lines,
-    transfers: transfers as Transfer[],
-    exits: exits as Exit[],
-    links: history.links as HistoricLink[],
+    transfers: data.transfers ?? [],
+    exits: data.exits ?? [],
+    links: data.history?.links ?? [],
     formerLines,
     stations,
     lineById: new Map(lines.map((l) => [l.id, l])),
     formerLineOf: new Map(formerLines.flatMap((f) => f.stations.map((id) => [id, f] as const))),
+    latestOpened: Math.max(...[...stations.values()].map((s) => s.opened ?? 0), ...lines.map((l) => l.since ?? 0)),
   };
 }
 
 /** The line the station belonged to within the horizon. */
 export function lineAt(net: Network, s: Station, horizon: Horizon): Line {
   const former = net.formerLineOf.get(s.id);
-  const id = former && isPast(horizon) && horizon < former.until ? former.lineId : s.lineId;
+  const id = former && isPast(net, horizon) && horizon < former.until ? former.lineId : s.lineId;
   return net.lineById.get(id)!;
 }
 
@@ -215,17 +200,14 @@ export function sectionLine(net: Network, line: Line, a: Station, b: Station, ho
   return la !== net.lineById.get(a.lineId) && la === lineAt(net, b, horizon) ? la : line;
 }
 
-/** Continuous runs of track: the main line, then each branch starting at its fork. */
-export function lineRuns(_net: Network, line: Line): RunStop[][] {
-  return line.runs;
-}
-
 /** Trains of the line run within the horizon; a line that shares track may have come later. */
-export const lineRunning = (line: Line, horizon: Horizon): boolean => !isPast(horizon) || (line.since ?? 0) <= horizon;
+export const lineRunning = (net: Network, line: Line, horizon: Horizon): boolean =>
+  !isPast(net, horizon) || (line.since ?? 0) <= horizon;
 
 /** Trains of the line take passengers within the horizon: it runs and one of its own stations is open. */
-const lineInUse = (line: Line, horizon: Horizon): boolean =>
-  lineRunning(line, horizon) && line.runs.some((run) => run.some((r) => r.station.lineId === line.id && isOpen(r.station, horizon)));
+const lineInUse = (net: Network, line: Line, horizon: Horizon): boolean =>
+  lineRunning(net, line, horizon) &&
+  line.runs.some((run) => run.some((r) => r.station.lineId === line.id && isOpen(net, r.station, horizon)));
 
 /** Lines calling at the station within the horizon, its own first. */
 export const linesAt = (net: Network, s: Station, horizon: Horizon): Line[] => [
@@ -233,12 +215,12 @@ export const linesAt = (net: Network, s: Station, horizon: Horizon): Line[] => [
   ...s.lineIds
     .slice(1)
     .map((id) => net.lineById.get(id)!)
-    .filter((l) => lineInUse(l, horizon)),
+    .filter((l) => lineInUse(net, l, horizon)),
 ];
 
 /** Station accepts passengers within the horizon. */
-export function isOpen(s: Station, horizon: Horizon = null): boolean {
-  if (isPast(horizon)) return (s.opened ?? Infinity) <= horizon;
+export function isOpen(net: Network, s: Station, horizon: Horizon = null): boolean {
+  if (isPast(net, horizon)) return (s.opened ?? Infinity) <= horizon;
   if (s.status === 'open' && !s.passThrough) return true;
   if (horizon === null) return false;
   return (s.opening ?? Infinity) <= horizon;
@@ -246,19 +228,19 @@ export function isOpen(s: Station, horizon: Horizon = null): boolean {
 
 /** Exit takes passengers within the horizon: its station is open and so is the exit itself. */
 export function exitOpen(net: Network, e: Exit, horizon: Horizon = null): boolean {
-  if (!isOpen(net.stations.get(e.station)!, horizon)) return false;
-  return !isPast(horizon) || (e.opened ?? 0) <= horizon;
+  if (!isOpen(net, net.stations.get(e.station)!, horizon)) return false;
+  return !isPast(net, horizon) || (e.opened ?? 0) <= horizon;
 }
 
 /** Trains run through the station within the horizon. */
-export function inService(s: Station, horizon: Horizon = null): boolean {
-  if (isPast(horizon)) return isOpen(s, horizon) || (s.throughSince ?? Infinity) <= horizon;
-  return s.status === 'open' || !!s.passThrough || isOpen(s, horizon);
+export function inService(net: Network, s: Station, horizon: Horizon = null): boolean {
+  if (isPast(net, horizon)) return isOpen(net, s, horizon) || (s.throughSince ?? Infinity) <= horizon;
+  return s.status === 'open' || !!s.passThrough || isOpen(net, s, horizon);
 }
 
 /** Historic track in service within the horizon. */
 export function activeLinks(net: Network, horizon: Horizon): HistoricLink[] {
-  if (!isPast(horizon)) return [];
+  if (!isPast(net, horizon)) return [];
   return net.links.filter((l) => l.from <= horizon && horizon < l.until);
 }
 
@@ -266,13 +248,13 @@ export function activeLinks(net: Network, horizon: Horizon): HistoricLink[] {
 export function decadeHorizons(net: Network): number[] {
   const first = Math.min(...[...net.stations.values()].map((s) => s.opened ?? Infinity));
   const ends: number[] = [];
-  for (let d = Math.floor(first / 10) * 10; d + 9 < LATEST_OPENED; d += 10) ends.push(d + 9);
+  for (let d = Math.floor(first / 10) * 10; d + 9 < net.latestOpened; d += 10) ends.push(d + 9);
   return ends;
 }
 
 /** Years the scheme names, ascending. */
 export function openingYears(net: Network): number[] {
   const years = new Set<number>();
-  for (const s of net.stations.values()) if (s.opening && !isOpen(s)) years.add(s.opening);
+  for (const s of net.stations.values()) if (s.opening && !isOpen(net, s)) years.add(s.opening);
   return [...years].sort((a, b) => a - b);
 }

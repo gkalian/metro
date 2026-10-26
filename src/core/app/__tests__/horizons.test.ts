@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { setLang } from '../i18n';
 import { loadNetwork } from '../../domain/network';
+import { spb } from '../../../cities/spb/city';
 import { chronologyValue, horizonLabel, horizonsOf, parseYear, tickLabel, yearParam } from '../horizons';
 
-const net = loadNetwork();
+const net = loadNetwork(spb.network);
 const horizons = horizonsOf(net);
 
 afterEach(() => setLang('ru'));
@@ -18,25 +19,25 @@ describe('horizons', () => {
   });
 
   it('says nothing after «Хронология» for today', () => {
-    expect(chronologyValue(null)).toBe('');
-    expect(chronologyValue(2019)).toBe(': к концу 2010-х');
-    expect(chronologyValue(2030)).toBe(': на 2030');
-    expect(chronologyValue(Infinity)).toBe(': все планы');
+    expect(chronologyValue(net, null)).toBe('');
+    expect(chronologyValue(net, 2019)).toBe(': к концу 2010-х');
+    expect(chronologyValue(net, 2030)).toBe(': на 2030');
+    expect(chronologyValue(net, Infinity)).toBe(': все планы');
   });
 
   it('labels stops and the routing hint', () => {
-    expect(horizonLabel(null)).toBe('на сегодня');
-    expect(horizonLabel(1979)).toBe('к концу 1970-х');
-    expect(tickLabel(1959)).toBe('50-е');
-    expect(tickLabel(null)).toBe('сейчас');
+    expect(horizonLabel(net, null)).toBe('на сегодня');
+    expect(horizonLabel(net, 1979)).toBe('к концу 1970-х');
+    expect(tickLabel(net, 1959)).toBe('50-е');
+    expect(tickLabel(net, null)).toBe('сейчас');
   });
 
   it('labels in English', () => {
     setLang('en');
-    expect(horizonLabel(1979)).toBe('by the end of the 1970s');
-    expect(chronologyValue(Infinity)).toBe(': all plans');
-    expect(tickLabel(1959)).toBe('50s');
-    expect(tickLabel(null)).toBe('now');
+    expect(horizonLabel(net, 1979)).toBe('by the end of the 1970s');
+    expect(chronologyValue(net, Infinity)).toBe(': all plans');
+    expect(tickLabel(net, 1959)).toBe('50s');
+    expect(tickLabel(net, null)).toBe('now');
   });
 
   it('round-trips through the URL', () => {

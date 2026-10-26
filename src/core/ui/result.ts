@@ -51,7 +51,7 @@ export function renderResult(
       legs.append(h('li', { className: 'leg leg--transfer' }, `${t('walkTo', nameOf(station(leg.to)))} · ${formatTime(leg.time)}`));
       return;
     }
-    const line = net.lineById.get(leg.lineId)!;
+    const line = net.lineById.get(leg.lineIds[0]!)!;
     // on shared track a train of any of these lines will do
     const lines = leg.lineIds.map((id) => net.lineById.get(id)!);
     const middle = leg.stations.slice(1, -1);
@@ -81,11 +81,11 @@ export function renderResult(
   });
 
   // an endpoint does not take passengers yet, or the way runs through track not built yet
-  const future = [from, to].some((id) => !isOpen(station(id))) || route.path.some((id) => !inService(station(id)));
+  const future = [from, to].some((id) => !isOpen(net, station(id))) || route.path.some((id) => !inService(net, station(id)));
   const notes = [
     t('noteEstimate'),
     future && t('noteFuture'),
-    isPast(state.horizon) && t('notePast'),
+    isPast(net, state.horizon) && t('notePast'),
     route.estimated && t('noteEstimatedRuns'),
   ].filter(Boolean);
 

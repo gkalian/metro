@@ -13,8 +13,8 @@ const lineLabel = (line: Line) =>
   h('span', { className: 'tip__line', textContent: `${line.id} · ${nameOf(line)}`, css: { '--line': line.color } });
 
 /** Without the notes, only the date: when the station opened or is due to. */
-function shortOpening(s: Station): string {
-  if (isOpen(s) && s.opened) return t('opened', noteDate(s.note, s.opened));
+function shortOpening(net: Network, s: Station): string {
+  if (isOpen(net, s) && s.opened) return t('opened', noteDate(s.note, s.opened));
   return s.opening ? t('openingPlanned', s.opening) : t('openingUnknown');
 }
 
@@ -28,11 +28,11 @@ export function stationTooltip(net: Network, s: Station, horizon: Horizon): HTML
     ...notes(
       fullNotes()
         ? [
-            !isOpen(s) && !s.passThrough && t('status', s.status),
-            !isOpen(s) && (s.opening ? t('openingPlanned', s.opening) : t('openingUnknown')),
+            !isOpen(net, s) && !s.passThrough && t('status', s.status),
+            !isOpen(net, s) && (s.opening ? t('openingPlanned', s.opening) : t('openingUnknown')),
             s.note,
           ]
-        : [shortOpening(s)],
+        : [shortOpening(net, s)],
     ),
   );
 }
