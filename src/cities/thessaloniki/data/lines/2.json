@@ -1,0 +1,225 @@
+{
+ "id": "2",
+ "name": "Новый вокзал — Микра",
+ "nameEn": "New Railway Station — Mikra",
+ "nameEl": "Νέος Σιδηροδρομικός Σταθμός — Μίκρα",
+ "color": "#1F5FC4",
+ "since": 2026,
+ "stations": [
+  {
+   "ref": "neos-stathmos",
+   "toNext": 80,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "dimokratias",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "venizelou",
+   "toNext": 70,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "agias-sofias",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "sintrivani",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "panepistimio",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "papafi",
+   "toNext": 70,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "efkleidis",
+   "toNext": 80,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "fleming",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "analipsi",
+   "toNext": 80,
+   "toNextEstimated": true
+  },
+  {
+   "ref": "25-martiou",
+   "toNext": 110,
+   "toNextEstimated": true
+  },
+  {
+   "id": "nomarchia",
+   "name": "Номархия",
+   "nameEn": "Nomarchia",
+   "nameEl": "Νομαρχία",
+   "lat": 40.591614,
+   "lon": 22.957134,
+   "status": "open",
+   "opened": 2026,
+   "note": "Открыта 27 августа 2026 года",
+   "toNext": 100,
+   "toNextEstimated": true
+  },
+  {
+   "id": "kalamaria",
+   "name": "Каламарья",
+   "nameEn": "Kalamaria",
+   "nameEl": "Καλαμαριά",
+   "lat": 40.584719,
+   "lon": 22.953094,
+   "status": "open",
+   "opened": 2026,
+   "note": "Открыта 27 августа 2026 года",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "id": "aretsou",
+   "name": "Арецу",
+   "nameEn": "Aretsou",
+   "nameEl": "Αρετσού",
+   "lat": 40.578399,
+   "lon": 22.954467,
+   "status": "open",
+   "opened": 2026,
+   "note": "Открыта 27 августа 2026 года",
+   "toNext": 100,
+   "toNextEstimated": true
+  },
+  {
+   "id": "nea-krini",
+   "name": "Неа Крини",
+   "nameEn": "Nea Krini",
+   "nameEl": "Νέα Κρήνη",
+   "lat": 40.57194,
+   "lon": 22.961413,
+   "status": "open",
+   "opened": 2026,
+   "note": "Открыта 27 августа 2026 года",
+   "toNext": 90,
+   "toNextEstimated": true
+  },
+  {
+   "id": "mikra",
+   "name": "Микра",
+   "nameEn": "Mikra",
+   "nameEl": "Μίκρα",
+   "lat": 40.567614,
+   "lon": 22.966707,
+   "status": "open",
+   "opened": 2026,
+   "note": "Открыта 27 августа 2026 года",
+   "toNext": 120,
+   "toNextEstimated": true
+  },
+  {
+   "id": "scholi-polemou",
+   "name": "Высшая военная школа",
+   "nameEn": "Anotera Scholi Polemou",
+   "nameEl": "Ανωτέρα Σχολή Πολέμου",
+   "lat": 40.5604,
+   "lon": 22.9767,
+   "status": "project",
+   "note": "У Высшей военной школы (ΑΔΙΣΠΟ). Координаты — проектная точка из OpenStreetMap.",
+   "opening": 2040,
+   "toNext": 130,
+   "toNextEstimated": true
+  },
+  {
+   "id": "patriarchika",
+   "name": "Патриархика",
+   "nameEn": "Patriarchika",
+   "nameEl": "Πατριαρχικά",
+   "lat": 40.5545,
+   "lon": 22.9906,
+   "status": "project",
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 80,
+   "toNextEstimated": true
+  },
+  {
+   "id": "diavalkaniko",
+   "name": "Диавалканико",
+   "nameEn": "Diavalkaniko",
+   "nameEl": "Διαβαλκανικό",
+   "lat": 40.5492,
+   "lon": 22.9878,
+   "status": "project",
+   "note": "У больницы «Диавалканико». Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 100,
+   "toNextEstimated": true
+  },
+  {
+   "id": "georgiki-scholi",
+   "name": "Сельскохозяйственная школа",
+   "nameEn": "Georgiki Scholi",
+   "nameEl": "Γεωργική Σχολή",
+   "lat": 40.5415,
+   "lon": 22.9878,
+   "status": "project",
+   "note": "На южной окраине земель Американской сельскохозяйственной школы. Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 190,
+   "toNextEstimated": true
+  },
+  {
+   "id": "aerodromio",
+   "name": "Аэропорт",
+   "nameEn": "Airport",
+   "nameEl": "Αεροδρόμιο",
+   "lat": 40.5247,
+   "lon": 22.9758,
+   "status": "project",
+   "note": "У пассажирского терминала аэропорта «Македония». Координаты приблизительные.",
+   "opening": 2040,
+   "toNext": 250,
+   "toNextEstimated": true
+  },
+  {
+   "id": "thessintec",
+   "name": "Центр инноваций и технологий",
+   "nameEn": "Innovation & Technology Centre",
+   "nameEl": "Κέντρο Καινοτομίας & Τεχνολογίας",
+   "lat": 40.5125,
+   "lon": 22.9444,
+   "status": "project",
+   "note": "Технопарк ThessINTEC. Координаты приблизительные — по OpenStreetMap и схеме развития до 2040 г.",
+   "opening": 2040
+  }
+ ],
+ "branches": [
+  {
+   "from": "patriarchika",
+   "time": 190,
+   "timeEstimated": true,
+   "stations": [
+    {
+     "id": "thermi",
+     "name": "Терми",
+     "nameEn": "Thermi",
+     "nameEl": "Θέρμη",
+     "lat": 40.5505,
+     "lon": 23.0155,
+     "status": "project",
+     "note": "На схеме до 2040 г. — только задел под продление, без срока. Координаты приблизительные."
+    }
+   ]
+  }
+ ]
+}

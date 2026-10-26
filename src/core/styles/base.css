@@ -1,6 +1,7 @@
 /* Page frame: font, full-screen map and the small parts shared across the panel. */
 :root {
-  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Montserrat has no Greek letters; the browser takes them from Manrope */
+  font-family: 'Montserrat', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color: var(--fg);
 }
 

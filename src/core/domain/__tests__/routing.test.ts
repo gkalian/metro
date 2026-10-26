@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { decadeHorizons, isOpen, loadNetwork } from '../network';
-import { spb } from '../../../cities/spb/city';
+import { data as spb } from '../../../cities/spb/data';
 import { buildGraph, findRoute } from '../routing';
 
 const net = loadNetwork(spb.network);

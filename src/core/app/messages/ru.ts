@@ -3,6 +3,7 @@
  * arguments (see `Messages`), so a text missing from a translation fails to compile.
  */
 import type { Status } from '../../domain/network';
+import type { Lang } from '../i18n';
 
 /** Russian plural form for `n`: «1 станция», «2 станции», «5 станций». */
 export function plural(n: number, one: string, few: string, many: string): string {
@@ -26,6 +27,8 @@ export const ru = {
   horizonToday: 'на сегодня',
   horizonAllPlans: 'на все планы',
   horizonDecade: (decade: number) => `к концу ${decade}-х`,
+  /** A past year, where history steps by the years of openings. */
+  horizonEndOfYear: (year: number) => `на конец ${year} года`,
   horizonYear: (year: number) => `на ${year}`,
   chronologyAllPlans: 'все планы',
   tickNow: 'сейчас',
@@ -35,13 +38,16 @@ export const ru = {
   // panel
   showPanel: 'Развернуть панель',
   hidePanel: 'Свернуть панель',
-  languageButton: 'Язык: русский. Переключить на английский',
+  languageButton: (next: Lang) =>
+    `Язык: русский. Переключить на ${{ ru: 'русский', en: 'английский', el: 'греческий' }[next]}`,
+  otherCities: 'Другие города',
   from: 'Откуда',
   to: 'Куда',
   clear: 'Очистить',
   plannedFor: (year: number) => `план ${year}`,
   noDate: 'без срока',
   nothingFound: 'Ничего не найдено',
+  legendPlanned: 'Проектируемый участок',
   legendRail: 'Железнодорожные линии',
   legendWalk: 'Пеший переход между станциями ж/д и метро',
 

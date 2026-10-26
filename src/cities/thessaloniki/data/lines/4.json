@@ -1,0 +1,90 @@
+{
+ "id": "4",
+ "name": "Димократиас — Больница Папагеоргиу",
+ "nameEn": "Dimokratias — Papageorgiou Hospital",
+ "nameEl": "Δημοκρατίας — Νοσοκομείο Παπαγεωργίου",
+ "color": "#F2B300",
+ "stations": [
+  {
+   "ref": "dimokratias",
+   "toNext": 120,
+   "toNextEstimated": true
+  },
+  {
+   "id": "neapoli",
+   "name": "Неаполи",
+   "nameEn": "Neapoli",
+   "nameEl": "Νεάπολη",
+   "lat": 40.651,
+   "lon": 22.9356,
+   "status": "project",
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 110,
+   "toNextEstimated": true
+  },
+  {
+   "id": "terpsithea",
+   "name": "Терпсифея",
+   "nameEn": "Terpsithea",
+   "nameEl": "Τερψιθέα",
+   "lat": 40.6598,
+   "lon": 22.9322,
+   "status": "project",
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 80,
+   "toNextEstimated": true
+  },
+  {
+   "id": "stavroupoli",
+   "name": "Ставруполи",
+   "nameEn": "Stavroupoli",
+   "nameEl": "Σταυρούπολη",
+   "lat": 40.6644,
+   "lon": 22.9334,
+   "status": "project",
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 100,
+   "toNextEstimated": true
+  },
+  {
+   "id": "polichni",
+   "name": "Полихни",
+   "nameEn": "Polichni",
+   "nameEl": "Πολίχνη",
+   "lat": 40.6712,
+   "lon": 22.9375,
+   "status": "project",
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 130,
+   "toNextEstimated": true
+  },
+  {
+   "id": "efkarpia",
+   "name": "Эфкарпия",
+   "nameEn": "Efkarpia",
+   "nameEl": "Ευκαρπία",
+   "lat": 40.6808,
+   "lon": 22.9446,
+   "status": "project",
+   "note": "Координаты приблизительные — сняты со схемы развития до 2040 г.",
+   "opening": 2040,
+   "toNext": 150,
+   "toNextEstimated": true
+  },
+  {
+   "id": "papageorgiou",
+   "name": "Больница Папагеоргиу",
+   "nameEn": "Papageorgiou Hospital",
+   "nameEl": "Νοσοκομείο Παπαγεωργίου",
+   "lat": 40.6752,
+   "lon": 22.9612,
+   "status": "project",
+   "note": "У больницы Папагеоргиу, на месте её парковки; там же планируется депо. Координаты приблизительные.",
+   "opening": 2040
+  }
+ ]
+}

@@ -1,8 +1,8 @@
 import './styles/index.css';
-import type { City } from './city';
-import { LANGS, nextLang, setCityMessages, setLang, t, type Lang } from './app/i18n';
+import type { City, CityData } from './city';
+import { LANGS, nextLang, setCityTexts, setLang, t, type Lang } from './app/i18n';
 import { translatePage } from './ui/static-text';
-import { chronologyValue, horizonLabel, horizonsOf, parseYear, tickLabel, yearParam } from './app/horizons';
+import { parseYear, timelineOf, yearParam } from './app/horizons';
 import { loadChoice, loadFlag, saveFlag, saveString } from './app/storage';
 import { isOpen, loadNetwork, type Horizon } from './domain/network';
 import { loadRailway } from './domain/railway';
@@ -15,10 +15,12 @@ import { renderResult } from './ui/result';
 import { StationPicker } from './ui/station-picker';
 
 /** Sets up the page for the city: map, panel and the route in the URL. */
-export function start(city: City): void {
-  const net = loadNetwork(city.network);
-  const rail = loadRailway(city.railway);
-  const horizons = horizonsOf(net);
+export function start(city: City, data: CityData): void {
+  const net = loadNetwork(data.network);
+  const rail = loadRailway(data.railway);
+  const hasRail = rail.stations.size > 0;
+  const timeline = timelineOf(net, city.history);
+  const horizons = timeline.stops;
   const graphs = new Map<Horizon, Graph>();
   const graphAt = (h: Horizon) => graphs.get(h) ?? graphs.set(h, buildGraph(net, h)).get(h)!;
 
@@ -33,10 +35,10 @@ export function start(city: City): void {
     showRail: loadFlag('show-rail', true),
     horizon: parseYear(horizons, params.get('year')),
     theme: loadChoice('theme', THEMES, matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-    lang: loadChoice<Lang>('lang', LANGS, 'ru'),
+    lang: cityLang(city, loadChoice<Lang>('lang', LANGS, 'ru')),
   };
   setLang(state.lang);
-  setCityMessages(city.messages);
+  setCityTexts(city);
 
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const showPlannedBox = $<HTMLInputElement>('show-planned');
@@ -47,7 +49,7 @@ export function start(city: City): void {
     $('horizon-ticks').replaceChildren(
       ...horizons.map((h, i) => {
         const tick = Object.assign(document.createElement('span'), {
-          textContent: tickLabel(net, h),
+          textContent: timeline.tick(h),
           className: h === null ? 'is-now' : '',
         });
         tick.style.setProperty('--at', String(i / (horizons.length - 1)));
@@ -65,6 +67,9 @@ export function start(city: City): void {
     sidebarToggle.title = label;
   }
   setSidebar(loadChoice('sidebar', ['open', 'collapsed'], 'open') === 'collapsed');
+
+  showRailBox.closest('label')!.hidden = !hasRail;
+  bindCitySwitch();
 
   const mapView = new MapView('map', net, rail, city.bounds, state.theme, onStationClick);
   const fromPicker = new StationPicker($('picker-from'), 'from', net, (id) => setEndpoint('from', id));
@@ -122,23 +127,23 @@ export function start(city: City): void {
     // the button shows the language in use
     const langBtn = $('lang');
     langBtn.textContent = state.lang.toUpperCase();
-    langBtn.setAttribute('aria-label', t('languageButton'));
+    langBtn.setAttribute('aria-label', t('languageButton', nextLang(state.lang)));
     translatePage();
     setSidebar(document.documentElement.dataset.sidebar === 'collapsed');
     renderTicks();
-    renderLegend($('legend'), net);
+    renderLegend($('legend'), net, hasRail);
     showPlannedBox.checked = state.showPlanned;
     showRailBox.checked = state.showRail;
     slider.value = String(horizons.indexOf(state.horizon));
-    slider.setAttribute('aria-valuetext', horizonLabel(net, state.horizon));
-    $('chronology-value').textContent = chronologyValue(net, state.horizon);
+    slider.setAttribute('aria-valuetext', timeline.label(state.horizon));
+    $('chronology-value').textContent = timeline.heading(state.horizon);
     for (const picker of [fromPicker, toPicker]) {
       picker.showPlanned = state.showPlanned;
       picker.horizon = state.horizon;
     }
     fromPicker.set(state.from ? net.stations.get(state.from)! : null);
     toPicker.set(state.to ? net.stations.get(state.to)! : null);
-    renderResult($('result'), net, { ...state, route, horizonLabel: horizonLabel(net, state.horizon) });
+    renderResult($('result'), net, { ...state, route, horizonLabel: timeline.label(state.horizon) });
     mapView.render({ ...state, route });
     if (fit && route && route.path.length > 1) mapView.fitRoute(route);
 
@@ -191,4 +196,27 @@ export function start(city: City): void {
   });
 
   update(true);
+}
+
+/**
+ * The language stored for the site if the city speaks it. Another city's language (Greek on
+ * the Petersburg page) gives English, and stays stored for when the reader goes back.
+ */
+function cityLang(city: City, stored: Lang): Lang {
+  return city.langs.includes(stored) ? stored : 'en';
+}
+
+/** The list of other cities under the heading closes on a click elsewhere or on Escape. */
+function bindCitySwitch(): void {
+  const menu = document.getElementById('city') as HTMLDetailsElement | null;
+  if (!menu) return;
+  document.addEventListener('click', (e) => {
+    if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.open) {
+      menu.open = false;
+      menu.querySelector('summary')!.focus();
+    }
+  });
 }

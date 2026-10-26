@@ -3,6 +3,7 @@ export interface RailStation {
   id: string;
   name: string;
   nameEn?: string;
+  nameEl?: string;
   lat: number;
   lon: number;
   /** Metro stations within walking distance, as the scheme draws them. */

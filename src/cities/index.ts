@@ -1,5 +1,6 @@
-import type { City } from '../core/city';
-import { spb } from './spb/city';
+import type { City } from '../core/city.ts';
+import { spb } from './spb/city.ts';
+import { thessaloniki } from './thessaloniki/city.ts';
 
-/** Every city on the site; tests check the data of each. */
-export const CITIES: City[] = [spb];
+/** Every city on the site, the main one first: each gets its page, and the switcher lists them. */
+export const CITIES: City[] = [spb, thessaloniki];

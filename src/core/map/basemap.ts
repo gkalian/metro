@@ -1,5 +1,5 @@
 import type { ExpressionSpecification, Map as MlMap, StyleSpecification } from 'maplibre-gl';
-import { lang } from '../app/i18n';
+import { lang, localLang } from '../app/i18n';
 
 export type Theme = 'light' | 'dark';
 export const THEMES: readonly Theme[] = ['light', 'dark'];
@@ -11,7 +11,9 @@ const BASEMAP: Record<Theme, string> = {
 };
 
 // Montserrat glyphs are built from the Google Fonts TTFs and served from public/fonts.
-const GLYPHS = `${new URL('fonts/', document.baseURI).href}{fontstack}/{range}.pbf`;
+// from the site root, which the page names: a city's page may sit a folder deeper
+const SITE_ROOT = new URL(document.documentElement.dataset.root ?? './', document.baseURI);
+const GLYPHS = `${new URL('fonts/', SITE_ROOT).href}{fontstack}/{range}.pbf`;
 export const FONT_BOLD = ['Montserrat SemiBold'];
 export const FONT_REGULAR = ['Montserrat Regular'];
 const FONT_ITALIC = ['Montserrat Italic'];
@@ -22,14 +24,15 @@ export function loadBasemap(map: MlMap, theme: Theme): void {
 }
 
 /**
- * Basemap names in the page's language where the tiles carry them. Without an English name
- * the Latin spelling is better than the Cyrillic one; without a Russian one, the local name.
+ * Basemap names in the page's language where the tiles carry them. Otherwise the local name in
+ * the city's own language, and for a reader of another one the Latin spelling before it: Greek
+ * names on the Russian map of Thessaloniki, but Cyrillic ones on the Russian map of Petersburg.
+ * The Greek letters in the glyphs come from Manrope: Montserrat has none.
  */
 export function localizeBasemap(map: MlMap): void {
-  const field: ExpressionSpecification =
-    lang() === 'en'
-      ? ['coalesce', ['get', 'name:en'], ['get', 'name:latin'], ['get', 'name']]
-      : ['coalesce', ['get', 'name:ru'], ['get', 'name']];
+  const l = lang();
+  const latin: ExpressionSpecification[] = l === localLang() ? [] : [['get', 'name:latin']];
+  const field: ExpressionSpecification = ['coalesce', ['get', `name:${l}`], ...latin, ['get', 'name']];
   for (const layer of map.getStyle().layers) {
     if (layer.type !== 'symbol' || !layer.layout?.['text-field']) continue;
     if (!JSON.stringify(layer.layout['text-field']).includes('name')) continue;

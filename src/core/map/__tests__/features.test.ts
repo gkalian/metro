@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { loadNetwork } from '../../domain/network';
 import { loadRailway } from '../../domain/railway';
-import { spb } from '../../../cities/spb/city';
+import { data as spb } from '../../../cities/spb/data';
 import { buildGraph, findRoute } from '../../domain/routing';
 import { metroFeatures, pairKey, railCurves, railFeatures, trackCurves, wayColor, type MapState } from '../features';
 

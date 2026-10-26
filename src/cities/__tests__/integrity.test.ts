@@ -3,13 +3,16 @@
  * before it breaks the map (which trusts every id it is given). They run for every city.
  */
 import { describe, expect, it } from 'vitest';
+import { nameIn } from '../../core/app/i18n';
 import { loadNetwork } from '../../core/domain/network';
 import { loadRailway } from '../../core/domain/railway';
 import { CITIES } from '..';
 
-describe.each(CITIES)('$id', (city) => {
-  const net = loadNetwork(city.network);
-  const rail = loadRailway(city.railway);
+const loaded = await Promise.all(CITIES.map(async (city) => ({ city, data: await city.load() })));
+
+describe.each(loaded)('$city.id', ({ city, data }) => {
+  const net = loadNetwork(data.network);
+  const rail = loadRailway(data.railway);
   const allStations = [...net.stations.values()];
   const metro = (id: string) => net.stations.has(id);
   const line = (id: string) => net.lineById.has(id);
@@ -35,9 +38,15 @@ describe.each(CITIES)('$id', (city) => {
       expect(allStations.filter((s) => !inArea(s)).map((s) => s.id)).toEqual([]);
     });
 
-    it('name every line and station in English too', () => {
-      const unnamed = [...net.lines, ...allStations, ...rail.stations.values()].filter((x) => !x.nameEn?.trim());
+    it.each(city.langs)('name every line and station in %s', (l) => {
+      const unnamed = [...net.lines, ...allStations, ...rail.stations.values()].filter((x) => !nameIn(x, l)?.trim());
       expect(unnamed.map((x) => x.name)).toEqual([]);
+    });
+
+    it('have their pages described in every language', () => {
+      expect(Object.values(city.title).every((s) => s.trim())).toBe(true);
+      expect(city.langs[0]).toBe('ru');
+      expect(city.langs).toContain(city.localLang);
     });
 
     it('give lines on shared track the same run times', () => {

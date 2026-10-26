@@ -1,4 +1,4 @@
-import { lang, nameOf, noteDate, t } from '../app/i18n';
+import { lang, localLang, nameIn, nameOf, noteDate, t } from '../app/i18n';
 import { isOpen, lineAt, linesAt, type Exit, type Horizon, type Line, type Network, type Station } from '../domain/network';
 import { routesAt, type Railway, type RailStation } from '../domain/railway';
 import { h } from '../ui/dom';
@@ -12,6 +12,16 @@ const fullNotes = () => lang() === 'ru';
 const lineLabel = (line: Line) =>
   h('span', { className: 'tip__line', textContent: `${line.id} · ${nameOf(line)}`, css: { '--line': line.color } });
 
+/**
+ * The name as written on the station, where signs are not in Russian, e.g. Greek in
+ * Thessaloniki. The Russian names are the data's own and need no echo.
+ */
+function signName(s: Station): HTMLElement | false {
+  const l = localLang();
+  const name = l !== 'ru' && l !== lang() && nameIn(s, l);
+  return !!name && h('span', { className: 'tip__sign', lang: l, textContent: name });
+}
+
 /** Without the notes, only the date: when the station opened or is due to. */
 function shortOpening(net: Network, s: Station): string {
   if (isOpen(net, s) && s.opened) return t('opened', noteDate(s.note, s.opened));
@@ -24,6 +34,7 @@ export function stationTooltip(net: Network, s: Station, horizon: Horizon): HTML
     'div',
     { className: 'tip' },
     h('strong', { textContent: nameOf(s) }),
+    signName(s),
     ...linesAt(net, s, horizon).map(lineLabel),
     ...notes(
       fullNotes()

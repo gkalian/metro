@@ -4,6 +4,7 @@ export interface Station {
   id: string;
   name: string;
   nameEn?: string;
+  nameEl?: string;
   lat: number;
   lon: number;
   status: Status;
@@ -29,6 +30,7 @@ export interface Line {
   id: string;
   name: string;
   nameEn?: string;
+  nameEl?: string;
   color: string;
   /** Year trains of this line began to run, when later than the stations it shares. */
   since?: number;
@@ -250,6 +252,13 @@ export function decadeHorizons(net: Network): number[] {
   const ends: number[] = [];
   for (let d = Math.floor(first / 10) * 10; d + 9 < net.latestOpened; d += 10) ends.push(d + 9);
   return ends;
+}
+
+/** Years before the latest in which stations opened, ascending: history step by step. */
+export function yearHorizons(net: Network): number[] {
+  const years = new Set<number>();
+  for (const s of net.stations.values()) if (s.opened && s.opened < net.latestOpened) years.add(s.opened);
+  return [...years].sort((a, b) => a - b);
 }
 
 /** Years the scheme names, ascending. */

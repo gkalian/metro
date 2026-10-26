@@ -14,8 +14,16 @@
   gap: 8px;
 }
 
-.legend__rail {
+.legend__extra {
   margin-top: 4px;
+}
+
+/* the map's planned track: a row of round dots */
+.plan-swatch {
+  flex: none;
+  width: 22px;
+  height: 4px;
+  background: radial-gradient(circle, var(--muted) 1.6px, transparent 2px) left center / 6px 4px repeat-x;
 }
 
 /* the map's railway: dark line with a dashed light core */

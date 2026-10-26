@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { activeLinks, decadeHorizons, inService, isOpen, isPast, lineAt, loadNetwork, sectionLine } from '../network';
-import { spb } from '../../../cities/spb/city';
+import { data as spb } from '../../../cities/spb/data';
 
 const net = loadNetwork(spb.network);
 const st = (id: string) => net.stations.get(id)!;

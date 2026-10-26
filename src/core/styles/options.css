@@ -14,6 +14,11 @@
   cursor: pointer;
 }
 
+/* the rail option where the city has no suburban rail */
+.option[hidden] {
+  display: none;
+}
+
 .option input {
   width: 16px;
   height: 16px;

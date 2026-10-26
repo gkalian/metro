@@ -1,0 +1,69 @@
+/* The heading opens a list of the other cities' pages. */
+.city {
+  position: relative;
+  min-width: 0;
+}
+
+.city__summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -4px -8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.city__summary::-webkit-details-marker {
+  display: none;
+}
+
+.city__summary:hover {
+  background: var(--hover);
+}
+
+/* the same chevron as the folding sections: down when shut, up when open */
+.city__chevron {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  color: var(--muted);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.15s;
+}
+
+.city[open] .city__chevron {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+.city__list {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 8px);
+  left: -8px;
+  min-width: 220px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-solid);
+  box-shadow: var(--shadow);
+}
+
+.city__list a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.city__list a:hover,
+.city__list a:focus-visible {
+  background: var(--hover);
+}

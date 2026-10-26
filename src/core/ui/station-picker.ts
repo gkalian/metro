@@ -70,8 +70,8 @@ export class StationPicker {
   private open(query: string): void {
     const q = normalize(query);
     const all = [...this.net.stations.values()].filter((s) => this.showPlanned || isOpen(this.net, s, this.horizon));
-    // either name finds the station, whichever language is shown
-    const names = (s: Station) => [s.name, s.nameEn ?? ''].map(normalize);
+    // any name finds the station, whichever language is shown
+    const names = (s: Station) => [s.name, s.nameEn ?? '', s.nameEl ?? ''].map(normalize);
     const starts = all.filter((s) => names(s).some((n) => n.startsWith(q)));
     const contains = all.filter((s) => !starts.includes(s) && names(s).some((n) => n.includes(q)));
     this.options = q ? [...starts, ...contains] : all;

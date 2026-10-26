@@ -7,5 +7,13 @@ export function formatTime(seconds: number): string {
   return t('hoursMinutes', Math.floor(min / 60), String(min % 60).padStart(2, '0'));
 }
 
-/** For matching station names: case and «ё» do not matter. */
-export const normalize = (s: string): string => s.toLowerCase().replaceAll('ё', 'е').trim();
+/** For matching station names: case, «ё» and Greek accents do not matter. */
+export const normalize = (s: string): string =>
+  s
+    .toLowerCase()
+    .replaceAll('ё', 'е')
+    // Greek tonos and dialytika, without touching «й»
+    .normalize('NFD')
+    .replace(/[\u0301\u0308]/g, '')
+    .normalize('NFC')
+    .trim();
