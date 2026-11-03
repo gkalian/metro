@@ -31,7 +31,8 @@ The network at the end of each decade since the 1950s, today, and in the future 
 <summary><b>Plans to 2040</b></summary>
 
 - Opening years, the red line branch to Pulkovo, the extensions to Kolomyazhskaya, Ruchyi and Prospekt Marshala Zhukova, and the northern part of the Circle line come from the development plan in the metro's 2025 report ([Fontanka, 18.08.2026](https://www.fontanka.ru/2026/08/18/76594703/)). These stations are placed from the plan; expect errors of a few hundred metres.
-- Only the northern part of the Circle line is shown (Bolshoy Prospekt — Polyustrovsky Prospekt): the plan doesn't name its other stations.
+- Only the northern part of the Circle line is shown (Bolshoy Prospekt — Ladozhskaya): the plan doesn't name its other stations. Bolsheokhtinskaya and Ladozhskaya-2 follow the conclusion of the 2026 public hearings on the planning project: a station on Krasnogvardeyskaya Square, and the Ladozhskaya-2 entrance north of Zolnaya Street.
+- The Admiralteysko-Okhtinskaya line (line 8, Yanino — Dvinskaya) follows **the 2018 plan** from [metro.vpeterburge.ru](https://metro.vpeterburge.ru/construct/aol/)[^aol]. It has no date and appears only at the "all plans" step. Stations are placed by the landmarks in the description of their entrances; expect errors of a few hundred metres. Ulitsa Kommuny, since dropped, and the cancelled section from Dvinskaya to Sosnovaya Polyana are not shown. The line colour is arbitrary.
 - Pulkovskiye Vysoty and Expoforum have no date on the plan and appear only at the "all plans" step.
 - The south-western section of line 6 (2037) follows the plan, although the city has reportedly abandoned this alignment.
 
@@ -42,9 +43,11 @@ The network at the end of each decade since the 1950s, today, and in the future 
 
 - Times between open stations — [spb.metrobook.ru](https://spb.metrobook.ru/), to the minute.
 - Where no time is published (all of line 6 and planned sections), it is estimated from distance; the data marks these with `toNextEstimated` and the interface shows the total with "≈".
-- Transfers are a rough guess: 3 minutes everywhere, 1 minute at Tekhnologichesky Institut.
+- Transfers are a rough guess: 3 minutes everywhere, 1 minute at Tekhnologichesky Institut, 5 minutes between the two Ladozhskaya stations (long underground passages).
 
 </details>
+
+[^aol]: Admiralteysko-Okhtinskaya line: alignment and station descriptions — "Razmyshleniya o piterskom metro", https://metro.vpeterburge.ru/construct/aol/ (plan of December 2018).
 
 <details>
 <summary><b>Suburban rail</b></summary>

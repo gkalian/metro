@@ -108,5 +108,35 @@
   "a": "polyustrovskiy-prospekt-2",
   "b": "polyustrovskiy-prospekt-1",
   "time": 180
+ },
+ {
+  "a": "ladozhskaya-2",
+  "b": "ladozhskaya",
+  "time": 300
+ },
+ {
+  "a": "bolsheokhtinskaya-2",
+  "b": "bolsheokhtinskaya",
+  "time": 180
+ },
+ {
+  "a": "suvorovskaya-2",
+  "b": "suvorovskaya",
+  "time": 180
+ },
+ {
+  "a": "chernyshevskaya-2",
+  "b": "chernyshevskaya",
+  "time": 180
+ },
+ {
+  "a": "admiralteyskaya-3",
+  "b": "admiralteyskaya",
+  "time": 180
+ },
+ {
+  "a": "teatralnaya-2",
+  "b": "teatralnaya",
+  "time": 180
  }
 ]
