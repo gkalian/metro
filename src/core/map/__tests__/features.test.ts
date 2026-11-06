@@ -41,11 +41,20 @@ describe('metroFeatures', () => {
     const exit = (state: MapState) =>
       metroFeatures(net, curves, state).stations.find((f) => f.properties!.exit === 'sportivnaya-vo');
     const passage = (state: MapState) =>
-      metroFeatures(net, curves, state).transfers.find((f) => f.properties!.key === 'exit|sportivnaya-vo');
+      metroFeatures(net, curves, state).transfers.find((f) => String(f.properties!.key).startsWith('exit|sportivnaya-vo|'));
     expect(exit({ ...base, horizon: 2009 })).toBeUndefined();
     expect(passage({ ...base, horizon: 2009 })).toBeUndefined();
     expect(exit(base)!.properties).toMatchObject({ id: 'sportivnaya', name: 'Спортивная', color: color('5') });
     expect(passage(base)).toBeDefined();
+  });
+
+  it('draws the ВСМ exit of «Лиговский проспект» faint until 2028', () => {
+    const exit = (state: MapState) =>
+      metroFeatures(net, curves, state).stations.find((f) => f.properties!.exit === 'ligovskiy-vsm');
+    expect(exit(base)!.properties).toMatchObject({ id: 'ligovskiy-prospekt', planned: true });
+    expect(exit({ ...base, showPlanned: false })).toBeUndefined();
+    expect(exit({ ...base, horizon: 2028 })!.properties!.planned).toBe(false);
+    expect(exit({ ...base, horizon: 2024 })).toBeUndefined();
   });
 
   it('mutes everything but the route', () => {

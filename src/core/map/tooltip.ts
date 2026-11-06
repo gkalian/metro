@@ -1,5 +1,5 @@
 import { lang, localLang, nameIn, nameOf, noteDate, t } from '../app/i18n';
-import { isOpen, lineAt, linesAt, type Exit, type Horizon, type Line, type Network, type Station } from '../domain/network';
+import { exitOpen, isOpen, lineAt, linesAt, type Exit, type Horizon, type Line, type Network, type Station } from '../domain/network';
 import { routesAt, type Railway, type RailStation } from '../domain/railway';
 import { h } from '../ui/dom';
 
@@ -51,12 +51,17 @@ export function stationTooltip(net: Network, s: Station, horizon: Horizon): HTML
 /** Station, its line within the horizon and where a far exit comes up. */
 export function exitTooltip(net: Network, e: Exit, horizon: Horizon): HTMLElement {
   const s = net.stations.get(e.station)!;
+  const open = exitOpen(net, e);
   return h(
     'div',
     { className: 'tip' },
     h('strong', { textContent: nameOf(s) }),
     lineLabel(lineAt(net, s, horizon)),
-    ...notes(fullNotes() ? [`${e.name}: ${e.address}.`, e.note] : [t('opened', noteDate(e.note, e.opened ?? s.opened!))]),
+    ...notes(
+      fullNotes()
+        ? [`${e.name}: ${e.address}.`, !open && t('openingPlanned', e.opening!), e.note]
+        : [open ? t('opened', noteDate(e.note, e.opened ?? s.opened!)) : t('openingPlanned', e.opening!)],
+    ),
   );
 }
 

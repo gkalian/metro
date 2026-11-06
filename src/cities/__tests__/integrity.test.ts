@@ -103,6 +103,9 @@ describe.each(loaded)('$city.id', ({ city, data }) => {
         expect(metro(e.station), e.id).toBe(true);
         expect(inArea(e), e.id).toBe(true);
         expect(e.opened ?? Infinity, e.id).toBeGreaterThanOrEqual(net.stations.get(e.station)!.opened ?? Infinity);
+        // a planned exit is not open yet, and its year lies ahead
+        if (e.opening) expect(e.opened, e.id).toBeUndefined();
+        if (e.opening) expect(e.opening, e.id).toBeGreaterThan(net.latestOpened);
       }
     });
 

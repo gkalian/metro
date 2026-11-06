@@ -180,10 +180,11 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
     });
   }
 
-  // A far exit, once it takes passengers, looks like its station joined to it by a transfer;
+  // A far exit looks like its station joined to it by a transfer, faint while it is planned;
   // it carries the station's id, so it answers clicks and hovers as the station does.
   for (const e of net.exits) {
-    if (!exitOpen(net, e, horizon)) continue;
+    const open = exitOpen(net, e, horizon);
+    if (!open && !showLater) continue;
     const s = net.stations.get(e.station)!;
     const role = s.id === from ? 'from' : s.id === to ? 'to' : '';
     const color = lineAt(net, s, horizon).color;
@@ -192,22 +193,22 @@ export function metroFeatures(net: Network, curves: Map<string, Point[]>, state:
       type: 'Feature',
       geometry: { type: 'Point', coordinates: [e.lon, e.lat] },
       properties: {
-        key: `${e.id}|${color}`,
+        key: `${e.id}|${open}|${color}`,
         id: s.id,
         exit: e.id,
         name: nameOf(s),
         color,
-        planned: false,
+        planned: !open,
         shared: false,
         role,
         dim,
-        rank: role ? 0 : routeStops.has(s.id) ? 1 : 2,
+        rank: role ? 0 : routeStops.has(s.id) ? 1 : open ? 2 : 3,
       },
     });
     transfers.push({
       type: 'Feature',
       geometry: { type: 'LineString', coordinates: [[s.lon, s.lat], [e.lon, e.lat]] },
-      properties: { key: `exit|${e.id}`, planned: false, dim },
+      properties: { key: `exit|${e.id}|${open}`, planned: !open, dim },
     });
   }
 

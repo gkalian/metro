@@ -60,6 +60,8 @@ export interface Exit {
   lon: number;
   /** Year the exit opened to passengers, when later than the station. */
   opened?: number;
+  /** Planned opening year of an exit still being built. */
+  opening?: number;
   note?: string;
 }
 
@@ -231,7 +233,9 @@ export function isOpen(net: Network, s: Station, horizon: Horizon = null): boole
 /** Exit takes passengers within the horizon: its station is open and so is the exit itself. */
 export function exitOpen(net: Network, e: Exit, horizon: Horizon = null): boolean {
   if (!isOpen(net, net.stations.get(e.station)!, horizon)) return false;
-  return !isPast(net, horizon) || (e.opened ?? 0) <= horizon;
+  if (isPast(net, horizon)) return (e.opened ?? (e.opening ? Infinity : 0)) <= horizon;
+  if (e.opened || !e.opening) return true;
+  return horizon !== null && e.opening <= horizon;
 }
 
 /** Trains run through the station within the horizon. */
@@ -265,5 +269,6 @@ export function yearHorizons(net: Network): number[] {
 export function openingYears(net: Network): number[] {
   const years = new Set<number>();
   for (const s of net.stations.values()) if (s.opening && !isOpen(net, s)) years.add(s.opening);
+  for (const e of net.exits) if (e.opening && !exitOpen(net, e)) years.add(e.opening);
   return [...years].sort((a, b) => a - b);
 }
